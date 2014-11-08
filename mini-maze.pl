@@ -1,8 +1,5 @@
 mazeSize(2, 2).
-barrier(1, 2).
 
+move([OldX, _] , [NewX, _]) :-  NewX is OldX + 1.
+move([_, OldY] , [_, NewY]) :-  NewY is OldY + 1.
 
-solve(From, To, Path).
-
-
-move(X, Y) :-
