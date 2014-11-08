@@ -5,10 +5,22 @@ valid(X, Y) :-
 	X =< Xlim ,
 	Y =< Ylim .
 
-move([Xold,Y], [Xnew,Y]) :-
+finished(Step, Step).
+
+step([Xold,Y], [Xnew,Y]) :-
 	Xnew is Xold + 1 ,
 	valid(Xnew,Y).
 
-move([X,Yold], [X,Ynew]) :-
+step([X,Yold], [X,Ynew]) :-
 	Ynew is Yold + 1 ,
 	valid(X,Ynew).
+
+move(StepA, _, To, Acc, Acc) :-
+	finished(StepA, To).
+
+move(StepA, StepB, To, Acc, Path) :-
+	step(StepA, StepB) ,
+	move(StepB, NextStep, To, [Acc,StepB], Path).
+
+solve(From, To, Path) :-
+	move(From, Next, To, From, Path).
