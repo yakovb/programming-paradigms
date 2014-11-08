@@ -1,6 +1,9 @@
 mazeSize(2, 2).
 
+barrier(1,2).
+
 valid(X, Y) :-
+	\+(barrier(X,Y)) ,
 	mazeSize(Xlim, Ylim) ,
 	X =< Xlim ,
 	Y =< Ylim .
