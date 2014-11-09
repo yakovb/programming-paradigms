@@ -1,9 +1,9 @@
-mazeSize(7, 7).
+mazeSize(3,3).
 
 barrier(2,1).
 
-valid(X, Y, Path) :-
-	\+(member([X,Y], Path)) ,
+valid(X, Y, Acc) :-
+	\+(member([X,Y], Acc)) ,
 	\+(barrier(X,Y)) ,
 	mazeSize(Xlim, Ylim) ,
 	X =< Xlim ,
@@ -12,29 +12,29 @@ valid(X, Y, Path) :-
 finished(Step, Step).
 
 
-step([Xold,Y], [Xnew,Y], Path) :-
+step([Xold,Y], [Xnew,Y], Acc) :-
 	Xnew is Xold + 1 ,
-	valid(Xnew,Y, Path).
+	valid(Xnew,Y, Acc).
 
-step([X,Yold], [X,Ynew], Path) :-
+step([X,Yold], [X,Ynew], Acc) :-
 	Ynew is Yold + 1 ,
-	valid(X,Ynew, Path).
+	valid(X,Ynew, Acc).
 
-step([Xold,Y], [Xnew,Y], Path) :-
+step([Xold,Y], [Xnew,Y], Acc) :-
 	Xnew is Xold - 1 ,
-	valid(Xnew,Y, Path).
+	valid(Xnew,Y, Acc).
 
-step([X,Yold], [X,Ynew], Path) :-
+step([X,Yold], [X,Ynew], Acc) :-
 	Ynew is Yold - 1 ,
-	valid(X,Ynew, Path).
+	valid(X,Ynew, Acc).
 
 
 move(StepA, _, To, Acc, Acc) :-
 	finished(StepA, To).
 
 move(StepA, StepB, To, Acc, Path) :-
-	step(StepA, StepB, Path) ,
-	move(StepB, NextStep, To, [Acc,StepB], Path).
+	step(StepA, StepB, Acc) ,
+	move(StepB, _, To, [StepB|Acc], Path).
 
 solve(From, To, Path) :-
-	move(From, Next, To, From, Path).
+	move(From, _, To, From, Path).
