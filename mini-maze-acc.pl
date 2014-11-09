@@ -1,6 +1,6 @@
 mazeSize(3,3).
 
-barrier(2,1).
+barrier(2,2).
 
 valid(X, Y, Acc) :-
 	\+(member([X,Y], Acc)) ,
@@ -20,13 +20,14 @@ step([X,Yold], [X,Ynew], Acc) :-
 	Ynew is Yold + 1 ,
 	valid(X,Ynew, Acc).
 
+step([X,Yold], [X,Ynew], Acc) :-
+	Ynew is Yold - 1 ,
+	valid(X,Ynew, Acc).
+
 step([Xold,Y], [Xnew,Y], Acc) :-
 	Xnew is Xold - 1 ,
 	valid(Xnew,Y, Acc).
 
-step([X,Yold], [X,Ynew], Acc) :-
-	Ynew is Yold - 1 ,
-	valid(X,Ynew, Acc).
 
 
 move(StepA, _, To, Acc, Acc) :-
