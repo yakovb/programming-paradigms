@@ -3,11 +3,13 @@ mazeSize(3,3).
 barrier(2,2).
 
 valid(X, Y, Acc) :-
-	\+(member([X,Y], Acc)) ,
-	\+(barrier(X,Y)) ,
 	mazeSize(Xlim, Ylim) ,
+	X > 0 ,
 	X =< Xlim ,
-	Y =< Ylim .
+	Y > 0 ,
+	Y =< Ylim ,
+	\+(member([X,Y], Acc)) ,
+	\+(barrier(X,Y)).
 
 finished(Step, Step).
 
@@ -37,6 +39,6 @@ move(StepA, StepB, To, Acc, Path) :-
 	move(StepB, _, To, [StepB|Acc], Path).
 
 solve(From, To, Path) :-
-	move(From, _, To, [], Result) ,
+	move(From, _, To, [From], Result) ,
 	reverse(Result, L2) ,
 	Path = [From|L2].
