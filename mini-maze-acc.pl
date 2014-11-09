@@ -40,5 +40,4 @@ move(StepA, StepB, To, Acc, Path) :-
 
 solve(From, To, Path) :-
 	move(From, _, To, [From], Result) ,
-	reverse(Result, L2) ,
-	Path = [From|L2].
+	reverse(Result, Path).
