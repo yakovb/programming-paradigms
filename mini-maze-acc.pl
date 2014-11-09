@@ -29,7 +29,6 @@ step([Xold,Y], [Xnew,Y], Acc) :-
 	valid(Xnew,Y, Acc).
 
 
-
 move(StepA, _, To, Acc, Acc) :-
 	finished(StepA, To).
 
@@ -38,4 +37,6 @@ move(StepA, StepB, To, Acc, Path) :-
 	move(StepB, _, To, [StepB|Acc], Path).
 
 solve(From, To, Path) :-
-	move(From, _, To, From, Path).
+	move(From, _, To, [], Result) ,
+	reverse(Result, L2) ,
+	Path = [From|L2].
