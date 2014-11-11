@@ -1,46 +1,31 @@
-mazeSize(5,9).
+use_module([maze, print-maze]).
 
-barrier(1, 8).
-barrier(2, 1).
-barrier(2, 2).
-barrier(2, 4).
-barrier(2, 5).
-barrier(3, 4).
-barrier(3, 7).
-barrier(3, 9).
-barrier(4, 4).
-barrier(4, 7).
-barrier(4, 8).
-barrier(4, 9).
-barrier(5, 2).
-
-valid(X, Y, Acc) :-
-	mazeSize(Xlim, Ylim) ,
-	X > 0 ,
-	X =< Xlim ,
-	Y > 0 ,
-	Y =< Ylim ,
-	\+(member([X,Y], Acc)) ,
-	\+(barrier(X,Y)).
+valid(Height, Length, Acc) :-
+	mazeSize(UpperHeight, UpperLength) ,
+	Height > 0 ,
+	Height =< UpperHeight ,
+	Length > 0 ,
+	Length =< UpperLength ,
+	\+(member([Height,Length], Acc)) ,
+	\+(barrier(Height,Length)).
 
 finished(Step, Step).
 
+step([Height,OldLength], [Height,NewLength], Acc) :-
+	NewLength is OldLength + 1 ,
+	valid(Height,NewLength, Acc).
 
-step([Xold,Y], [Xnew,Y], Acc) :-
-	Xnew is Xold + 1 ,
-	valid(Xnew,Y, Acc).
+step([OldHeight,Length], [NewHeight,Length], Acc) :-
+	NewHeight is OldHeight + 1 ,
+	valid(NewHeight,Length, Acc).
 
-step([X,Yold], [X,Ynew], Acc) :-
-	Ynew is Yold + 1 ,
-	valid(X,Ynew, Acc).
+step([OldHeight,Length], [NewHeight,Length], Acc) :-
+	NewHeight is OldHeight - 1 ,
+	valid(NewHeight,Length, Acc).
 
-step([X,Yold], [X,Ynew], Acc) :-
-	Ynew is Yold - 1 ,
-	valid(X,Ynew, Acc).
-
-step([Xold,Y], [Xnew,Y], Acc) :-
-	Xnew is Xold - 1 ,
-	valid(Xnew,Y, Acc).
+step([Height,OldLength], [Height,NewLength], Acc) :-
+	NewLength is OldLength - 1 ,
+	valid(Height,NewLength, Acc).
 
 
 move(StepA, _, To, Acc, Acc) :-
@@ -52,5 +37,6 @@ move(StepA, StepB, To, Acc, Path) :-
 
 solve(From, To, Path) :-
 	move(From, _, To, [From], Result) ,
-	reverse(Result, Path).
+	reverse(Result, Path) ,
+	printMaze(Path).
 

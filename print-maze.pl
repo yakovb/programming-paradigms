@@ -42,13 +42,13 @@ buildLine(Row, Column, Line, Path) :-
 
 %coordinate is a barrier
 buildLine(Row, Column, Line, Path) :-
-	barrier(Column, Row) ,
+	barrier(Row, Column) ,
 	NewCol is Column + 1 ,
 	buildLine(Row, NewCol, ['x'|Line], Path).
 
 %coordinate is in the path
 buildLine(Row, Column, Line, Path) :-
-	member([Column, Row], Path) ,
+	member([Row, Column], Path) ,
 	NewCol is Column + 1 ,
 	buildLine(Row, NewCol, ['*'|Line], Path).
 
