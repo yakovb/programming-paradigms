@@ -26,17 +26,19 @@ buildLine(Row, Column, Line, Path) :-
 
 %coordinate is on the "Length" axis
 buildLine(Row, Column, Line, Path) :-
-	Row =:= 0 ,
-	Column > 0 ,
+	mazeSize(_, Length) ,
+	Row =:= -1 ,
+	(Column > 0 , Column =< Length) ,
 	NewCol is Column + 1 ,
-	buildLine(Row, NewCol, [Column|Line], Path).
+	buildLine(Row, NewCol, ['0'|Line], Path).
 
 %coordinate is on the "Height" axis
 buildLine(Row, Column, Line, Path) :-
-	Row > 0 ,
+	mazeSize(Height, _) ,
 	Column =:= -1 ,
+	(Row > 0 , Row =< Height) ,
 	NewCol is Column + 1 ,
-	buildLine(Row, NewCol, [Row|Line], Path).
+	buildLine(Row, NewCol, ['0'|Line], Path).
 
 %coordinate is a corner
 buildLine(Row, Column, Line, Path) :-
