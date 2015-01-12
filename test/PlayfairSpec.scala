@@ -28,16 +28,16 @@ class PlayfairSpec extends FlatSpec {
 
   it can "be a long string that includes spaces" in {
     val longKey = "this is a very long keyword that I would like to use"
-    assert(checkKeyword(longKey).get === longKey.toList.filter(c => !c.isSpaceChar))
+    assert(checkKeyword(longKey).get === longKey.filter(c => !c.isSpaceChar))
   }
 
   it can "be a single word" in {
     val k = "keyword"
-    assert(checkKeyword(k).get === k.toList)
+    assert(checkKeyword(k).get === k)
   }
 
   it can "be the word Pennsylvania" in {
     val k = "Pennsylvania"
-    assert(checkKeyword(k).get === k.toList)
+    assert(checkKeyword(k).get === k)
   }
 }
