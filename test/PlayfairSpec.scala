@@ -138,7 +138,10 @@ class PlayfairSpec extends FlatSpec {
    * Test the behaviour of the ENCODE function.
    */
   behavior of "ENCODE"
-  it should "deal with the PPL input" in {}
+  it should "deal with the PPL input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) === Source.fromFile("ppl-secrettext.txt").mkString)
+  }
   it should "deal with the wikipedia input" in {}
   it should "deal with two-letter-long input" in {}
   it should "deal with three-letter-long input" in {}
