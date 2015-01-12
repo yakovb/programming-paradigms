@@ -17,26 +17,23 @@ class PlayfairSpec extends FlatSpec {
    */
   behavior of "a keyword"
 
-  it must "not be an empty string" in {
-    assert(checkKeyword("").isFailure)
+  it should "not be an empty string" in {
+    assert(checkKeyword(Try("")) === false)
   }
-  it must "not consist solely of spaces" in {
-    assert(checkKeyword("   ").isFailure)
+  it should "not consist solely of spaces" in {
+    assert(checkKeyword(Try("   ")) === false)
   }
-  it must "not contain any non-letter characters (except spaces)" in {
-    assert(checkKeyword("my-keyword").isFailure)
+  it should "not contain any non-letter characters (except spaces)" in {
+    assert(checkKeyword(Try("my-keyword")) === false)
   }
   it can "be a long string that includes spaces" in {
-    val longKey = "this is a very long keyword that I would like to use"
-    assert(checkKeyword(longKey).get === longKey.filter(c => !c.isSpaceChar))
+    assert(checkKeyword(Try("this is a very long keyword that I would like to use")) === true)
   }
   it can "be a single word" in {
-    val k = "keyword"
-    assert(checkKeyword(k).get === k)
+    assert(checkKeyword(Try("keyword")) === true)
   }
   it can "be the word Pennsylvania" in {
-    val k = "Pennsylvania"
-    assert(checkKeyword(k).get === k)
+    assert(checkKeyword(Try("Pennsylvania")) === true)
   }
 
   /**
