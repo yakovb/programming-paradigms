@@ -8,7 +8,7 @@ import playfair.Playfair._
 class PlayfairSpec extends FlatSpec {
 
   /**
-   * Test the behaviour of getKeywordFromUser. This should accept words or phrases with letters only
+   * Test the behaviour of checkKeyword. This should accept words or phrases with letters only
    * and can include spaces (in addition to letters). In this case it should return a Success[String];
    * in all other cases it should return a Failure[String],
    */
@@ -40,4 +40,16 @@ class PlayfairSpec extends FlatSpec {
     val k = "Pennsylvania"
     assert(checkKeyword(k).get === k)
   }
+
+  /**
+   * Test the behaviour of the file getting methods. A correctly specified file should return a String
+   * while an incorrectly specified filename should return a nothing - this is implemented via Option.
+   */
+
+  behavior of "a source file"
+
+  it must "return nothing if not properly requested" in {}
+  it must "return nothing if properly requested but doesn't contain any valid text" in {}
+  it must "return a string if properly requested and contains valid text" in {}
+
 }
