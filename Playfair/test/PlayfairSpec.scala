@@ -63,8 +63,12 @@ class PlayfairSpec extends FlatSpec {
     val f = obtainFileFromUser("valid-twoletters.txt")
     assert(checkFileValidForEncoding(f) === true)
   }
-  it should "return true if properly requested and contains valid text" in {
+  it should "return true if properly requested and contains valid text (wiki text)" in {
     val f = obtainFileFromUser("wiki-plaintext.txt")
+    assert(checkFileValidForEncoding(f) === true)
+  }
+  it should "return true if properly requested and contains valid text (ProgPara text)" in {
+    val f = obtainFileFromUser("ppl-plaintext.txt")
     assert(checkFileValidForEncoding(f) === true)
   }
 
