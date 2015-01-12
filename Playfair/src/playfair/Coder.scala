@@ -11,5 +11,5 @@ class Coder(keyword: String) {
 
   def decode(secretText: String): String = ???
 
-  def createCodeBlock(): Array[String] = ???
+  def createCodeBlock(): Array[Char] = ???
 }
