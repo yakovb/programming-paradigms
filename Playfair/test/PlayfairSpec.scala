@@ -114,19 +114,19 @@ class PlayfairSpec extends FlatSpec {
   behavior of "code block generator"
 
   it should "reproduce the code block from the PPL coursework notes" in {
-    val c = new Coder("Pennsylvania")
+    val c = new Coder("Pennsylvania".filter(_.isLetter))
     assert(c.createCodeBlock() === "pensylvaibcdfghkmoqrtuwxz".toCharArray)
   }
   it should "reproduce the code block in the wikipedia entry" in {
-    val c = new Coder("playfair example")
+    val c = new Coder("playfair example".filter(_.isLetter))
     assert(c.createCodeBlock() === "playfirexmbcdghknoqstuvwz".toCharArray)
   }
   it should "largely reproduce the alphabet when given a short keyword" in {
-    val c = new Coder("yes")
+    val c = new Coder("yes".filter(_.isLetter))
     assert(c.createCodeBlock() === "yesabcdfghiklmnopqrtuvwxz".toCharArray)
   }
   it should "correctly work with long keywords" in {
-    val c = new Coder("this is a very long keyword that I would like to use")
+    val c = new Coder("this is a very long keyword that I would like to use".filter(_.isLetter))
     assert(c.createCodeBlock() === "thisaverylongkwdubcfmpqxz".toCharArray)
   }
 }
