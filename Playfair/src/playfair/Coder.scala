@@ -6,8 +6,32 @@ package playfair
 class Coder(keyword: String) {
   val alphabet = "abcdefghiklmnopqrstuvwxyz".toList
   val rowBounds = Array(0, 5, 10, 15, 20)
+  val codeBlock = createCodeBlock()
 
-  def encode(plaintText: String): String = ???
+  def encode(plaintText: String): String = {
+    def encodeHelper(lst: List[Char], acc: List[Char]): List[Char] = lst match {
+      case Nil                            => acc.reverse
+      case a::Nil                         => encodeHelper(Nil, processLetters(a, 'z') ::: acc)
+      case a::b::rest if a==b && a!='x'   => encodeHelper(b::rest, processLetters(a, 'x') ::: acc)
+      case a::b::rest if a==b && a=='x'   => encodeHelper(b::rest, processLetters(a, 'q') ::: acc)
+      case a::b::rest if a!=b             => encodeHelper(rest, processLetters(a, b) ::: acc)
+    }
+    def processLetters(x: Char, y: Char): List[Char] = {
+      def sameRow(i: Int, j: Int): Boolean = {
+        val big = math.max(i, j)
+        val small = math.min(i, j)
+        rowBounds.indexWhere(p =>  p <= big) == rowBounds.indexWhere(p =>  p <= small)
+      }
+      def sameColumn(i: Int, j: Int): Boolean = {
+        i%5 == j%5
+      }
+
+      val i = codeBlock indexOf x
+      val j = codeBlock indexOf y
+
+      // requires reverse
+    }
+  }
 
   def decode(secretText: String): String = ???
 
