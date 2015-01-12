@@ -13,8 +13,9 @@ class Coder(keyword: String) {
 
   def createCodeBlock(): Array[Char] = {
     def blockHelper(lst: List[Char]): List[Char] = lst match {
-      case Nil        => lst
-      case h :: rest  => h :: blockHelper(lst.tail.filter(_ != h))
+      case Nil                  => lst
+      case ('i' | 'j') :: rest  => 'i' :: blockHelper(lst.tail.filter(c => c != 'i' && c != 'j'))
+      case h :: rest            => h :: blockHelper(lst.tail.filter(_ != h))
     }
     val keyPart = blockHelper(keyword.toLowerCase.toList).toArray
     val alphabetPart = (for (c <- alphabet if !keyPart.contains(c)) yield c).toArray
