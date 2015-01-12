@@ -41,7 +41,7 @@ class PlayfairSpec extends FlatSpec {
    * while an incorrectly specified filename should return a nothing - this is implemented via Option.
    */
 
-  behavior of "a source file validity checker"
+  behavior of "the loading and checking of a source file for ENCODING"
 
   it should "return false if file for ENCODING is not properly requested" in {
     val f = obtainFileFromUser("badFileName")
