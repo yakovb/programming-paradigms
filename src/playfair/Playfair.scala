@@ -11,7 +11,7 @@ object Playfair {
    * Reads in user's keyword from the console
    * @return String of user input
    */
-  def obtainKeywordFromUser(): String = Console.in.readLine()
+  def obtainKeywordFromUser(): Try[String] = Try(Console.in.readLine())
 
   /**
    * Reads in user's filename location from the console
@@ -53,11 +53,11 @@ object Playfair {
    * @param word user's keyword
    * @return Failure[IllegalArgumentException] if tests fail; Success[keyword as list of chars] otherwise
    */
-  def checkKeyword(word: String): Try[String]  = {
-    val keyword = word.toList.filter(c => !c.isSpaceChar)
-    if (keyword.isEmpty) Failure(new IllegalArgumentException("The supplied keyword is empty."))
-    else if (keyword.exists(c => !c.isLetter)) Failure(new IllegalArgumentException("The supplied keyword contains non-letter characters."))
-    else Success(word.filter(c => !c.isSpaceChar))
+  def checkKeyword(word: Try[String]): Boolean = word match {
+    case Success(w) =>
+      val wNoSpaces = w.toList.filter(!_.isSpaceChar)
+      wNoSpaces.nonEmpty && !wNoSpaces.exists(!_.isLetter)
+    case Failure(w) => false
   }
 
 
