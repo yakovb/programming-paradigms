@@ -3,6 +3,7 @@
  */
 
 import org.scalatest.FlatSpec
+import playfair.Coder
 import playfair.Playfair._
 
 import scala.io.Source
@@ -40,7 +41,6 @@ class PlayfairSpec extends FlatSpec {
    * Test the behaviour of the file getting methods. A correctly specified file should return true
    * while an incorrectly specified file (or invalid file) should return false.
    */
-
   behavior of "a source file for ENCODING"
 
   it should "return false if file is not properly requested" in {
@@ -107,4 +107,26 @@ class PlayfairSpec extends FlatSpec {
     assert(checkFileValidForDecoding(f) === true)
   }
 
+  /**
+   * Test the behaviour of the code block generating function. This function works within
+   * the Coder object so only works with valid keywords
+   */
+  behavior of "code block generator"
+
+  it should "reproduce the code block from the PPL coursework notes" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.createCodeBlock() === "pensylvaibcdfghkmoqrtuwxz".toCharArray)
+  }
+  it should "reproduce the code block in the wikipedia entry" in {
+    val c = new Coder("playfair example")
+    assert(c.createCodeBlock() === "playfirexmbcdghknoqstuvwz".toCharArray)
+  }
+  it should "largely reproduce the alphabet when given a short keyword" in {
+    val c = new Coder("yes")
+    assert(c.createCodeBlock() === "yesabcdfghiklmnopqrtuvwxz".toCharArray)
+  }
+  it should "correctly work with long keywords" in {
+    val c = new Coder("this is a very long keyword that I would like to use")
+    assert(c.createCodeBlock() === "thisaverylongkwdubcfmpqxz".toCharArray)
+  }
 }
