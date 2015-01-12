@@ -18,8 +18,10 @@ object Playfair {
    * @return the contents of a file that may or may not exist or be valid
    */
   def obtainFileFromUser(): Try[String] = {
-    val name = Console.in.readLine()
-    Try(Source.fromFile(name).mkString)
+    val f = Source.fromFile( Console.in.readLine() )
+    val result = Try(f.mkString)
+    f.close()
+    result
   }
 
   /**
