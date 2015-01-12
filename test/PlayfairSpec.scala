@@ -133,4 +133,15 @@ class PlayfairSpec extends FlatSpec {
     val c = new Coder("this is a very long keyword that I would like to use".filter(_.isLetter))
     assert(c.createCodeBlock() === "thisaverylongkwdubcfmpqxz".toCharArray)
   }
+
+  /**
+   * Test the behaviour of the ENCODE function.
+   */
+  behavior of "ENCODE"
+  it should "deal with the PPL input" in {}
+  it should "deal with the wikipedia input" in {}
+  it should "deal with two-letter-long input" in {}
+  it should "deal with three-letter-long input" in {}
+  it should "deal with input having many j's" in {}
+  it should "deal with the input having many double letters" in {}
 }
