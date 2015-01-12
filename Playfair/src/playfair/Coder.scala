@@ -16,6 +16,8 @@ class Coder(keyword: String) {
       case Nil        => lst
       case h :: rest  => h :: blockHelper(lst.tail.filter(_ != h))
     }
-    blockHelper(keyword.toLowerCase.toList).toArray
+    val keyPart = blockHelper(keyword.toLowerCase.toList).toArray
+    val alphabetPart = (for (c <- alphabet if !keyPart.contains(c)) yield c).toArray
+    keyPart ++ alphabetPart
   }
 }
