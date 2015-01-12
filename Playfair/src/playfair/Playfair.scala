@@ -15,15 +15,11 @@ object Playfair {
     Console.in.readLine()
   }
 
-  def obtainFileFromUser(name: String): Try[String] = {
-    val str = Try(Source.fromFile(name).mkString)
-    str match {
-      case Success(s) =>
-        val sl = s.toList
-        if (sl.count((_: Char).isLetter) > 1) str
-        else Failure(new IllegalArgumentException("The file doesn't have valid contents."))
-      case Failure(s) => Failure(new IllegalArgumentException("The file doesn't exist or contains non-unicode characters."))
-    }
+  def obtainFileFromUser(name: String): Try[String] = Try(Source.fromFile(name).mkString)
+
+  def checkFileValidForEncoding(text: Try[String]): Boolean = text match {
+    case Success(s) => s.toList.count((_: Char).isLetter) > 1
+    case Failure(s) => false
   }
 
   /**
