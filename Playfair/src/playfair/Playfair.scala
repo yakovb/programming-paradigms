@@ -1,6 +1,7 @@
 package playfair
 
-import scala.util.{Try, Failure, Success}
+import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 /**
  * Created by Yakov Boglev on 11/01/2015.
@@ -12,6 +13,14 @@ object Playfair {
    */
   def obtainKeywordFromUser(): String = {
     Console.in.readLine()
+  }
+
+  def obtainFileFromUser(name: String): Try[String] = {
+    val str = Try(Source.fromFile(name).mkString)
+    str.get match {
+      case s if s.matches(".*[a-zA-Z].*[a-zA-Z].*")  => Success(s)
+      case _ => Failure(new IllegalArgumentException("The file doesn't exist or has invalid contents."))
+    }
   }
 
   /**

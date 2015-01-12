@@ -2,6 +2,8 @@
  * Created by Yakov Boglev on 11/01/2015.
  */
 
+import java.io.FileNotFoundException
+
 import org.scalatest.FlatSpec
 import playfair.Playfair._
 
@@ -17,25 +19,20 @@ class PlayfairSpec extends FlatSpec {
   it must "not be an empty string" in {
     assert(checkKeyword("").isFailure)
   }
-
   it must "not consist solely of spaces" in {
     assert(checkKeyword("   ").isFailure)
   }
-
   it must "not contain any non-letter characters (except spaces)" in {
     assert(checkKeyword("my-keyword").isFailure)
   }
-
   it can "be a long string that includes spaces" in {
     val longKey = "this is a very long keyword that I would like to use"
     assert(checkKeyword(longKey).get === longKey.filter(c => !c.isSpaceChar))
   }
-
   it can "be a single word" in {
     val k = "keyword"
     assert(checkKeyword(k).get === k)
   }
-
   it can "be the word Pennsylvania" in {
     val k = "Pennsylvania"
     assert(checkKeyword(k).get === k)
@@ -48,8 +45,31 @@ class PlayfairSpec extends FlatSpec {
 
   behavior of "a source file"
 
-  it must "return nothing if not properly requested" in {}
-  it must "return nothing if properly requested but doesn't contain any valid text" in {}
-  it must "return a string if properly requested and contains valid text" in {}
+  it must "return an Option enclosing a FileNotFoundException if not properly requested" in {
+    intercept[FileNotFoundException] {
+      obtainFileFromUser("badFileName").get
+    }
+  }
+  it must "return an Option enclosing an IllegalArgumentException if properly requested but file is empty" in {
+    intercept[IllegalArgumentException] {
+      obtainFileFromUser("invalid-empty.txt").get
+    }
+  }
+  it must "return an Option enclosing an IllegalArgumentException if properly requested but contains no valid text" in {
+    intercept[IllegalArgumentException] {
+      obtainFileFromUser("invalid-noletters.txt").get
+    }
+  }
+  it must "return an Option enclosing an IllegalArgumentException if properly requested but contains fewer than two letters" in {
+    intercept[IllegalArgumentException] {
+      obtainFileFromUser("invalid-oneletter.txt").get
+    }
+  }
+  it must "return a string if properly requested and contains valid but meaningless text" in {
+    assert(obtainFileFromUser("valid-twoletters.txt").get.matches(".*d.*R.*"))
+  }
+  it must "return a string if properly requested and contains valid text" in {
+    assert(obtainFileFromUser("wiki-plaintext.txt").get === "Hide the gold in the tree stump")
+  }
 
 }
