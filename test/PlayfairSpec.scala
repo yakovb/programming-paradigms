@@ -41,33 +41,31 @@ class PlayfairSpec extends FlatSpec {
    * while an incorrectly specified filename should return a nothing - this is implemented via Option.
    */
 
-  behavior of "a source file"
+  behavior of "a source file validity checker"
 
-  it must "return a Failure[IllegalArgumentException] if not properly requested" in {
-    intercept[IllegalArgumentException] {
-      obtainFileFromUser("badFileName").get
-    }
+  it should "return false if file for ENCODING is not properly requested" in {
+    val f = obtainFileFromUser("badFileName")
+    assert(checkFileValidForEncoding(f) === false)
   }
-  it must "return a Failure[IllegalArgumentException] if properly requested but file is empty" in {
-    intercept[IllegalArgumentException] {
-      obtainFileFromUser("invalid-empty.txt").get
-    }
+  it should "return false if file for ENCODING is properly requested but file is empty" in {
+    val f = obtainFileFromUser("invalid-empty.txt")
+    assert(checkFileValidForEncoding(f) === false)
   }
-  it must "return a Failure[IllegalArgumentException] if properly requested but contains no valid text" in {
-    intercept[IllegalArgumentException] {
-      obtainFileFromUser("invalid-noletters.txt").get
-    }
+  it should "return false if file for ENCODING is properly requested but contains no valid text" in {
+    val f = obtainFileFromUser("invalid-noletters.txt")
+    assert(checkFileValidForEncoding(f) === false)
   }
-  it must "return a Failure[IllegalArgumentException] if properly requested but contains fewer than two letters" in {
-    intercept[IllegalArgumentException] {
-      obtainFileFromUser("invalid-oneletter.txt").get
-    }
+  it should "return false if properly requested but contains fewer than two letters" in {
+    val f = obtainFileFromUser("invalid-oneletter.txt")
+    assert(checkFileValidForEncoding(f) === false)
   }
-  it must "return a Success[String] if properly requested and contains valid but meaningless text" in {
-    assert(obtainFileFromUser("valid-twoletters.txt").get.toList.exists(c => c == 'd' || c == 'R'))
+  it should "return true if properly requested and contains valid but meaningless text" in {
+    val f = obtainFileFromUser("valid-twoletters.txt")
+    assert(checkFileValidForEncoding(f) === true)
   }
-  it must "return a Success[String] if properly requested and contains valid text" in {
-    assert(obtainFileFromUser("wiki-plaintext.txt").get === "Hide the gold in the tree stump")
+  it should "return true if properly requested and contains valid text" in {
+    val f = obtainFileFromUser("wiki-plaintext.txt")
+    assert(checkFileValidForEncoding(f) === true)
   }
 
 }
