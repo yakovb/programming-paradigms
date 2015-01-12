@@ -37,8 +37,8 @@ class PlayfairSpec extends FlatSpec {
   }
 
   /**
-   * Test the behaviour of the file getting methods. A correctly specified file should return a String
-   * while an incorrectly specified filename should return a nothing - this is implemented via Option.
+   * Test the behaviour of the file getting methods. A correctly specified file should return true
+   * while an incorrectly specified file (or invalid file) should return false.
    */
 
   behavior of "the loading and checking of a source file for ENCODING"
@@ -55,21 +55,48 @@ class PlayfairSpec extends FlatSpec {
     val f = obtainFileFromUser("invalid-noletters.txt")
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return false if properly requested but contains fewer than two letters" in {
+  it should "return false if file for ENCODING is properly requested but contains fewer than two letters" in {
     val f = obtainFileFromUser("invalid-oneletter.txt")
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return true if properly requested and contains valid but meaningless text" in {
+  it should "return true if file for ENCODING is properly requested and contains valid but meaningless text" in {
     val f = obtainFileFromUser("valid-twoletters.txt")
     assert(checkFileValidForEncoding(f) === true)
   }
-  it should "return true if properly requested and contains valid text (wiki text)" in {
+  it should "return true if file for ENCODING is properly requested and contains valid text (wiki text)" in {
     val f = obtainFileFromUser("wiki-plaintext.txt")
     assert(checkFileValidForEncoding(f) === true)
   }
-  it should "return true if properly requested and contains valid text (ProgPara text)" in {
+  it should "return true if file for ENCODING is properly requested and contains valid text (ProgPara text)" in {
     val f = obtainFileFromUser("ppl-plaintext.txt")
     assert(checkFileValidForEncoding(f) === true)
+  }
+
+  behavior of "the loading and checking of a source file for DECODING"
+
+  it should "return false if file for DECODING is not properly requested" in {
+    val f = obtainFileFromUser("badFileName")
+    assert(checkFileValidForDecoding(f) === false)
+  }
+  it should "return false if file for DECODING is properly requested but file is empty" in {
+    val f = obtainFileFromUser("invalid-empty.txt")
+    assert(checkFileValidForDecoding(f) === false)
+  }
+  it should "return false if file for DECODING is properly requested but contains anything but letters, spaces and newlines" in {
+    val f = obtainFileFromUser("invalid-noletters.txt")
+    assert(checkFileValidForDecoding(f) === false)
+  }
+  it should "return false if file for DECODING is properly requested but contains fewer than two letters" in {
+    val f = obtainFileFromUser("invalid-oneletter.txt")
+    assert(checkFileValidForDecoding(f) === false)
+  }
+  it should "return true if file for DECODING is properly requested and has an even number of letters" in {
+    val f = obtainFileFromUser("invalid-oddNumSecrettext1.txt")
+    assert(checkFileValidForDecoding(f) === false)
+  }
+  it should "return false if file for DECODING is properly requested but has an odd number of letters" in {
+    val f = obtainFileFromUser("invalid-oddNumSecrettext2.txt")
+    assert(checkFileValidForDecoding(f) === false)
   }
 
 }
