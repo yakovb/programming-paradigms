@@ -17,9 +17,12 @@ object Playfair {
 
   def obtainFileFromUser(name: String): Try[String] = {
     val str = Try(Source.fromFile(name).mkString)
-    str.get match {
-      case s if s.matches(".*[a-zA-Z].*[a-zA-Z].*")  => Success(s)
-      case _ => Failure(new IllegalArgumentException("The file doesn't exist or has invalid contents."))
+    str match {
+      case Success(s) =>
+        val sl = s.toList
+        if (sl.count((_: Char).isLetter) > 1) str
+        else Failure(new IllegalArgumentException("The file doesn't have valid contents."))
+      case Failure(s) => Failure(new IllegalArgumentException("The file doesn't exist or contains non-unicode characters."))
     }
   }
 

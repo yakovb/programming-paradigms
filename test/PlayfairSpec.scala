@@ -2,8 +2,6 @@
  * Created by Yakov Boglev on 11/01/2015.
  */
 
-import java.io.FileNotFoundException
-
 import org.scalatest.FlatSpec
 import playfair.Playfair._
 
@@ -45,30 +43,30 @@ class PlayfairSpec extends FlatSpec {
 
   behavior of "a source file"
 
-  it must "return an Option enclosing a FileNotFoundException if not properly requested" in {
-    intercept[FileNotFoundException] {
+  it must "return a Failure[IllegalArgumentException] if not properly requested" in {
+    intercept[IllegalArgumentException] {
       obtainFileFromUser("badFileName").get
     }
   }
-  it must "return an Option enclosing an IllegalArgumentException if properly requested but file is empty" in {
+  it must "return a Failure[IllegalArgumentException] if properly requested but file is empty" in {
     intercept[IllegalArgumentException] {
       obtainFileFromUser("invalid-empty.txt").get
     }
   }
-  it must "return an Option enclosing an IllegalArgumentException if properly requested but contains no valid text" in {
+  it must "return a Failure[IllegalArgumentException] if properly requested but contains no valid text" in {
     intercept[IllegalArgumentException] {
       obtainFileFromUser("invalid-noletters.txt").get
     }
   }
-  it must "return an Option enclosing an IllegalArgumentException if properly requested but contains fewer than two letters" in {
+  it must "return a Failure[IllegalArgumentException] if properly requested but contains fewer than two letters" in {
     intercept[IllegalArgumentException] {
       obtainFileFromUser("invalid-oneletter.txt").get
     }
   }
-  it must "return a string if properly requested and contains valid but meaningless text" in {
-    assert(obtainFileFromUser("valid-twoletters.txt").get.matches(".*d.*R.*"))
+  it must "return a Success[String] if properly requested and contains valid but meaningless text" in {
+    assert(obtainFileFromUser("valid-twoletters.txt").get.toList.exists(c => c == 'd' || c == 'R'))
   }
-  it must "return a string if properly requested and contains valid text" in {
+  it must "return a Success[String] if properly requested and contains valid text" in {
     assert(obtainFileFromUser("wiki-plaintext.txt").get === "Hide the gold in the tree stump")
   }
 
