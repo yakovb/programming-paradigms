@@ -5,6 +5,9 @@
 import org.scalatest.FlatSpec
 import playfair.Playfair._
 
+import scala.io.Source
+import scala.util.Try
+
 class PlayfairSpec extends FlatSpec {
 
   /**
@@ -41,62 +44,70 @@ class PlayfairSpec extends FlatSpec {
    * while an incorrectly specified file (or invalid file) should return false.
    */
 
-  behavior of "the loading and checking of a source file for ENCODING"
+  behavior of "a source file for ENCODING"
 
-  it should "return false if file for ENCODING is not properly requested" in {
-    val f = obtainFileFromUser("badFileName")
+  it should "return false if file is not properly requested" in {
+    val f = Try(Source.fromFile("badFileName").mkString)
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return false if file for ENCODING is properly requested but file is empty" in {
-    val f = obtainFileFromUser("invalid-empty.txt")
+  it should "return false if is properly requested but file is empty" in {
+    val f = Try(Source.fromFile("invalid-empty.txt").mkString)
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return false if file for ENCODING is properly requested but contains no valid text" in {
-    val f = obtainFileFromUser("invalid-noletters.txt")
+  it should "return false if file is properly requested but contains no valid text" in {
+    val f = Try(Source.fromFile("invalid-noletters.txt").mkString)
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return false if file for ENCODING is properly requested but contains fewer than two letters" in {
-    val f = obtainFileFromUser("invalid-oneletter.txt")
+  it should "return false if file is properly requested but contains fewer than two letters" in {
+    val f = Try(Source.fromFile("invalid-oneletter.txt").mkString)
     assert(checkFileValidForEncoding(f) === false)
   }
-  it should "return true if file for ENCODING is properly requested and contains valid but meaningless text" in {
-    val f = obtainFileFromUser("valid-twoletters.txt")
+  it should "return true if file is properly requested and contains valid but meaningless text" in {
+    val f = Try(Source.fromFile("valid-twoletters.txt").mkString)
     assert(checkFileValidForEncoding(f) === true)
   }
-  it should "return true if file for ENCODING is properly requested and contains valid text (wiki text)" in {
-    val f = obtainFileFromUser("wiki-plaintext.txt")
+  it should "return true if file is properly requested and contains valid text (wiki text)" in {
+    val f = Try(Source.fromFile("wiki-plaintext.txt").mkString)
     assert(checkFileValidForEncoding(f) === true)
   }
-  it should "return true if file for ENCODING is properly requested and contains valid text (ProgPara text)" in {
-    val f = obtainFileFromUser("ppl-plaintext.txt")
+  it should "return true if file is properly requested and contains valid text (ProgPara text)" in {
+    val f = Try(Source.fromFile("ppl-plaintext.txt").mkString)
     assert(checkFileValidForEncoding(f) === true)
   }
 
-  behavior of "the loading and checking of a source file for DECODING"
+  behavior of "a source file for DECODING"
 
-  it should "return false if file for DECODING is not properly requested" in {
-    val f = obtainFileFromUser("badFileName")
+  it should "return false if file is not properly requested" in {
+    val f = Try(Source.fromFile("badFileName").mkString)
     assert(checkFileValidForDecoding(f) === false)
   }
-  it should "return false if file for DECODING is properly requested but file is empty" in {
-    val f = obtainFileFromUser("invalid-empty.txt")
+  it should "return false if file is properly requested but file is empty" in {
+    val f = Try(Source.fromFile("invalid-empty.txt").mkString)
     assert(checkFileValidForDecoding(f) === false)
   }
-  it should "return false if file for DECODING is properly requested but contains anything but letters, spaces and newlines" in {
-    val f = obtainFileFromUser("invalid-noletters.txt")
+  it should "return false if file is properly requested but contains anything but letters, spaces and newlines" in {
+    val f = Try(Source.fromFile("invalid-noletters.txt").mkString)
     assert(checkFileValidForDecoding(f) === false)
   }
-  it should "return false if file for DECODING is properly requested but contains fewer than two letters" in {
-    val f = obtainFileFromUser("invalid-oneletter.txt")
+  it should "return false if file is properly requested but contains fewer than two letters" in {
+    val f = Try(Source.fromFile("invalid-oneletter.txt").mkString)
     assert(checkFileValidForDecoding(f) === false)
   }
-  it should "return true if file for DECODING is properly requested and has an even number of letters" in {
-    val f = obtainFileFromUser("invalid-oddNumSecrettext1.txt")
+  it should "return false if file is properly requested but has an odd number of letters" in {
+    val f = Try(Source.fromFile("invalid-oddNumSecrettext.txt").mkString)
     assert(checkFileValidForDecoding(f) === false)
   }
-  it should "return false if file for DECODING is properly requested but has an odd number of letters" in {
-    val f = obtainFileFromUser("invalid-oddNumSecrettext2.txt")
-    assert(checkFileValidForDecoding(f) === false)
+  it should "return true if file is properly requested and has an even number of letters" in {
+    val f = Try(Source.fromFile("valid-twoletters.txt").mkString)
+    assert(checkFileValidForDecoding(f) === true)
+  }
+  it should "return true if file is the wiki secret text" in {
+    val f = Try(Source.fromFile("wiki-secrettext.txt").mkString)
+    assert(checkFileValidForDecoding(f) === true)
+  }
+  it should "return true if file is the PPL secret text" in {
+    val f = Try(Source.fromFile("ppl-secrettext.txt").mkString)
+    assert(checkFileValidForDecoding(f) === true)
   }
 
 }
