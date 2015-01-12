@@ -11,5 +11,11 @@ class Coder(keyword: String) {
 
   def decode(secretText: String): String = ???
 
-  def createCodeBlock(): Array[Char] = ???
+  def createCodeBlock(): Array[Char] = {
+    def blockHelper(lst: List[Char]): List[Char] = lst match {
+      case Nil        => lst
+      case h :: rest  => h :: blockHelper(lst.tail.filter(_ != h))
+    }
+    blockHelper(keyword.toLowerCase.toList).toArray
+  }
 }
