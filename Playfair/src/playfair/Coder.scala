@@ -30,7 +30,9 @@ class Coder(keyword: String) {
         case a :: b :: rest if a != b => encodeHelper(rest, processLetters(a, b, encode) ::: acc)
       }
     }
-    encodeHelper(plaintText.toList, List[Char]()).mkString
+    val textWithoutJ = plaintText.map((c: Char) => if (c == 'j') 'i' else c)
+    val textOnlyLetters = for (c <- textWithoutJ if c isLetter) yield c.toLower
+    encodeHelper(textOnlyLetters.toList, List[Char]()).mkString
   }
 
   def decode(secretText: String): String = ???
@@ -40,27 +42,29 @@ class Coder(keyword: String) {
     def sameRow(i: Int, j: Int): Boolean = {
       val big = math.max(i, j)
       val small = math.min(i, j)
-      rowBounds.indexWhere(p =>  p <= big && p + 1 > big) == rowBounds.indexWhere(p =>  p <= small && p + 1 > small)
+      if (rowBounds.indexWhere(indx => indx > small && indx <= big) == -1) true else false
     }
     def sameColumn(i: Int, j: Int): Boolean = {
       i%5 == j%5
     }
     def rowOperation(k: Int): Int = direction match {
-      case "encode" => if (k + 1%5 == 0) k - 4 else k + 1
+      case "encode" => if ((k+1)%5 == 0) k - 4
+      else k + 1
       case "decode" =>
         val indexMod = k % 5
         if (indexMod - 1 < 0) k + 4 else indexMod - 1
     }
     def columnOperation(k: Int): Int = direction match {
-      case "encode" => if (k >= 20) k - 20 else k + 1
+      case "encode" => if (k >= 20) k - 20
+      else k + 5
       case "decode" => if (k <= 4) k + 20 else k - 1
     }
     def rectangleOperation(i: Int, j: Int): List[Char] = {
-      val iDiff = 4 - i%5
-      val jDiff = 4 - j%5
+      val iDiff = 4 - (i%5)
+      val jDiff = 4 - (j%5)
       val absDiff = math.abs(iDiff - jDiff)
-      if (iDiff > jDiff) List(codeBlock(i - absDiff), codeBlock(j + absDiff))
-      else List(codeBlock(i + absDiff), codeBlock(j - absDiff))
+      if (iDiff > jDiff) List(codeBlock(i + absDiff), codeBlock(j - absDiff))
+      else List(codeBlock(i - absDiff), codeBlock(j + absDiff))
     }
     val i = codeBlock indexOf x
     val j = codeBlock indexOf y
