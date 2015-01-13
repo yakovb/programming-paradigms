@@ -7,6 +7,10 @@ class Coder(keyword: String) {
   val alphabet = "abcdefghiklmnopqrstuvwxyz".toList
   val rowBounds = Array(0, 5, 10, 15, 20, 25)
   val codeBlock = createCodeBlock()
+  def messagePrep(text: String): List[Char] = {
+    val textWithoutJ = text.map((c: Char) => if (c == 'j') 'i' else c)
+    (for (c <- textWithoutJ if c isLetter) yield c.toLower).toList
+  }
 
   def createCodeBlock(): Array[Char] = {
     def blockHelper(lst: List[Char]): List[Char] = lst match {
@@ -30,9 +34,7 @@ class Coder(keyword: String) {
         case a :: b :: rest if a != b => encodeHelper(rest, processLetters(a, b, encode) ::: acc)
       }
     }
-    val textWithoutJ = plaintText.map((c: Char) => if (c == 'j') 'i' else c)
-    val textOnlyLetters = for (c <- textWithoutJ if c isLetter) yield c.toLower
-    encodeHelper(textOnlyLetters.toList, List[Char]()).mkString
+    encodeHelper(messagePrep(plaintText), List[Char]()).mkString
   }
 
   def decode(secretText: String): String = ???
@@ -55,9 +57,8 @@ class Coder(keyword: String) {
         if (indexMod - 1 < 0) k + 4 else indexMod - 1
     }
     def columnOperation(k: Int): Int = direction match {
-      case "encode" => if (k >= 20) k - 20
-      else k + 5
-      case "decode" => if (k <= 4) k + 20 else k - 1
+      case "encode" => if (k >= 20) k - 20 else k + 5
+      case "decode" => if (k <= 4) k + 20 else k - 5
     }
     def rectangleOperation(i: Int, j: Int): List[Char] = {
       val iDiff = 4 - (i%5)
