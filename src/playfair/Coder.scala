@@ -31,6 +31,10 @@ class Coder(keyword: String) {
           val indexMod = k % 5
           if (indexMod - 1 < 0) k + 4 else indexMod - 1
       }
+      def columnOperation(k: Int): Int = direction match {
+        case "encode" => if (k >= 20) k - 20 else k + 1
+        case "decode" => if (k <= 4) k + 20 else k - 1
+      }
       def rectangleOperation(i: Int, j: Int): List[Char] = {
         val iDiff = 4 - i%5
         val jDiff = 4 - j%5
