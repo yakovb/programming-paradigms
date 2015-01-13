@@ -50,6 +50,7 @@ class Coder(keyword: String) {
     decodeHelper(messagePrep(secretText), List[Char]()).mkString
   }
 
+  def display(output: String): String = ???
 
   def processLetters(x: Char, y: Char, direction: String): List[Char] = {
     def sameRow(i: Int, j: Int): Boolean = {

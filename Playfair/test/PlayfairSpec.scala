@@ -188,4 +188,31 @@ class PlayfairSpec extends FlatSpec {
     val c = new Coder("Pennsylvania")
     assert(c.decode("biqurvqksuyu") === "iamxmborexez")
   }
+
+  /**
+   * Test the behaviour of the DISPLAY function on output
+   */
+  behavior of "display of encoded text"
+  it should "not modify small encoded output, e.g. result of encoding 'yes'" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.display("vsyx") === "vsyx")
+  }
+  it should "handle output extending over one block, e.g. a decoded 'jammboree'" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.display("iamxmborexez") === "iamxm borex ez")
+  }
+  it should "deal with the wikipedia decoded output" in {
+    val c = new Coder("playfair example".filter(_.isLetter))
+    assert(c.display("hidethegoldinthetrexestump") === "hidet hegol dinth etrex estum p")
+  }
+  it should "deal with the PPL encoded output" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.display(Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter)) ===
+    "fafaw aermw yqnvm vqyns genwm hwoln kqwow ofkpf nexcq wqfvp\n" +
+      "dckqu vhzwn ynmyz unsig wazcl wpxnv ipxey mpiqf asmvw lbvpx\n" +
+      "dymvd vaken obefm yinhq pdgyb npxfb zcsvp xzbas cxqki bynfn\n" +
+      "bonsn yniar wuynd tqbzp vowad sefxe ymnie fzcym ndqkp dfryn\n" +
+      "dckqu vinlw nyzlv mvyfl xenmg axpmy etwlx lwain zcnyf onyzl\n" +
+      "kqxny m")
+  }
 }
