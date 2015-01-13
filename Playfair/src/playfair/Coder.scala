@@ -45,6 +45,7 @@ class Coder(keyword: String) {
       lst match {
         case Nil            => acc.reverse
         case a :: b :: rest => decodeHelper(rest, processLetters(a, b, decode) ::: acc)
+        case _              => throw new Exception("badly formed secret text")
       }
     }
     decodeHelper(messagePrep(secretText), List[Char]()).mkString
