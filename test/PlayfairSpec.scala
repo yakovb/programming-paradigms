@@ -140,11 +140,13 @@ class PlayfairSpec extends FlatSpec {
   behavior of "ENCODE"
   it should "deal with the wikipedia input" in {
     val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.encode(Source.fromFile("wiki-plaintext.txt").mkString) === Source.fromFile("wiki-secrettext.txt").mkString)
+    assert(c.encode(Source.fromFile("wiki-plaintext.txt").mkString) ===
+      Source.fromFile("wiki-secrettext.txt").mkString)
   }
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) === Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter))
+    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) ===
+      Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter))
   }
   it should "deal with two-letter-long input" in {
     val c = new Coder("Pennsylvania")
@@ -157,5 +159,32 @@ class PlayfairSpec extends FlatSpec {
   it should "deal with input having many j's" in {
     val c = new Coder("Pennsylvania")
     assert(c.encode("jammboree") === "biqurvqksuyu")
+  }
+
+  /**
+   * Test the behaviour of the DECODE function.
+   */
+  behavior of "DECODE"
+  it should "deal with the wikipedia input" in {
+    val c = new Coder("playfair example".filter(_.isLetter))
+    assert(c.decode(Source.fromFile("wiki-secrettext.txt").mkString) ===
+      Source.fromFile("wiki-plaintext.txt").mkString.filter(_.isLetter).map(_.toLower))
+  }
+  it should "deal with the PPL input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.decode(Source.fromFile("ppl-secrettext.txt").mkString) ===
+      Source.fromFile("ppl-plaintext.txt").mkString.filter(_.isLetter).map(_.toLower))
+  }
+  it should "deal with two-letter-long input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.decode("hm") === "rd")
+  }
+  it should "deal with three-letter-long input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.decode("vsyx") === "jes")
+  }
+  it should "deal with input having many j's" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.decode("biqurvqksuyu") === "jammboree")
   }
 }
