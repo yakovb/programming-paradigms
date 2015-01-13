@@ -138,13 +138,24 @@ class PlayfairSpec extends FlatSpec {
    * Test the behaviour of the ENCODE function.
    */
   behavior of "ENCODE"
+  it should "deal with the wikipedia input" in {
+    val c = new Coder("playfair example".filter(_.isLetter))
+    assert(c.encode(Source.fromFile("wiki-plaintext.txt").mkString) === Source.fromFile("wiki-secrettext.txt").mkString)
+  }
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) === Source.fromFile("ppl-secrettext.txt").mkString)
+    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) === Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter))
   }
-  it should "deal with the wikipedia input" in {}
-  it should "deal with two-letter-long input" in {}
-  it should "deal with three-letter-long input" in {}
-  it should "deal with input having many j's" in {}
-  it should "deal with the input having many double letters" in {}
+  it should "deal with two-letter-long input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.encode(Source.fromFile("valid-twoletters.txt").mkString) === "hm")
+  }
+  it should "deal with three-letter-long input" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.encode("jes") === "vsyx")
+  }
+  it should "deal with input having many j's" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.encode("jammboree") === "biqurvqksuyu")
+  }
 }
