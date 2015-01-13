@@ -65,7 +65,7 @@ class Coder(keyword: String) {
     }
   }
 
-  def processLetters(x: Char, y: Char, direction: String): List[Char] = {
+  private def processLetters(x: Char, y: Char, direction: String): List[Char] = {
     def sameRow(i: Int, j: Int): Boolean = {
       val big = math.max(i, j)
       val small = math.min(i, j)
