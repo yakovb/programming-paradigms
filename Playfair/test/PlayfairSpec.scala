@@ -167,24 +167,23 @@ class PlayfairSpec extends FlatSpec {
   behavior of "DECODE"
   it should "deal with the wikipedia input" in {
     val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.decode(Source.fromFile("wiki-secrettext.txt").mkString) ===
-      Source.fromFile("wiki-plaintext.txt").mkString.filter(_.isLetter).map(_.toLower))
+    assert(c.decode(Source.fromFile("wiki-secrettext.txt").mkString) === "hidethegoldinthetrexestump")
   }
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
     assert(c.decode(Source.fromFile("ppl-secrettext.txt").mkString) ===
       Source.fromFile("ppl-plaintext.txt").mkString.filter(_.isLetter).map(_.toLower))
   }
-  it should "deal with two-letter-long input" in {
+  it should "deal with two-letter-long input (original plaintext 'dr')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("hm") === "rd")
+    assert(c.decode("hm") === "dr")
   }
-  it should "deal with three-letter-long input" in {
+  it should "deal with three-letter-long input (original plaintext 'yes')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("vsyx") === "jes")
+    assert(c.decode("vsyx") === "iesz")
   }
-  it should "deal with input having many j's" in {
+  it should "deal with input having many j's (original plaintext 'jammboree')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("biqurvqksuyu") === "jammboree")
+    assert(c.decode("biqurvqksuyu") === "iamxmborexez")
   }
 }

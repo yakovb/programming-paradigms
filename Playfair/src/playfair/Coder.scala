@@ -37,7 +37,16 @@ class Coder(keyword: String) {
     encodeHelper(messagePrep(plaintText), List[Char]()).mkString
   }
 
-  def decode(secretText: String): String = ???
+  def decode(secretText: String): String = {
+    def decodeHelper(lst: List[Char], acc: List[Char]): List[Char] = {
+      val decode = "decode"
+      lst match {
+        case Nil => acc.reverse
+        case a :: b :: rest => decodeHelper(rest, processLetters(a, b, decode) ::: acc)
+      }
+    }
+    decodeHelper(messagePrep(secretText), List[Char]()).mkString
+  }
 
 
   def processLetters(x: Char, y: Char, direction: String): List[Char] = {
