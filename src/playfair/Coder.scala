@@ -50,7 +50,19 @@ class Coder(keyword: String) {
     decodeHelper(messagePrep(secretText), List[Char]()).mkString
   }
 
-  def display(output: String): String = ???
+  def display(text: String): String = {
+    val strBld1 = new StringBuilder
+    val strBld2 = new StringBuilder
+    val textBlocks = for (blockLngth <- Range(0, text.size, LETTERS_PER_BLOCK)) yield text.drop(blockLngth).take(LETTERS_PER_BLOCK)
+    val textWithSpaces: String = textBlocks.toList.addString(strBld1, " ").mkString
+    if (textWithSpaces.size < 60) textWithSpaces
+    else {
+      val lineLength = BLOCKS_PER_LINE * (LETTERS_PER_BLOCK + 1) // +1 for the space at the end of the line
+      val textLines = for (lineLngth <- Range(0, textWithSpaces.size, lineLength)) yield textWithSpaces.drop(lineLngth).take(lineLength)
+      val textLinesTrimmed = textLines.map(ln => if (ln.size % lineLength == 0) ln.init else ln)
+      textLinesTrimmed.toList.addString(strBld2, "\n").mkString
+    }
+  }
 
   def processLetters(x: Char, y: Char, direction: String): List[Char] = {
     def sameRow(i: Int, j: Int): Boolean = {
