@@ -5,7 +5,7 @@ package playfair
  */
 class Coder(keyword: String) {
   val alphabet = "abcdefghiklmnopqrstuvwxyz".toList
-  val rowBounds = Array(0, 5, 10, 15, 20)
+  val rowBounds = Array(0, 5, 10, 15, 20, 25)
   val codeBlock = createCodeBlock()
 
   def encode(plaintText: String): String = {
@@ -20,7 +20,7 @@ class Coder(keyword: String) {
       def sameRow(i: Int, j: Int): Boolean = {
         val big = math.max(i, j)
         val small = math.min(i, j)
-        rowBounds.indexWhere(p =>  p <= big) == rowBounds.indexWhere(p =>  p <= small)
+        rowBounds.indexWhere(p =>  p <= big && p + 1 > big) == rowBounds.indexWhere(p =>  p <= small && p + 1 > small)
       }
       def sameColumn(i: Int, j: Int): Boolean = {
         i%5 == j%5
