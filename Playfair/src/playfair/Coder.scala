@@ -7,6 +7,8 @@ class Coder(keyword: String) {
   val alphabet = "abcdefghiklmnopqrstuvwxyz".toList
   val rowBounds = Array(0, 5, 10, 15, 20, 25)
   val codeBlock = createCodeBlock()
+  val BLOCKS_PER_LINE = 10
+  val LETTERS_PER_BLOCK = 5
   def messagePrep(text: String): List[Char] = {
     val textWithoutJ = text.map((c: Char) => if (c == 'j') 'i' else c)
     (for (c <- textWithoutJ if c isLetter) yield c.toLower).toList
