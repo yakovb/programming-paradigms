@@ -25,6 +25,13 @@ class Coder(keyword: String) {
       def sameColumn(i: Int, j: Int): Boolean = {
         i%5 == j%5
       }
+      def rectangleOperation(i: Int, j: Int): List[Char] = {
+        val iDiff = 4 - i%5
+        val jDiff = 4 - j%5
+        val absDiff = math.abs(iDiff - jDiff)
+        if (iDiff > jDiff) List(codeBlock(i - absDiff), codeBlock(j + absDiff))
+        else List(codeBlock(i + absDiff), codeBlock(j - absDiff))
+      }
 
       val i = codeBlock indexOf x
       val j = codeBlock indexOf y
