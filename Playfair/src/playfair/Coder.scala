@@ -16,7 +16,7 @@ class Coder(keyword: String) {
       case a::b::rest if a==b && a=='x'   => encodeHelper(b::rest, processLetters(a, 'q') ::: acc)
       case a::b::rest if a!=b             => encodeHelper(rest, processLetters(a, b) ::: acc)
     }
-    def processLetters(x: Char, y: Char): List[Char] = {
+    def processLetters(x: Char, y: Char, direction: String): List[Char] = {
       def sameRow(i: Int, j: Int): Boolean = {
         val big = math.max(i, j)
         val small = math.min(i, j)
@@ -25,6 +25,12 @@ class Coder(keyword: String) {
       def sameColumn(i: Int, j: Int): Boolean = {
         i%5 == j%5
       }
+      def rowOperation(k: Int): Int = direction match {
+        case "encode" => if (k + 1%5 == 0) k - 4 else k + 1
+        case "decode" =>
+          val indexMod = k % 5
+          if (indexMod - 1 < 0) k + 4 else indexMod - 1
+      }
       def rectangleOperation(i: Int, j: Int): List[Char] = {
         val iDiff = 4 - i%5
         val jDiff = 4 - j%5
@@ -32,7 +38,6 @@ class Coder(keyword: String) {
         if (iDiff > jDiff) List(codeBlock(i - absDiff), codeBlock(j + absDiff))
         else List(codeBlock(i + absDiff), codeBlock(j - absDiff))
       }
-
       val i = codeBlock indexOf x
       val j = codeBlock indexOf y
 
