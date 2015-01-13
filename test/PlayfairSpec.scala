@@ -172,7 +172,9 @@ class PlayfairSpec extends FlatSpec {
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
     assert(c.decode(Source.fromFile("ppl-secrettext.txt").mkString) ===
-      Source.fromFile("ppl-plaintext.txt").mkString.filter(_.isLetter).map(_.toLower))
+      "ananonymousreadersendswordofaproofofconceptgoxoglechromebrowserextensionthatstealsuserslogindet" +
+        "ailsthedeveloperandreasgrechsaysthatheistryingtoraiseawarenessaboutsecurityamongendusersandth" +
+        "ereforechosechromeasatestbedbecauseofitsreputationasthesafestbrowser")
   }
   it should "deal with two-letter-long input (original plaintext 'dr')" in {
     val c = new Coder("Pennsylvania")

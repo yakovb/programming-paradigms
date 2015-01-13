@@ -41,7 +41,7 @@ class Coder(keyword: String) {
     def decodeHelper(lst: List[Char], acc: List[Char]): List[Char] = {
       val decode = "decode"
       lst match {
-        case Nil => acc.reverse
+        case Nil            => acc.reverse
         case a :: b :: rest => decodeHelper(rest, processLetters(a, b, decode) ::: acc)
       }
     }
@@ -63,7 +63,7 @@ class Coder(keyword: String) {
       else k + 1
       case "decode" =>
         val indexMod = k % 5
-        if (indexMod - 1 < 0) k + 4 else indexMod - 1
+        if (indexMod - 1 < 0) k + 4 else k - 1
     }
     def columnOperation(k: Int): Int = direction match {
       case "encode" => if (k >= 20) k - 20 else k + 5
