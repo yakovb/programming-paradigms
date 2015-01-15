@@ -7,8 +7,8 @@ class Coder(keyword: String) {
   val alphabet = "abcdefghiklmnopqrstuvwxyz".toList
   val rowBounds = Array(0, 5, 10, 15, 20, 25)
   val codeBlock = createCodeBlock()
-  val BLOCKS_PER_LINE = 10
-  val LETTERS_PER_BLOCK = 5
+  val blocksPerLine = 10
+  val lettersPerBlock = 5
 
   /**
    * Prepares a message for encoding/decoding by changing j's to i's and removing all non-letter characters (including spaces)
@@ -94,11 +94,11 @@ class Coder(keyword: String) {
   def display(text: String): String = {
     val strBld1 = new StringBuilder
     val strBld2 = new StringBuilder
-    val textBlocks = for (blockLngth <- Range(0, text.size, LETTERS_PER_BLOCK)) yield text.drop(blockLngth).take(LETTERS_PER_BLOCK)
+    val textBlocks = for (blockLngth <- Range(0, text.size, lettersPerBlock)) yield text.drop(blockLngth).take(lettersPerBlock)
     val textWithSpaces: String = textBlocks.toList.addString(strBld1, " ").mkString
     if (textWithSpaces.size < 60) textWithSpaces
     else {
-      val lineLength = BLOCKS_PER_LINE * (LETTERS_PER_BLOCK + 1) // +1 for the space at the end of the line
+      val lineLength = blocksPerLine * (lettersPerBlock + 1) // +1 for the space at the end of the line
       val textLines = for (lineLngth <- Range(0, textWithSpaces.size, lineLength)) yield textWithSpaces.drop(lineLngth).take(lineLength)
       val textLinesTrimmed = textLines.map(ln => if (ln.size % lineLength == 0) ln.init else ln)
       textLinesTrimmed.toList.addString(strBld2, "\n").mkString
