@@ -11,13 +11,13 @@ import scala.util.{Failure, Success, Try}
 object Playfair {
   /**
    * Reads in user's keyword from the console
-   * @return String of user input
+   * @return String of user input wrapped in a Try
    */
   def obtainKeywordFromUser(): Try[String] = Try(Console.in.readLine())
 
   /**
    * Reads in user's filename location from the console
-   * @return the contents of a file that may or may not exist or be valid
+   * @return the contents of a file that may or may not exist or be valid, wrapped in a Try
    */
   def obtainFileFromUser(): Try[String] = {
     val f = Try( Source.fromFile(Console.in.readLine()) )
