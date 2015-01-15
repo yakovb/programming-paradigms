@@ -66,30 +66,38 @@ object Playfair {
       println("Choose your option from the list below:")
       println("\tTo encode a text press:\t\t'e'")
       println("\tTo decode a text press:\t\t'd'")
-      println("\tTo quit press:\t\t\t'q'")
+      println("\tTo quit press:\t\t\t\t'q'")
       val option = Console.in.readLine()
       option match {
         case "e" | "d"  =>
           print("\nEnter keyword:\t\t")
           val key = obtainKeywordFromUser()
-          if (!checkKeyword(key)) finished = true
+          if (!checkKeyword(key)) {
+            println("Bad keyword: the keyword must contain only letters and spaces, no punctuation.")
+            finished = true
+          }
           else {
+            print("\nEnter filename (use full path to file if not in current directory:\t\t")
             val file = obtainFileFromUser()
             option match {
               case "e"  =>
-                if (!checkFileValidForEncoding(file)) finished = true
-                else doEncodeSteps(key.get, file.get)
+                if (!checkFileValidForEncoding(file)) {
+                  println("File doesn't exist, is empty, or contains less than 2 letters.")
+                  finished = true
+                }
+                else println(new Coder(key.get).encode(file.get))
               case "d"  =>
-                if (!checkFileValidForDecoding(file)) finished = true
-                else doDecodeSteps(key.get, file.get)
+                if (!checkFileValidForDecoding(file)) {
+                  println("File doesn't exist, is empty, or contains less than 2 letters.")
+                  finished = true
+                }
+                else println(new Coder(key.get).decode(file.get))
             }
           }
         case "q"  =>  finished = true
         case _    =>  println("\nBad input. Try again")
       }
     }
-    def doEncodeSteps(k: String, f: String) = ???
-    def doDecodeSteps(k: String, f: String) = ???
   }
 
 }
