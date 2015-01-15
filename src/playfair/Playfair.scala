@@ -1,5 +1,7 @@
 package playfair
 
+import java.io.FileNotFoundException
+
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
@@ -18,10 +20,11 @@ object Playfair {
    * @return the contents of a file that may or may not exist or be valid
    */
   def obtainFileFromUser(): Try[String] = {
-    val f = Source.fromFile( Console.in.readLine() )
-    val result = Try(f.mkString)
-    f.close()
-    result
+    val f = Try( Source.fromFile(Console.in.readLine()) )
+    f match {
+      case Success(s) =>  Try(s.mkString)
+      case Failure(s) =>  Failure(new FileNotFoundException)
+    }
   }
 
   /**
