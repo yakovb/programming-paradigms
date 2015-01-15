@@ -67,47 +67,29 @@ object Playfair {
       println("\tTo encode a text press:\t\t'e'")
       println("\tTo decode a text press:\t\t'd'")
       println("\tTo quit press:\t\t\t'q'")
-      processOption()
-    }
-
-
-    def processOption(): Any = {
       val option = Console.in.readLine()
       option match {
-        case "e"  =>  doEncodeSteps(file, key.get)
-        case "d"  =>  doDecodeSteps(file, key.get)
+        case "e" | "d"  =>
+          print("\nEnter keyword:\t\t")
+          val key = obtainKeywordFromUser()
+          if (!checkKeyword(key)) finished = true
+          else {
+            val file = obtainFileFromUser()
+            option match {
+              case "e"  =>
+                if (!checkFileValidForEncoding(file)) finished = true
+                else doEncodeSteps(key.get, file.get)
+              case "d"  =>
+                if (!checkFileValidForDecoding(file)) finished = true
+                else doDecodeSteps(key.get, file.get)
+            }
+          }
         case "q"  =>  finished = true
         case _    =>  println("\nBad input. Try again")
       }
-
-      else {
-        println()
-        print("Enter the name of your target file, including extension (and path if in another directory):  ")
-        val file = obtainFileFromUser()
-      }
     }
-    def doKeywordSteps() = {
-      print("Enter keyword:\t\t")
-      val key = obtainKeywordFromUser()
-      if (!checkKeyword(key)) println("Bad keyword. Try again")
-
-
-    }
-    def doEncodeSteps(f: Try[String], k: String) = {
-      if (!checkFileValidForEncoding(f)) println("Bad file or filename. Try again")
-      else {
-        val c = new Coder(k)
-        c.display(c.encode(f.get))
-      }
-    }
-    def doDecodeSteps(f: Try[String], k: String) = {
-      if (!checkFileValidForDecoding(f)) println("Bad file or filename. Try again")
-      else {
-        val c = new Coder(k)
-        c.display(c.decode(f.get))
-      }
-    }
-
+    def doEncodeSteps(k: String, f: String) = ???
+    def doDecodeSteps(k: String, f: String) = ???
   }
 
 }
