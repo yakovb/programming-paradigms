@@ -25,7 +25,11 @@ class Coder(keyword: String) {
     keyPart ++ alphabetPart
   }
 
-  def encode(plaintText: String): String = {
+  def encode(plainText: String): String = display(encodeWoutFormatting(plainText))
+
+  def decode(secretText: String): String = display(decodeWoutFormatting(secretText))
+
+  def encodeWoutFormatting(plaintText: String): String = {
     def encodeHelper(lst: List[Char], acc: List[Char]): List[Char] = {
       val encode = "encode"
       lst match {
@@ -39,7 +43,7 @@ class Coder(keyword: String) {
     encodeHelper(messagePrep(plaintText), List[Char]()).mkString
   }
 
-  def decode(secretText: String): String = {
+  def decodeWoutFormatting(secretText: String): String = {
     def decodeHelper(lst: List[Char], acc: List[Char]): List[Char] = {
       val decode = "decode"
       lst match {
