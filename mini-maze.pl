@@ -1,6 +1,6 @@
 mazeSize(2, 2).
 
-move([X,Y], To, _) :-
+move([X,Y], To, Path) :-
 	NewX is X + 1 ,
 	mazeSize(XBound, _) ,
 	NewX =< XBound ,
