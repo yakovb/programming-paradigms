@@ -1,26 +1,42 @@
-mazeSize(2, 2).
+use_module([maze, print-maze]).
 
-move([X,Y], To, Path) :-
-	NewX is X + 1 ,
-	mazeSize(XBound, _) ,
-	NewX =< XBound ,
-	go([NewX,Y], To, [_|[NewX,Y]]).
+valid(Height, Length, Acc) :-
+	mazeSize(UpperHeight, UpperLength) ,
+	Height > 0 ,
+	Height =< UpperHeight ,
+	Length > 0 ,
+	Length =< UpperLength ,
+	\+(member([Height,Length], Acc)) ,
+	\+(barrier(Height,Length)).
 
-move([X,Y], To, _) :-
-	NewY is Y + 1 ,
-	mazeSize(_, YBound) ,
-	NewY =< YBound ,
-	go([X,NewY], To, [_|[X,NewY]]).
+finished(Step, Step).
+
+step([Height,OldLength], [Height,NewLength], Acc) :-
+	NewLength is OldLength + 1 ,
+	valid(Height,NewLength, Acc).
+
+step([OldHeight,Length], [NewHeight,Length], Acc) :-
+	NewHeight is OldHeight + 1 ,
+	valid(NewHeight,Length, Acc).
+
+step([OldHeight,Length], [NewHeight,Length], Acc) :-
+	NewHeight is OldHeight - 1 ,
+	valid(NewHeight,Length, Acc).
+
+step([Height,OldLength], [Height,NewLength], Acc) :-
+	NewLength is OldLength - 1 ,
+	valid(Height,NewLength, Acc).
 
 
-isFinished(To, To).
+move(StepA, _, To, Acc, Acc) :-
+	finished(StepA, To).
 
+move(StepA, StepB, To, Acc, Path) :-
+	step(StepA, StepB, Acc) ,
+	move(StepB, _, To, [StepB|Acc], Path).
 
-go(From, To, _) :-
-	isFinished(From, To).
+solve(From, To, Path) :-
+	move(From, _, To, [From], Result) ,
+	reverse(Result, Path) ,
+	printMaze(Path).
 
-go(From, To, Path) :-
-	move(From, To, Path).
-
-
-solve(From, To, [From|Path]) :- go(From, To, Path).
