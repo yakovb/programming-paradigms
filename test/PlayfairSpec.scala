@@ -190,34 +190,32 @@ class PlayfairSpec extends FlatSpec {
   }
 
   /**
-   * Test the behaviour of the ENCODE function
-   */
-  behavior of "display of encoded text"
-  it should "not modify small encoded output, e.g. result of encoding 'yes'" in {
-    val c = new Coder("Pennsylvania")
-    assert(c.encode("vsyx") === "vsyx")
-  }
-  it should "deal with the PPL encoded output" in {
-    val c = new Coder("Pennsylvania")
-    assert(c.encode(Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter)) ===
-      "fafaw aermw yqnvm vqyns genwm hwoln kqwow ofkpf nexcq wqfvp\n" +
-        "dckqu vhzwn ynmyz unsig wazcl wpxnv ipxey mpiqf asmvw lbvpx\n" +
-        "dymvd vaken obefm yinhq pdgyb npxfb zcsvp xzbas cxqki bynfn\n" +
-        "bonsn yniar wuynd tqbzp vowad sefxe ymnie fzcym ndqkp dfryn\n" +
-        "dckqu vinlw nyzlv mvyfl xenmg axpmy etwlx lwain zcnyf onyzl\n" +
-        "kqxny m")
-  }
-
-  /**
-   * Test the behavious of the DECODE function
+   * Test the behaviour of the display function
    */
   behavior of "display of decoded text"
   it should "handle output extending over one block, e.g. a decoded 'jammboree'" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("iamxmborexez") === "iamxm borex ez")
+    assert(c.display("iamxmborexez") === "iamxm borex ez")
   }
   it should "deal with the wikipedia decoded output" in {
     val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.decode("hidethegoldinthetrexestump") === "hidet hegol dinth etrex estum p")
+    assert(c.display("hidethegoldinthetrexestump") === "hidet hegol dinth etrex estum p")
   }
+
+  behavior of "display of encoded text"
+  it should "not modify small encoded output, e.g. result of encoding 'yes'" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.display("vsyx") === "vsyx")
+  }
+  it should "deal with the PPL encoded output" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.display(Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter)) ===
+    "fafaw aermw yqnvm vqyns genwm hwoln kqwow ofkpf nexcq wqfvp\n" +
+    "dckqu vhzwn ynmyz unsig wazcl wpxnv ipxey mpiqf asmvw lbvpx\n" +
+    "dymvd vaken obefm yinhq pdgyb npxfb zcsvp xzbas cxqki bynfn\n" +
+    "bonsn yniar wuynd tqbzp vowad sefxe ymnie fzcym ndqkp dfryn\n" +
+    "dckqu vinlw nyzlv mvyfl xenmg axpmy etwlx lwain zcnyf onyzl\n" +
+    "kqxny m")
+  }
+
 }
