@@ -135,84 +135,89 @@ class PlayfairSpec extends FlatSpec {
   }
 
   /**
-   * Test the behaviour of the ENCODE function.
+   * Test the behaviour of the ENCODE-WITHOUT-FORMATTING function.
    */
-  behavior of "ENCODE"
+  behavior of "ENCODE without formatting"
   it should "deal with the wikipedia input" in {
     val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.encode(Source.fromFile("wiki-plaintext.txt").mkString) ===
+    assert(c.encodeWoutFormatting(Source.fromFile("wiki-plaintext.txt").mkString) ===
       Source.fromFile("wiki-secrettext.txt").mkString)
   }
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode(Source.fromFile("ppl-plaintext.txt").mkString) ===
+    assert(c.encodeWoutFormatting(Source.fromFile("ppl-plaintext.txt").mkString) ===
       Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter))
   }
   it should "deal with two-letter-long input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode(Source.fromFile("valid-twoletters.txt").mkString) === "hm")
+    assert(c.encodeWoutFormatting(Source.fromFile("valid-twoletters.txt").mkString) === "hm")
   }
   it should "deal with three-letter-long input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode("jes") === "vsyx")
+    assert(c.encodeWoutFormatting("jes") === "vsyx")
   }
   it should "deal with input having many j's" in {
     val c = new Coder("Pennsylvania")
-    assert(c.encode("jammboree") === "biqurvqksuyu")
+    assert(c.encodeWoutFormatting("jammboree") === "biqurvqksuyu")
   }
 
   /**
-   * Test the behaviour of the DECODE function.
+   * Test the behaviour of the DECODE-WITHOUT-FORMATTING  function.
    */
-  behavior of "DECODE"
+  behavior of "DECODE without formatting"
   it should "deal with the wikipedia input" in {
     val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.decode(Source.fromFile("wiki-secrettext.txt").mkString) === "hidethegoldinthetrexestump")
+    assert(c.decodeWoutFormatting(Source.fromFile("wiki-secrettext.txt").mkString) === "hidethegoldinthetrexestump")
   }
   it should "deal with the PPL input" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode(Source.fromFile("ppl-secrettext.txt").mkString) ===
+    assert(c.decodeWoutFormatting(Source.fromFile("ppl-secrettext.txt").mkString) ===
       "ananonymousreadersendswordofaproofofconceptgoxoglechromebrowserextensionthatstealsuserslogindet" +
         "ailsthedeveloperandreasgrechsaysthatheistryingtoraiseawarenessaboutsecurityamongendusersandth" +
         "ereforechosechromeasatestbedbecauseofitsreputationasthesafestbrowser")
   }
   it should "deal with two-letter-long input (original plaintext 'dr')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("hm") === "dr")
+    assert(c.decodeWoutFormatting("hm") === "dr")
   }
   it should "deal with three-letter-long input (original plaintext 'yes')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("vsyx") === "iesz")
+    assert(c.decodeWoutFormatting("vsyx") === "iesz")
   }
   it should "deal with input having many j's (original plaintext 'jammboree')" in {
     val c = new Coder("Pennsylvania")
-    assert(c.decode("biqurvqksuyu") === "iamxmborexez")
+    assert(c.decodeWoutFormatting("biqurvqksuyu") === "iamxmborexez")
   }
 
   /**
-   * Test the behaviour of the DISPLAY function on output
+   * Test the behaviour of the ENCODE function
    */
   behavior of "display of encoded text"
   it should "not modify small encoded output, e.g. result of encoding 'yes'" in {
     val c = new Coder("Pennsylvania")
-    assert(c.display("vsyx") === "vsyx")
-  }
-  it should "handle output extending over one block, e.g. a decoded 'jammboree'" in {
-    val c = new Coder("Pennsylvania")
-    assert(c.display("iamxmborexez") === "iamxm borex ez")
-  }
-  it should "deal with the wikipedia decoded output" in {
-    val c = new Coder("playfair example".filter(_.isLetter))
-    assert(c.display("hidethegoldinthetrexestump") === "hidet hegol dinth etrex estum p")
+    assert(c.encode("vsyx") === "vsyx")
   }
   it should "deal with the PPL encoded output" in {
     val c = new Coder("Pennsylvania")
-    assert(c.display(Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter)) ===
-    "fafaw aermw yqnvm vqyns genwm hwoln kqwow ofkpf nexcq wqfvp\n" +
-      "dckqu vhzwn ynmyz unsig wazcl wpxnv ipxey mpiqf asmvw lbvpx\n" +
-      "dymvd vaken obefm yinhq pdgyb npxfb zcsvp xzbas cxqki bynfn\n" +
-      "bonsn yniar wuynd tqbzp vowad sefxe ymnie fzcym ndqkp dfryn\n" +
-      "dckqu vinlw nyzlv mvyfl xenmg axpmy etwlx lwain zcnyf onyzl\n" +
-      "kqxny m")
+    assert(c.encode(Source.fromFile("ppl-secrettext.txt").mkString.filter(_.isLetter)) ===
+      "fafaw aermw yqnvm vqyns genwm hwoln kqwow ofkpf nexcq wqfvp\n" +
+        "dckqu vhzwn ynmyz unsig wazcl wpxnv ipxey mpiqf asmvw lbvpx\n" +
+        "dymvd vaken obefm yinhq pdgyb npxfb zcsvp xzbas cxqki bynfn\n" +
+        "bonsn yniar wuynd tqbzp vowad sefxe ymnie fzcym ndqkp dfryn\n" +
+        "dckqu vinlw nyzlv mvyfl xenmg axpmy etwlx lwain zcnyf onyzl\n" +
+        "kqxny m")
+  }
+
+  /**
+   * Test the behavious of the DECODE function
+   */
+  behavior of "display of decoded text"
+  it should "handle output extending over one block, e.g. a decoded 'jammboree'" in {
+    val c = new Coder("Pennsylvania")
+    assert(c.decode("iamxmborexez") === "iamxm borex ez")
+  }
+  it should "deal with the wikipedia decoded output" in {
+    val c = new Coder("playfair example".filter(_.isLetter))
+    assert(c.decode("hidethegoldinthetrexestump") === "hidet hegol dinth etrex estum p")
   }
 }
