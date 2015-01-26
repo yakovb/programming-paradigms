@@ -159,3 +159,41 @@ class Book
 
   end
 end
+
+
+class Member
+  # New member should have no books, must have a lib card
+  # Can have max of 3 books checked out at once
+  # Should keep a reference to their library
+  def initialize(name, library)
+
+  end
+
+  # Return name
+  def get_name
+
+  end
+
+  # Add book to this member's checked out books
+  def check_out(book)
+
+  end
+
+  # Remove book from member's checkout list
+  # Possibly override 'return' keyword to be alias for this method?
+  def give_back(book)
+
+  end
+
+  # Return set of books checkout out by this member
+  # May be an empty set
+  def get_books
+
+  end
+
+  # Tells member they have overdue books
+  # Does this by printing string of name along with notice
+  def send_overdue_notice(notice)
+
+  end
+end
