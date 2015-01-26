@@ -113,3 +113,49 @@ class Calendar
 
   end
 end
+
+
+class Book
+  # Should have an author, title, id and due_date
+  # due_date is initially nil
+  def initialize(id, title, author)
+
+  end
+
+  # Return book_id
+  def get_id()
+
+  end
+
+  # Return title
+  def get_title()
+
+  end
+
+  # Return author
+  def get_author()
+
+  end
+
+  # Return due_date. Note that this could be nil
+  def get_due_date()
+
+  end
+
+  # Set due_date. Return nothing
+  # Should always work because books can be renewed (except going back in time)
+  def check_out(due_date)
+
+  end
+
+  # Set due date to nil, return nothing
+  # Book may already be checked in!
+  def check_in
+
+  end
+
+  # id: title, by author
+  def to_s
+
+  end
+end
