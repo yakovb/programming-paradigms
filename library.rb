@@ -1,4 +1,5 @@
 class Library
+  # Should be a single object
   # Creates data structure of books
   # Creates a singleton calendar
   # Creates empty Hash of members
@@ -90,6 +91,25 @@ class Library
 
   # Return 'The library is now closed for renovations'
   def quit()
+
+  end
+end
+
+
+class Calendar
+  # Should be singleton object
+  # Time measured in ints starting at 0
+  def initialize()
+
+  end
+
+  # Return current date
+  def get_date()
+
+  end
+
+  # Increment date and return new date
+  def advance()
 
   end
 end
