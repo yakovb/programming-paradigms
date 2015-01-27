@@ -143,6 +143,7 @@ class Book
 
   # TODO Should always work because books can be renewed (except going back in time)
   def check_out(due_date)
+    int_check due_date
     @due_date = due_date
     nil
   end
