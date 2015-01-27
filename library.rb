@@ -88,7 +88,7 @@ class Library
   # No other operations (except quit) should work when library is closed
   def close
     check_closed_library
-    #@open = false
+    @open = false
   end
 
   # Return 'The library is now closed for renovations'

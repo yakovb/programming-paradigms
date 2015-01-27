@@ -10,13 +10,11 @@ class TC_Library < Test::Unit::TestCase
 
   # Tear down the test library
   def teardown
-    @lib = nil
+    @lib._dump(-1)
   end
 
   def test_initialize_single_instance
-    assert_raise(NoMethodError) do
-      lib2 = Library.new
-    end
+    assert_raise(NoMethodError) { lib2 = Library.new }
   end
 
   # TODO
@@ -24,15 +22,22 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_close_on_closed
-    assert_raise(Exception) do
+    assert_raise(Exception) { @lib.close }
+  end
+
+  def test_close_on_open
+    assert_nothing_raised {
+      @lib.open
       @lib.close
-    end
+    }
   end
 
   def test_open_on_closed
-    assert_nothing_raised do
-      @lib.open
-    end
+    assert_nothing_raised { @lib.open }
+  end
+
+  def test_open_on_open
+    assert_raise(Exception) { 2.times @lib.open }
   end
 
 end
