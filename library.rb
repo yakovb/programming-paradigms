@@ -83,7 +83,6 @@ class Library
     'Good night.'
   end
 
-  # Return 'The library is now closed for renovations'
   def quit()
     @open = false
     'The library is now closed for renovations.'
@@ -118,45 +117,45 @@ end
 
 
 class Book
-  # Should have an author, title, id and due_date
-  # due_date is initially nil
+  # TODO Should have an author, title, id and due_date
+  # TODO due_date is initially nil
   def initialize(id, title, author)
 
   end
 
-  # Return book_id
+  # TODO Return book_id
   def get_id()
 
   end
 
-  # Return title
+  # TODO Return title
   def get_title()
 
   end
 
-  # Return author
+  # TODO Return author
   def get_author()
 
   end
 
-  # Return due_date. Note that this could be nil
+  # TODO Return due_date. Note that this could be nil
   def get_due_date()
 
   end
 
-  # Set due_date. Return nothing
-  # Should always work because books can be renewed (except going back in time)
+  # TODO Set due_date. Return nothing
+  # TODO Should always work because books can be renewed (except going back in time)
   def check_out(due_date)
 
   end
 
-  # Set due date to nil, return nothing
-  # Book may already be checked in!
+  # TODO Set due date to nil, return nothing
+  # TODO Book may already be checked in!
   def check_in
 
   end
 
-  # id: title, by author
+  # TODO id: title, by author
   def to_s
 
   end
@@ -164,37 +163,37 @@ end
 
 
 class Member
-  # New member should have no books, must have a lib card
-  # Can have max of 3 books checked out at once
-  # Should keep a reference to their library
+  # TODO New member should have no books, must have a lib card
+  # TODO Can have max of 3 books checked out at once
+  # TODO Should keep a reference to their library
   def initialize(name, library)
 
   end
 
-  # Return name
+  # TODO Return name
   def get_name
 
   end
 
-  # Add book to this member's checked out books
+  # TODO Add book to this member's checked out books
   def check_out(book)
 
   end
 
-  # Remove book from member's checkout list
-  # Possibly override 'return' keyword to be alias for this method?
+  # TODO Remove book from member's checkout list
+  # TODO Possibly override 'return' keyword to be alias for this method?
   def give_back(book)
 
   end
 
-  # Return set of books checkout out by this member
-  # May be an empty set
+  # TODO Return set of books checkout out by this member
+  # TODO May be an empty set
   def get_books
 
   end
 
-  # Tells member they have overdue books
-  # Does this by printing string of name along with notice
+  # TODO Tells member they have overdue books
+  # TODO Does this by printing string of name along with notice
   def send_overdue_notice(notice)
 
   end
