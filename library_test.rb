@@ -91,6 +91,10 @@ class TC_Book < Test::Unit::TestCase
     assert @b.get_due_date == nil, 'Due date should be nil for a new book'
   end
 
+  def test_checkout_returns_nil
+    assert @b.check_out(3) == nil, 'Checkout should return nil'
+  end
+
   def test_checkout_and_get_duedate
     @b.check_out 20
     assert @b.get_due_date == 20, 'Book due date should be 20'

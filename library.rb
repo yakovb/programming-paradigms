@@ -117,7 +117,6 @@ end
 
 
 class Book
-  # TODO due_date is initially nil
   def initialize(id, title, author)
     id_check id
     @id = id
@@ -142,10 +141,10 @@ class Book
     @due_date
   end
 
-  # TODO Set due_date. Return nothing
   # TODO Should always work because books can be renewed (except going back in time)
   def check_out(due_date)
     @due_date = due_date
+    nil
   end
 
   # TODO Set due date to nil, return nothing
