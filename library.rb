@@ -117,25 +117,23 @@ end
 
 
 class Book
-  # TODO Should have an author, title, id and due_date
   # TODO due_date is initially nil
   def initialize(id, title, author)
-
+    @id = id
+    @title = title
+    @author = author
   end
 
-  # TODO Return book_id
   def get_id()
-
+    @id
   end
 
-  # TODO Return title
   def get_title()
-
+    @title
   end
 
-  # TODO Return author
   def get_author()
-
+    @author
   end
 
   # TODO Return due_date. Note that this could be nil

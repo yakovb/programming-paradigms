@@ -66,7 +66,7 @@ end
 
 
 class TC_Book < Test::Unit::TestCase
-  def test_initialize_book
+  def test_initialize_book_and_getters
     b = Book.new(1, 'title', 'author')
     assert b.get_id == 1, 'Book id should be 1'
     assert b.get_title == 'title', 'Book title should be "title"'
