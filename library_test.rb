@@ -38,6 +38,10 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { 2.times @lib.open }
   end
 
+  def test_quit
+    assert @lib.quit == 'The library is now closed for renovations.', 'Quit message was wrong'
+  end
+
 end
 
 
