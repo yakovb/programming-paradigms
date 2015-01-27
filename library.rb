@@ -1,4 +1,6 @@
+require 'singleton'
 class Library
+  include Singleton
   # Should be a single object
   # Creates data structure of books
   # Creates a singleton calendar

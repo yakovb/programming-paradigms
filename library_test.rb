@@ -15,7 +15,7 @@ class TC_Library < Test::Unit::TestCase
 
   def test_initialize_single_instance
     assert_raise(NoMethodError) do
-      lib2 = Library.instance
+      lib2 = Library.new
     end
   end
 
