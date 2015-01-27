@@ -63,3 +63,13 @@ class TC_Calendar < Test::Unit::TestCase
     assert @cal.advance == 1, 'date after one advance() should be 1'
   end
 end
+
+
+class TC_Book < Test::Unit::TestCase
+  def test_initialize_book
+    b = Book.new(1, 'title', 'author')
+    assert b.get_id == 1, 'Book id should be 1'
+    assert b.get_title == 'title', 'Book title should be "title"'
+    assert b.get_author == 'author', 'Book author should be "author"'
+  end
+end
