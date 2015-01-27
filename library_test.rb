@@ -3,12 +3,10 @@ require 'test/unit'
 
 class TC_Library < Test::Unit::TestCase
 
-  # Create library singleton for the tests
   def setup
     @lib = Library.instance
   end
 
-  # Tear down the test library
   def teardown
     @lib._dump(-1)
   end
@@ -40,4 +38,15 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { 2.times @lib.open }
   end
 
+end
+
+
+class TC_Calendar < Test::Unit::TestCase
+  def setup
+    @cal = Calendar.instance
+  end
+
+  def teardown
+    @cal._dump(-1)
+  end
 end

@@ -3,14 +3,12 @@ class Library
   include Singleton
   # Creates data structure of books
   # Creates a singleton calendar
-  # Set current member being served to nil
   def initialize
     @members = {}
     @current_member = nil
     @open = false
   end
 
-  # If already open throw exception
   # else advance calendar and return welcome string
   def open
     check_open_library
@@ -84,11 +82,11 @@ class Library
 
   end
 
-  # Success means return 'Good night'
   # No other operations (except quit) should work when library is closed
   def close
     check_closed_library
     @open = false
+    'Good night.'
   end
 
   # Return 'The library is now closed for renovations'
@@ -108,7 +106,7 @@ end
 
 
 class Calendar
-  # Should be singleton object
+  include Singleton
   # Time measured in ints starting at 0
   def initialize()
 
