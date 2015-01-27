@@ -17,7 +17,7 @@ class Library
 
   # TODO Formatted string of people with overdue books, including the overdue books
   # TODO If no overdue return appropriate string
-  def find_all_overdue_books()
+  def find_all_overdue_books
 
   end
 
@@ -37,7 +37,7 @@ class Library
 
   # TODO Multiline string of current customer's overdue books (using book's to_s),  else return 'None'
   # TODO Exception if library is closed or nobody currently being served
-  def find_overdue_books()
+  def find_overdue_books
 
   end
 
@@ -84,7 +84,7 @@ class Library
     'Good night.'
   end
 
-  def quit()
+  def quit
     @open = false
     'The library is now closed for renovations.'
   end
@@ -107,11 +107,11 @@ class Calendar
     @date = 0
   end
 
-  def get_date()
+  def get_date
     @date
   end
 
-  def advance()
+  def advance
     @date = @date.next
   end
 end
@@ -126,15 +126,15 @@ class Book
     @due_date = nil
   end
 
-  def get_id()
+  def get_id
     @id
   end
 
-  def get_title()
+  def get_title
     @title
   end
 
-  def get_author()
+  def get_author
     @author
   end
 
