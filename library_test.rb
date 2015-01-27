@@ -23,9 +23,15 @@ class TC_Library < Test::Unit::TestCase
   def test_load_books
   end
 
-  def test_close
+  def test_close_on_closed
     assert_raise(Exception) do
       @lib.close
+    end
+  end
+
+  def test_open_on_closed
+    assert_nothing_raised do
+      @lib.open
     end
   end
 

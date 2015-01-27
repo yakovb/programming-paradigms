@@ -12,8 +12,9 @@ class Library
 
   # If already open throw exception
   # else advance calendar and return welcome string
-  def open()
-
+  def open
+    check_open_library
+    @open = true
   end
 
   # Formatted string of people with overdue books,
@@ -84,9 +85,8 @@ class Library
   end
 
   # Success means return 'Good night'
-  # Exception if library is closed
   # No other operations (except quit) should work when library is closed
-  def close()
+  def close
     check_closed_library
     #@open = false
   end
@@ -97,10 +97,13 @@ class Library
   end
 
   def check_closed_library
-    raise Exception, "The library is not open", caller unless @open
+    raise Exception, "The library is not open.", caller unless @open
+  end
+  def check_open_library
+    raise Exception, "The library is already open!", caller if @open
   end
 
-  private :check_closed_library
+  private :check_closed_library, :check_open_library
 end
 
 
