@@ -64,6 +64,7 @@ class Library
   # TODO Checking out affects the book, the member, and the library
   # TODO If successful, return 'n books have been checked out to member'
   # TODO Exception if library is closed, no current member, library doesn't have that book id
+  # TODO Due dates must be current date + 7
   def check_out(*book_ids)
 
   end
@@ -141,7 +142,6 @@ class Book
     @due_date
   end
 
-  # TODO Should always work because books can be renewed (except going back in time)
   def check_out(due_date)
     int_check due_date
     @due_date = due_date
