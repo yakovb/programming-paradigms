@@ -1,24 +1,22 @@
+require_relative 'library'
 require 'test/unit'
 
-class TC_Calendar < Test::Unit::TestCase
+class TC_Library < Test::Unit::TestCase
 
-  # Called before every test method runs. Can be used
-  # to set up fixture information.
+  # Create library singleton for the tests
   def setup
-    # Do nothing
+    lib = Library.instance
   end
 
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
-
+  # Tear down the test library
   def teardown
-    # Do nothing
+    lib = nil
   end
 
-  # Fake test
-  def test_fail
-
-    fail('Not implemented')
+  def test_initialize_single_instance
+    assert_raise(NoMethodError) do
+      lib2 = Library.instance
+    end
   end
 
 end
