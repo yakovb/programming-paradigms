@@ -53,4 +53,8 @@ class TC_Calendar < Test::Unit::TestCase
   def test_initialize_single_calendar
     assert_raise(NoMethodError) { Calendar.new }
   end
+
+  def test_date_at_creation
+    assert @cal.get_date == 0
+  end
 end

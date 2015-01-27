@@ -108,13 +108,12 @@ end
 class Calendar
   include Singleton
   # Time measured in ints starting at 0
-  def initialize()
-
+  def initialize
+    @date = 0
   end
 
-  # Return current date
   def get_date()
-
+    @date
   end
 
   # Increment date and return new date
