@@ -148,10 +148,8 @@ class Book
     nil
   end
 
-  # TODO Set due date to nil, return nothing
-  # TODO Book may already be checked in!
   def check_in
-
+    @due_date = nil
   end
 
   # TODO id: title, by author
