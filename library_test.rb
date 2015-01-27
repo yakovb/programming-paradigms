@@ -79,6 +79,10 @@ class TC_Book < Test::Unit::TestCase
     assert @b.get_author == 'author', 'Book author should be "author"'
   end
 
+  def test_new_book_bad_id
+    assert_raise(Exception) { Book.new('x', 't', 'a') }
+  end
+
   def test_get_duedate_for_new_book
     assert @b.get_due_date == nil, 'Due date should be nil for a new book'
   end

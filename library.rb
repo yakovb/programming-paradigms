@@ -119,6 +119,7 @@ end
 class Book
   # TODO due_date is initially nil
   def initialize(id, title, author)
+    id_check id
     @id = id
     @title = title
     @author = author
@@ -157,6 +158,11 @@ class Book
   def to_s
 
   end
+
+  def id_check(id)
+    raise Exception, 'Book ID must be an integer greater than 0!' if id.to_i == 0
+  end
+  private :id_check
 end
 
 
