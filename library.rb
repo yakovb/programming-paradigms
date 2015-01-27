@@ -90,10 +90,10 @@ class Library
   end
 
   def check_closed_library
-    raise Exception, "The library is not open.", caller unless @open
+    raise Exception, 'The library is not open.', caller unless @open
   end
   def check_open_library
-    raise Exception, "The library is already open!", caller if @open
+    raise Exception, 'The library is already open!', caller if @open
   end
 
   private :check_closed_library, :check_open_library
