@@ -107,7 +107,7 @@ end
 
 class Calendar
   include Singleton
-  # Time measured in ints starting at 0
+
   def initialize
     @date = 0
   end
@@ -116,7 +116,6 @@ class Calendar
     @date
   end
 
-  # Increment date and return new date
   def advance()
     @date = @date.next
   end
