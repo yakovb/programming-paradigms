@@ -118,7 +118,7 @@ end
 
 class Book
   def initialize(id, title, author)
-    id_check id
+    int_check id
     @id = id
     @title = title
     @author = author
@@ -158,10 +158,10 @@ class Book
 
   end
 
-  def id_check(id)
-    raise Exception, 'Book ID must be an integer greater than 0!' if id.to_i == 0
+  def int_check(num)
+    raise Exception, 'Book ID must be an integer greater than 0!' if num.to_i == 0
   end
-  private :id_check
+  private :int_check
 end
 
 
