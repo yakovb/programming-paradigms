@@ -109,4 +109,8 @@ class TC_Book < Test::Unit::TestCase
     @b.check_in
     assert @b.get_due_date == nil, 'Due date of checked in book should be nil'
   end
+
+  def test_to_s
+    assert @b.to_s == '1: title, by author', 'Book.to_s returns wrong string'
+  end
 end

@@ -154,7 +154,7 @@ class Book
 
   # TODO id: title, by author
   def to_s
-
+    "#{@id}: #{@title}, by #{@author}"
   end
 
   def int_check(num)
