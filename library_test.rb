@@ -11,8 +11,8 @@ class TC_Library < Test::Unit::TestCase
     @lib._dump(-1)
   end
 
-  def test_initialize_single_instance
-    assert_raise(NoMethodError) { lib2 = Library.new }
+  def test_initialize_single_library
+    assert_raise(NoMethodError) { Library.new }
   end
 
   # TODO
@@ -48,5 +48,9 @@ class TC_Calendar < Test::Unit::TestCase
 
   def teardown
     @cal._dump(-1)
+  end
+
+  def test_initialize_single_calendar
+    assert_raise(NoMethodError) { Calendar.new }
   end
 end
