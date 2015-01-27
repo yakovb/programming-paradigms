@@ -122,6 +122,7 @@ class Book
     @id = id
     @title = title
     @author = author
+    @due_date = nil
   end
 
   def get_id()
@@ -136,9 +137,8 @@ class Book
     @author
   end
 
-  # TODO Return due_date. Note that this could be nil
-  def get_due_date()
-
+  def get_due_date
+    @due_date
   end
 
   # TODO Set due_date. Return nothing

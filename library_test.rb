@@ -66,10 +66,20 @@ end
 
 
 class TC_Book < Test::Unit::TestCase
+  def setup
+    @b = Book.new(1, 'title', 'author')
+  end
+  def teardown
+    @b = nil
+  end
+
   def test_initialize_book_and_getters
-    b = Book.new(1, 'title', 'author')
-    assert b.get_id == 1, 'Book id should be 1'
-    assert b.get_title == 'title', 'Book title should be "title"'
-    assert b.get_author == 'author', 'Book author should be "author"'
+    assert @b.get_id == 1, 'Book id should be 1'
+    assert @b.get_title == 'title', 'Book title should be "title"'
+    assert @b.get_author == 'author', 'Book author should be "author"'
+  end
+
+  def test_get_duedate_for_new_book
+    assert @b.get_due_date == nil, 'Due date should be nil for a new book'
   end
 end
