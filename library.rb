@@ -1,14 +1,13 @@
 require 'singleton'
 class Library
   include Singleton
-  # Should be a single object
   # Creates data structure of books
   # Creates a singleton calendar
-  # Creates empty Hash of members
-  # Set flag to 'not open'
   # Set current member being served to nil
-  def initialize()
-
+  def initialize
+    @members = {}
+    @current_member = nil
+    @open = false
   end
 
   # If already open throw exception
@@ -88,13 +87,20 @@ class Library
   # Exception if library is closed
   # No other operations (except quit) should work when library is closed
   def close()
-
+    check_closed_library
+    #@open = false
   end
 
   # Return 'The library is now closed for renovations'
   def quit()
 
   end
+
+  def check_closed_library
+    raise Exception, "The library is not open", caller unless @open
+  end
+
+  private :check_closed_library
 end
 
 
