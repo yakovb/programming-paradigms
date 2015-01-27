@@ -47,14 +47,15 @@ class TC_Calendar < Test::Unit::TestCase
   end
 
   def teardown
-    @cal._dump(-1)
+    @cal._dump
   end
 
   def test_initialize_single_calendar
     assert_raise(NoMethodError) { Calendar.new }
   end
 
-  def test_date_at_creation
-    assert @cal.get_date == 0
+  def test_create_and_advance
+    assert @cal.get_date == 0, 'date at creation should be 0'
+    assert @cal.advance == 1, 'date after one advance() should be 1'
   end
 end

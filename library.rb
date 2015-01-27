@@ -118,7 +118,7 @@ class Calendar
 
   # Increment date and return new date
   def advance()
-
+    @date = @date.next
   end
 end
 
