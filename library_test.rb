@@ -134,6 +134,10 @@ class TC_Member < Test::Unit::TestCase
     assert @m.get_books.size == 1, 'Member should only have one book checked out'
   end
 
+  def test_check_out_4_books
+    assert_raise(Exception) { 4.times { @m.check_out 'a book' } }
+  end
+
   def test_get_books_empty
     assert @m.get_books == [], 'New member should not have any books'
   end
