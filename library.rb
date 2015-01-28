@@ -1,5 +1,7 @@
 require 'singleton'
 class Library
+  # TODO All methods should return a result - string or int since they'll be used by the librarian
+  # TODO All methods should take string or int and not objects
   include Singleton
   # TODO Creates data structure of books
   # TODO Creates a singleton calendar
@@ -169,7 +171,8 @@ class Member
   # TODO Can have max of 3 books checked out at once
   # TODO Should keep a reference to their library
   def initialize(name, library)
-
+    @name = name
+    @library = library
   end
 
   # TODO Return name
