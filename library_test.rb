@@ -114,3 +114,18 @@ class TC_Book < Test::Unit::TestCase
     assert @b.to_s == '1: title, by author', 'Book.to_s returns wrong string'
   end
 end
+
+
+class TC_Member < Test::Unit::TestCase
+  def setup
+    @m = Member.new 'Bob', :lib
+  end
+
+  def teardown
+    @m = nil
+  end
+
+  def test_initialize_and_get_name
+    assert @m.get_name == 'Bob', 'New member should be called Bob'
+  end
+end
