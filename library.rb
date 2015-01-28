@@ -195,8 +195,6 @@ class Member
     @book_set
   end
 
-  # TODO Tells member they have overdue books
-  # TODO Does this by printing string of name along with notice
   def send_overdue_notice(notice)
     puts "#{@name}: #{notice}"
   end
