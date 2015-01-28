@@ -129,6 +129,11 @@ class TC_Member < Test::Unit::TestCase
     assert @m.get_name == 'Bob', 'New member should be called Bob'
   end
 
+  def test_check_out_one_book
+    @m.check_out 'a book'
+    assert @m.get_books.size == 1, 'Member should only have one book checked out'
+  end
+
   def test_get_books_empty
     assert @m.get_books == [], 'New member should not have any books'
   end

@@ -167,9 +167,6 @@ end
 
 
 class Member
-  # TODO New member should have no books, must have a lib card
-  # TODO Can have max of 3 books checked out at once
-  # TODO Should keep a reference to their library
   def initialize(name, library)
     @name = name
     @library = library
@@ -182,7 +179,7 @@ class Member
 
   # TODO Add book to this member's checked out books
   def check_out(book)
-
+    @book_set<<book
   end
 
   # TODO Remove book from member's checkout list
