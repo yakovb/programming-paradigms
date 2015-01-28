@@ -175,9 +175,8 @@ class Member
     @library = library
   end
 
-  # TODO Return name
   def get_name
-
+    @name
   end
 
   # TODO Add book to this member's checked out books
