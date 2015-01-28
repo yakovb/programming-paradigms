@@ -173,6 +173,7 @@ class Member
   def initialize(name, library)
     @name = name
     @library = library
+    @book_set = []
   end
 
   def get_name
@@ -190,10 +191,8 @@ class Member
 
   end
 
-  # TODO Return set of books checkout out by this member
-  # TODO May be an empty set
   def get_books
-
+    @book_set
   end
 
   # TODO Tells member they have overdue books
