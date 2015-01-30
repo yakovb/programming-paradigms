@@ -154,7 +154,6 @@ class Book
     @due_date = nil
   end
 
-  # TODO id: title, by author
   def to_s
     "#{@id}: #{@title}, by #{@author}"
   end
