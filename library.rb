@@ -188,7 +188,12 @@ class Member
   # TODO Remove book from member's checkout list
   # TODO Possibly override 'return' keyword to be alias for this method?
   def give_back(book)
-
+    if @book_set.include? book
+      @book_set.delete book
+      "Returned #{book.to_s}"
+    else
+      "This member did not recently check out #{book.to_s}"
+end
   end
 
   def get_books

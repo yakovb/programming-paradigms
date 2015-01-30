@@ -151,10 +151,18 @@ class TC_Member < Test::Unit::TestCase
     assert_raise(Exception) { 4.times { @m.check_out 'a book' } }
   end
 
-  def test_give_back
+  def test_give_back_success_message
     b = DummyBook.new(1, 'aTitle', 'aAuthor')
     @m.check_out(b)
-    assert @m.give_back(b) == 'Dummy Book', 'Giving back a book should return string signifying success'
+    assert @m.give_back(b) == 'Returned Dummy Book', 'Giving back a book should return string signifying success'
+  end
+
+  def test_give_back_successful_removal
+    b = DummyBook.new(1, 'aTitle', 'aAuthor')
+    @m.check_out(b)
+    @m.give_back(b)
+    puts @m.get_books
+    assert @m.get_books == [], 'Books array should be empty after 1 book is checked out then checked back in'
   end
 
   def test_get_books_empty
