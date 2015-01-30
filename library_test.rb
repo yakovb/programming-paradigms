@@ -117,6 +117,19 @@ end
 
 
 class TC_Member < Test::Unit::TestCase
+
+  class DummyBook
+    attr_accessor :id, :title, :author
+    def initialize(id, title, author)
+      @id = id
+      @title = title
+      @author = author
+    end
+    def to_s
+      "Dummy Book"
+    end
+  end
+
   def setup
     @m = Member.new 'Bob', :lib
   end
@@ -136,6 +149,12 @@ class TC_Member < Test::Unit::TestCase
 
   def test_check_out_4_books
     assert_raise(Exception) { 4.times { @m.check_out 'a book' } }
+  end
+
+  def test_give_back
+    b = DummyBook.new(1, 'aTitle', 'aAuthor')
+    @m.check_out(b)
+    assert @m.give_back(b) == 'Dummy Book', 'Giving back a book should return string signifying success'
   end
 
   def test_get_books_empty
