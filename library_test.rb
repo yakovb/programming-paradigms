@@ -165,6 +165,11 @@ class TC_Member < Test::Unit::TestCase
     assert @m.get_books == [], 'Books array should be empty after 1 book is checked out then checked back in'
   end
 
+  def test_give_back_unsuccessful_message
+    b = DummyBook.new(1, 'aTitle', 'aAuthor')
+    assert @m.give_back(b) == 'This member did not recently check out Dummy Book', 'Giving back a book the member does not have should return failure message'
+  end
+
   def test_get_books_empty
     assert @m.get_books == [], 'New member should not have any books'
   end
