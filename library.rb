@@ -178,7 +178,6 @@ class Member
     @name
   end
 
-  # TODO Add book to this member's checked out books
   def check_out(book)
     if @book_set.size < 3
       @book_set<<book
