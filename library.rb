@@ -171,6 +171,7 @@ class Member
     @name = name
     @library = library
     @book_set = []
+    @@MAX_BOOKS = 3
   end
 
   def get_name
@@ -179,7 +180,10 @@ class Member
 
   # TODO Add book to this member's checked out books
   def check_out(book)
-    @book_set<<book
+    if @book_set.size < 3
+      @book_set<<book
+    else raise Exception, "Members cannot have more than #{@@MAX_BOOKS} books checked out. Cannot check in #{book.to_s}"
+    end
   end
 
   # TODO Remove book from member's checkout list
