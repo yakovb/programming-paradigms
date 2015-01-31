@@ -15,6 +15,10 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(NoMethodError) { Library.new }
   end
 
+  def test_initialize_makes_calendar
+    assert_nothing_raised { @lib.calendar.get_date }
+  end
+
   # TODO
   def test_load_books
   end
@@ -51,7 +55,7 @@ class TC_Calendar < Test::Unit::TestCase
   end
 
   def teardown
-    @cal._dump
+    @cal._dump(-1)
   end
 
   def test_initialize_single_calendar

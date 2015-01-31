@@ -5,7 +5,10 @@ class Library
   include Singleton
   # TODO Creates data structure of books
   # TODO Creates a singleton calendar
+  attr_reader :calendar
+
   def initialize
+    @calendar = Calendar.instance
     @members = {}
     @current_member = nil
     @open = false
