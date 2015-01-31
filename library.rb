@@ -25,7 +25,7 @@ class Library
   def find_all_overdue_books
     res = []
     @members.each_pair do |k, v|
-      res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v))
+      res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v) + "\n")
     end
     res.join("\n")
   end

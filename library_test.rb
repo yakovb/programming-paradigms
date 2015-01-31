@@ -29,7 +29,6 @@ class TC_Library < Test::Unit::TestCase
     assert str == '199: My Test Book, by Yakov Boglev', "Returned: #{str}"
   end
 
-  #TODO overdue books for one member
   #TODO overdue books for two members
   #TODO no overdue books
   #TODO closed library
@@ -40,9 +39,27 @@ class TC_Library < Test::Unit::TestCase
     @lib.serve('bob')
     @lib.check_out(1, 100)
     10.times {@lib.calendar.advance}
-    res = "member bob overdue list:\n--------------------\n#{@lib.books[0].to_s}\n#{@lib.books[99].to_s}"
+    res = "member bob overdue list:\n--------------------\n#{@lib.books[0].to_s}\n#{@lib.books[99].to_s}\n"
     str = @lib.find_all_overdue_books
     assert str == res, "Returned: #{str}"
+  end
+
+  def test_all_overdue_two_members
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    @lib.issue_card('alice')
+    @lib.serve('alice')
+    @lib.check_out(2, 200)
+    10.times {@lib.calendar.advance}
+    res = "member bob overdue list:\n--------------------\n#{@lib.books[0].to_s}\n#{@lib.books[99].to_s}" +
+          "\n\nmember alice overdue list:\n--------------------\n#{@lib.books[1].to_s}\n#{@lib.books[199].to_s}\n"
+    str = @lib.find_all_overdue_books
+    puts "res is:\n\n#{res}"
+    puts "str is:\n\n#{str}"
+    assert str == res, "Returned: #{str}"
+
   end
 
   def test_find_overdue_books_where_exist
