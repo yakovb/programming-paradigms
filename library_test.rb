@@ -20,8 +20,8 @@ class TC_Library < Test::Unit::TestCase
     assert_nothing_raised { @lib.calendar.get_date }
   end
 
-  # TODO
-  def test_load_books
+  def test_load_all_books
+    assert @lib.books.size == 200, 'Did not load all 200 books in collection'
   end
 
   def test_close_on_closed

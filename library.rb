@@ -4,9 +4,10 @@ class Library
   # TODO All methods should take string or int and not objects
   include Singleton
   # TODO Creates data structure of books
-  attr_reader :calendar
+  attr_reader :calendar, :books
 
   def initialize
+    @books = load_books('collection.txt')
     @calendar = Calendar.instance
     @members = {}
     @current_member = nil
@@ -107,12 +108,15 @@ class Library
   def check_open_library
     raise Exception, 'The library is already open!', caller if @open
   end
+  def load_books(src)
+    File.readlines src
+  end
 
   def self.reset
     @singleton__instance__ = nil
   end
 
-  private :check_closed_library, :check_open_library
+  private :check_closed_library, :check_open_library, :load_books
 end
 
 
