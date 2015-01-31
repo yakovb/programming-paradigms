@@ -74,15 +74,17 @@ class Library
   def check_out(*book_ids)
     check_closed_library
     check_current_member
-    if book_ids.size > 3
+    id_array = book_ids
+    id_array = search_to_array book_ids if book_ids[0].class == String
+    if id_array.size > 3
       'Members cannot check out more than 3 books'
-    elsif book_ids.empty?
+    elsif id_array.empty?
        'You cannot check out zero books'
-    elsif book_ids.any? { |id| id < 1 || id > @books.size }
+    elsif id_array.any? { |id| id < 1 || id > @books.size }
       raise Exception, "One of the id's you passed is not in this library.", caller
     else
       count = 0
-      book_ids.each do |id|
+      id_array.each do |id|
         b = @books[id - 1]
         b.check_out(@calendar.get_date + 7)
         @members[@current_member].check_out(b)
@@ -129,12 +131,16 @@ class Library
   def check_current_member
     raise Exception, 'No member is curently being served.', caller if @current_member == nil
   end
+  def search_to_array(search)
+    search_arr = search[0].split("\n")
+    search_arr.map { |res| res.partition(':').first.to_i }
+  end
 
   def self.reset
     @singleton__instance__ = nil
   end
 
-  private :check_closed_library, :check_open_library, :load_books, :check_current_member
+  private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
 end
 
 

@@ -103,7 +103,7 @@ class TC_Library < Test::Unit::TestCase
     @lib.open
     @lib.issue_card('bob')
     @lib.serve('bob')
-    result = @lib.books[1].to_s + "\n" + @lib.books[201].to_s
+    result = @lib.books[1].to_s + "\n" + @lib.books[200].to_s
     str = @lib.check_out(result)
     assert str == '2 books have been checked out to bob.', "Returned: #{str}"
   end
