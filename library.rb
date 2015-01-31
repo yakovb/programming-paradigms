@@ -109,10 +109,6 @@ class Library
     end
   end
 
-  # TODO Param must have at least one book
-  # TODO Sets member's books back to having due date +7 from today, or says why this isn't possible
-  # TODO If successful 'n books have been renewed for member'
-  # TODO Exception if library is closed, no current member, member doesn't have the book id
   def renew(*book_ids)
     check_closed_library
     check_current_member
