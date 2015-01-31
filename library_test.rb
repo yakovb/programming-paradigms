@@ -8,7 +8,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def teardown
-    @lib._dump(-1)
+    Library.reset
+    Calendar.reset
   end
 
   def test_initialize_single_library
@@ -38,8 +39,13 @@ class TC_Library < Test::Unit::TestCase
     assert_nothing_raised { @lib.open }
   end
 
+  def test_open_on_closed_with_msg
+    str = @lib.open
+    assert str == 'Today is day 1.', "Message should be 'Today is day 1.' but was '#{str}'"
+  end
+
   def test_open_on_open
-    assert_raise(Exception) { 2.times @lib.open }
+    assert_raise(Exception) { 2.times {@lib.open} }
   end
 
   def test_quit
@@ -55,7 +61,7 @@ class TC_Calendar < Test::Unit::TestCase
   end
 
   def teardown
-    @cal._dump(-1)
+    Calendar.reset
   end
 
   def test_initialize_single_calendar

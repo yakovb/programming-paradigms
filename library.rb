@@ -4,7 +4,6 @@ class Library
   # TODO All methods should take string or int and not objects
   include Singleton
   # TODO Creates data structure of books
-  # TODO Creates a singleton calendar
   attr_reader :calendar
 
   def initialize
@@ -18,6 +17,8 @@ class Library
   def open
     check_open_library
     @open = true
+    @calendar.advance
+    "Today is day #{@calendar.get_date}."
   end
 
   # TODO Formatted string of people with overdue books, including the overdue books
@@ -101,6 +102,10 @@ class Library
     raise Exception, 'The library is already open!', caller if @open
   end
 
+  def self.reset
+    @singleton__instance__ = nil
+  end
+
   private :check_closed_library, :check_open_library
 end
 
@@ -118,6 +123,10 @@ class Calendar
 
   def advance
     @date = @date.next
+  end
+
+  def self.reset
+    @singleton__instance__ = nil
   end
 end
 
