@@ -80,6 +80,8 @@ class Library
   def check_out(*book_ids)
     if book_ids.size > 3
       'Members cannot check out more than 3 books'
+    elsif book_ids.empty?
+       'You cannot check out zero books'
     else
       count = 0
       book_ids.each do |id|
