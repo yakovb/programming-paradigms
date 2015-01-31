@@ -29,7 +29,9 @@ class Library
   # TODO If member in library, return string saying so, else add them to Hash and return string saying so
   # TODO Exception if library is closed
   def issue_card(name_of_member)
-
+    memObj = Member.new name_of_member, self
+    @members[name_of_member] = memObj
+    "Library card issued to #{name_of_member}"
   end
 
   # TODO Set internal var 'current customer' to this member

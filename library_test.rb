@@ -48,6 +48,11 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { 2.times {@lib.open} }
   end
 
+  def test_issue_card_to_new_member
+    str = @lib.issue_card('person')
+    assert str == 'Library card issued to person', "Returned wrong string: #{str}"
+  end
+
   def test_quit
     assert @lib.quit == 'The library is now closed for renovations.', 'Quit message was wrong'
   end
