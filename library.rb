@@ -70,7 +70,6 @@ class Library
 
   end
 
-  # TODO book_ids could have been returned by a call to search(str)
   def check_out(*book_ids)
     check_closed_library
     check_current_member
