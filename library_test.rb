@@ -29,6 +29,16 @@ class TC_Library < Test::Unit::TestCase
     assert str == '199: My Test Book, by Yakov Boglev', "Returned: #{str}"
   end
 
+  def test_find_overdue_books_where_exist
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    10.times {@lib.calendar.advance}
+    str = @lib.find_overdue_books
+    assert str == @lib.books[0].to_s + "\n" + @lib.books[99].to_s, "Returned #{str}"
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')

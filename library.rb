@@ -40,7 +40,7 @@ class Library
   def serve(name_of_member)
     check_closed_library
     if @members.include? name_of_member
-      @current_member = name_of_member
+      @current_member = @members[name_of_member]
       "Now serving #{name_of_member}."
     else
       "#{name_of_member} does not have a library card."
@@ -50,7 +50,9 @@ class Library
   # TODO Multiline string of current customer's overdue books (using book's to_s),  else return 'None'
   # TODO Exception if library is closed or nobody currently being served
   def find_overdue_books
-
+    res = @current_member.get_books.map {
+        |b| b if b.get_due_date != nil && b.get_due_date < @calendar.get_date }
+    res.join("\n")
   end
 
   # TODO Must be given at least one book to check in
@@ -86,10 +88,10 @@ class Library
       id_array.each do |id|
         b = @books[id - 1]
         b.check_out(@calendar.get_date + 7)
-        @members[@current_member].check_out(b)
+        @current_member.check_out(b)
         count += 1
         end
-        "#{count} books have been checked out to #{@current_member}."
+        "#{count} books have been checked out to #{@current_member.get_name}."
     end
   end
 
