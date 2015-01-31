@@ -90,6 +90,15 @@ class TC_Library < Test::Unit::TestCase
     }
   end
 
+  def test_check_out_bad_id
+    assert_raise(Exception) {
+      @lib.open
+      @lib.issue_card('bob')
+      @lib.serve('bob')
+      @lib.check_out(500)
+    }
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
