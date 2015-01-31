@@ -105,6 +105,16 @@ class TC_Library < Test::Unit::TestCase
     assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
+  def test_checkin_search_result
+    res = '200: My Test Book, by Yakov Boglev'
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(200)
+    str = @lib.check_in(res)
+    assert str == 'bob has returned 1 books.', "Returned: #{str}"
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')

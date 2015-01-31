@@ -55,14 +55,13 @@ class Library
     (res.size > 0) ? res.join("\n") : 'None'
   end
 
-  # TODO Must be given at least one book to check in
-  # TODO Exception if library is closed, no member being served, or member doesn't have that book id
   def check_in(*book_numbers)
     check_closed_library
     check_current_member
     raise Exception, 'Cannot check in zero books', caller if book_numbers.empty?
 
     id_array = book_numbers
+    id_array = search_to_array book_numbers if book_numbers[0].class == String
     badId = -1
     if id_array.all? do |bId|
       badId = bId
