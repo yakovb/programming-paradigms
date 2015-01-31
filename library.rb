@@ -115,11 +115,19 @@ class Library
   # TODO Exception if library is closed, no current member, member doesn't have the book id
   def renew(*book_ids)
     id_array = book_ids
-    id_array.each do |id|
-      b = @books[id-1]
-      b.check_out(@calendar.get_date + 7)
+    badId = -1
+    if id_array.all? do |id|
+      badId = id
+      @current_member.get_books.include?(@books[id-1])
     end
-    "#{id_array.size} books have been renewed for #{@current_member.get_name}."
+      id_array.each do |id|
+        b = @books[id-1]
+        b.check_out(@calendar.get_date + 7)
+      end
+      "#{id_array.size} books have been renewed for #{@current_member.get_name}."
+    else
+      raise Exception, "The member does not have book #{badId}.", caller
+    end
   end
 
   # TODO No other operations (except quit) should work when library is closed
