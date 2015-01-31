@@ -71,11 +71,13 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_checkin_books_not_out
-    @lib.open
-    @lib.issue_card('bob')
-    @lib.serve('bob')
-    str = @lib.check_in(200, 1)
-    assert str == 'The member does not have book 200.', "Returned: #{str}"
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.issue_card('bob')
+      @lib.serve('bob')
+      str = @lib.check_in(200, 1)
+    }
+    assert ex.message == 'The member does not have book 200.', "Returned: #{ex.message}"
   end
 
   def test_check_out_one_book

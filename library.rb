@@ -56,8 +56,6 @@ class Library
   end
 
   # TODO Must be given at least one book to check in
-  # TODO Take the book and 'return it to the collection', noting that this affects the Book, Member and Library objects
-  # TODO Finally, return string saying member has return n books
   # TODO Exception if library is closed, no member being served, or member doesn't have that book id
   def check_in(*book_numbers)
     id_array = book_numbers
@@ -73,7 +71,7 @@ class Library
       end
       "#{@current_member.get_name} has returned #{id_array.size} books."
     else
-      "The member does not have book #{badId}."
+      raise Exception, "The member does not have book #{badId}.", caller
     end
   end
 
