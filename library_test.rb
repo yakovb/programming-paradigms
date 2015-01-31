@@ -77,6 +77,10 @@ class TC_Library < Test::Unit::TestCase
     assert str == 'person does not have a library card.', "Returned wrong string: #{str}"
   end
 
+  def test_serve_on_library_closed
+    assert_raise(Exception) { @lib.serve('person') }
+  end
+
   def test_quit
     assert @lib.quit == 'The library is now closed for renovations.', 'Quit message was wrong'
   end
