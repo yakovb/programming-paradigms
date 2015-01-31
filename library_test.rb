@@ -61,6 +61,14 @@ class TC_Library < Test::Unit::TestCase
     assert str == 'You cannot check out zero books', "Returned: #{str}"
   end
 
+  def test_check_out_affects_member
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    assert @lib.members['bob'].get_books.size == 2, 'Bob should have 2 books checked out'
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end

@@ -3,7 +3,7 @@ class Library
   # TODO All methods should return a result - string or int since they'll be used by the librarian
   # TODO All methods should take string or int and not objects
   include Singleton
-  attr_reader :calendar, :books
+  attr_reader :calendar, :books, :members
 
   def initialize
     @books = load_books('collection.txt')
@@ -70,7 +70,6 @@ class Library
 
   end
 
-  # TODO Param must have at least one book
   # TODO Checks out the book to the current member, or says why this isn't possible
   # TODO book_ids could have been returned by a call to search(str)
   # TODO Checking out affects the book, the member, and the library
