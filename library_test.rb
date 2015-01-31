@@ -29,7 +29,6 @@ class TC_Library < Test::Unit::TestCase
     assert str == '199: My Test Book, by Yakov Boglev', "Returned: #{str}"
   end
 
-  #TODO overdue books for two members
   #TODO no overdue books
   #TODO closed library
 
@@ -56,9 +55,16 @@ class TC_Library < Test::Unit::TestCase
     res = "member bob overdue list:\n--------------------\n#{@lib.books[0].to_s}\n#{@lib.books[99].to_s}" +
           "\n\nmember alice overdue list:\n--------------------\n#{@lib.books[1].to_s}\n#{@lib.books[199].to_s}\n"
     str = @lib.find_all_overdue_books
-    puts "res is:\n\n#{res}"
-    puts "str is:\n\n#{str}"
     assert str == res, "Returned: #{str}"
+  end
+
+  def test_all_overdue_no_members
+    @lib.open
+    str = @lib.find_all_overdue_books
+    assert str == 'No books are overdue.', "Returned: #{str}"
+  end
+
+  def test_all_overdue_library_closed
 
   end
 

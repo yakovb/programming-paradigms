@@ -27,7 +27,7 @@ class Library
     @members.each_pair do |k, v|
       res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v) + "\n")
     end
-    res.join("\n")
+    (res.empty?) ? 'No books are overdue.' : res.join("\n")
   end
 
   def issue_card(name_of_member)
