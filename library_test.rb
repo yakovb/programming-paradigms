@@ -39,6 +39,15 @@ class TC_Library < Test::Unit::TestCase
     assert str == @lib.books[0].to_s + "\n" + @lib.books[99].to_s, "Returned #{str}"
   end
 
+  def test_find_overdue_books_where_none
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    str = @lib.find_overdue_books
+    assert str == 'None', "Returned #{str}"
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
