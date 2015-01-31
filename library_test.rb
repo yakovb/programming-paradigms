@@ -1,6 +1,6 @@
 require_relative 'library'
 require 'test/unit'
-
+# TODO make assert_raise methods inspect their error messages as well (if they have messages)
 class TC_Library < Test::Unit::TestCase
 
   def setup
