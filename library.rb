@@ -49,10 +49,10 @@ class Library
 
   # TODO Exception if library is closed or nobody currently being served
   def find_overdue_books
+    check_closed_library
     check_current_member
     res = @current_member.get_books.select {
         |b| b if b.get_due_date != nil && b.get_due_date < @calendar.get_date }
-    puts res
     (res.size > 0) ? res.join("\n") : 'None'
   end
 

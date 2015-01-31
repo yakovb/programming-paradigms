@@ -55,6 +55,10 @@ class TC_Library < Test::Unit::TestCase
     }
   end
 
+  def test_find_overdue_books_library_closed
+    assert_raise(Exception) { @lib.find_overdue_books }
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
@@ -314,7 +318,6 @@ class TC_Member < Test::Unit::TestCase
     b = DummyBook.new(1, 'aTitle', 'aAuthor')
     @m.check_out(b)
     @m.give_back(b)
-    puts @m.get_books
     assert @m.get_books == [], 'Books array should be empty after 1 book is checked out then checked back in'
   end
 
