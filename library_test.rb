@@ -218,6 +218,17 @@ class TC_Library < Test::Unit::TestCase
     assert ex.message == 'The member does not have book 100.', "Returned: #{ex.message}"
   end
 
+  def test_renew_books_some_checked_out
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.issue_card('bob')
+      @lib.serve('bob')
+      @lib.check_out(100)
+      @lib.renew(100, 1)
+    }
+    assert ex.message == 'The member does not have book 1.', "Returned: #{ex.message}"
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
