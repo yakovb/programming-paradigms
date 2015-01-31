@@ -194,6 +194,21 @@ class TC_Library < Test::Unit::TestCase
     assert str == '2 books have been checked out to bob.', "Returned: #{str}"
   end
 
+  #TODO Renew checked out books
+  #TODO Renew NOT checked out books - exception
+  #TODO Renew bad book ids - exception
+  #TODO Renew based on search
+  #TODO Renew closed lib / no member
+
+  def test_renew_books
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    str = @lib.renew(100, 1)
+    assert str == '2 books have been renewed for bob.', "Returned: #{str}"
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
