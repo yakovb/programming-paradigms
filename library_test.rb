@@ -75,7 +75,7 @@ class TC_Library < Test::Unit::TestCase
       @lib.open
       @lib.issue_card('bob')
       @lib.serve('bob')
-      str = @lib.check_in(200, 1)
+      @lib.check_in(200, 1)
     }
     assert ex.message == 'The member does not have book 200.', "Returned: #{ex.message}"
   end
@@ -85,9 +85,24 @@ class TC_Library < Test::Unit::TestCase
       @lib.open
       @lib.issue_card('bob')
       @lib.serve('bob')
-      str = @lib.check_in
+      @lib.check_in
     }
     assert ex.message == 'Cannot check in zero books', "Returned: #{ex.message}"
+  end
+
+  def test_checkin_no_member
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.check_in(1)
+    }
+    assert ex.message == 'No member is currently being served.', "Returned: #{ex.message}"
+  end
+
+  def test_checkin_library_closed
+    ex = assert_raise(Exception) {
+      @lib.check_in(1)
+    }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_check_out_one_book
