@@ -24,6 +24,10 @@ class TC_Library < Test::Unit::TestCase
     assert @lib.books.size == 200, 'Did not load all 200 books in collection'
   end
 
+  def test_load_books_as_objects
+    assert @lib.books[198].to_s == '199: My Test Book, by Yakov Boglev', 'Did not return correct book.to_s'
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
