@@ -194,10 +194,6 @@ class TC_Library < Test::Unit::TestCase
     assert str == '2 books have been checked out to bob.', "Returned: #{str}"
   end
 
-  #TODO Renew bad book ids - exception
-  #TODO Renew based on search
-  #TODO Renew closed lib / no member
-
   def test_renew_books
     @lib.open
     @lib.issue_card('bob')
@@ -236,6 +232,31 @@ class TC_Library < Test::Unit::TestCase
     result = @lib.books[0].to_s + "\n" + @lib.books[199].to_s
     str = @lib.renew(result)
     assert str == '2 books have been renewed for bob.', "Returned: #{str}"
+  end
+
+  def test_renew_zero_books
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.issue_card('bob')
+      @lib.serve('bob')
+      @lib.renew
+    }
+    assert ex.message == 'Cannot renew zero books', "Returned: #{ex.message}"
+  end
+
+  def test_renew_library_closed
+    ex = assert_raise(Exception) {
+      @lib.renew
+    }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
+  end
+
+  def test_renew_no_member
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.renew
+    }
+    assert ex.message == 'No member is currently being served.', "Returned: #{ex.message}"
   end
 
   def test_close_on_closed

@@ -114,9 +114,13 @@ class Library
   # TODO If successful 'n books have been renewed for member'
   # TODO Exception if library is closed, no current member, member doesn't have the book id
   def renew(*book_ids)
+    check_closed_library
+    check_current_member
     id_array = book_ids
+    raise Exception, 'Cannot renew zero books', caller if id_array.empty?
     id_array = search_to_array book_ids if book_ids[0].class == String
     badId = -1
+
     if id_array.all? do |id|
       badId = id
       @current_member.get_books.include?(@books[id-1])
@@ -131,46 +135,46 @@ class Library
     end
   end
 
-  # TODO No other operations (except quit) should work when library is closed
-  def close
-    check_closed_library
-    @open = false
-    'Good night.'
-  end
-
-  def quit
-    @open = false
-    'The library is now closed for renovations.'
-  end
-
-  def check_closed_library
-    raise Exception, 'The library is not open.', caller unless @open
-  end
-  def check_open_library
-    raise Exception, 'The library is already open!', caller if @open
-  end
-  def load_books(src)
-    rawArr = File.readlines src
-    rawArr[-1] = rawArr.last+"\n" if rawArr.last[-1] != "\n"
-    rawArr.map do |b|
-      auth, *tail = b[1..-3].rpartition(',')
-      Book.new(rawArr.index(b)+1, auth, tail.last)
+    # TODO No other operations (except quit) should work when library is closed
+    def close
+      check_closed_library
+      @open = false
+      'Good night.'
     end
-  end
-  def check_current_member
-    raise Exception, 'No member is currently being served.', caller if @current_member == nil
-  end
-  def search_to_array(search)
-    search_arr = search[0].split("\n")
-    search_arr.map { |res| res.partition(':').first.to_i }
-  end
 
-  def self.reset
-    @singleton__instance__ = nil
-  end
+    def quit
+      @open = false
+      'The library is now closed for renovations.'
+    end
 
-  private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
-end
+    def check_closed_library
+      raise Exception, 'The library is not open.', caller unless @open
+    end
+    def check_open_library
+      raise Exception, 'The library is already open!', caller if @open
+    end
+    def load_books(src)
+      rawArr = File.readlines src
+      rawArr[-1] = rawArr.last+"\n" if rawArr.last[-1] != "\n"
+      rawArr.map do |b|
+        auth, *tail = b[1..-3].rpartition(',')
+        Book.new(rawArr.index(b)+1, auth, tail.last)
+      end
+    end
+    def check_current_member
+      raise Exception, 'No member is currently being served.', caller if @current_member == nil
+    end
+    def search_to_array(search)
+      search_arr = search[0].split("\n")
+      search_arr.map { |res| res.partition(':').first.to_i }
+    end
+
+    def self.reset
+      @singleton__instance__ = nil
+    end
+
+    private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
+  end
 
 
 class Calendar
