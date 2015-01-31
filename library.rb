@@ -57,11 +57,18 @@ class Library
 
   # TODO Must be given at least one book to check in
   # TODO Take the book and 'return it to the collection', noting that this affects the Book, Member and Library objects
-  # TODO Each book_number must be passed to search(str)
   # TODO Finally, return string saying member has return n books
   # TODO Exception if library is closed, no member being served, or member doesn't have that book id
   def check_in(*book_numbers)
-
+    id_array = book_numbers
+    if id_array.all? { |bId| @current_member.get_books.include?(@books[bId-1]) }
+      id_array.each do |bId|
+        b = @books[bId-1]
+        @current_member.give_back(b)
+        b.check_in
+      end
+      "#{@current_member.get_name} has returned #{id_array.size} books."
+    end
   end
 
   # TODO Find books that are NOT checked out where string is in author/title
