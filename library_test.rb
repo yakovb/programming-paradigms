@@ -40,7 +40,7 @@ class TC_Library < Test::Unit::TestCase
     @lib.serve('bob')
     @lib.check_out(1, 100)
     10.times {@lib.calendar.advance}
-    res = "bob:\t\t\t#{@lib.books[0].to_s}\nbob:\t\t\t#{@lib.books[99].to_s}"
+    res = "member bob overdue list:\n--------------------\n#{@lib.books[0].to_s}\n#{@lib.books[99].to_s}"
     str = @lib.find_all_overdue_books
     assert str == res, "Returned: #{str}"
   end

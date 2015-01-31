@@ -23,7 +23,11 @@ class Library
   # TODO Formatted string of people with overdue books, including the overdue books
   # TODO If no overdue return appropriate string
   def find_all_overdue_books
-
+    res = []
+    @members.each_pair do |k, v|
+      res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v))
+    end
+    res.join("\n")
   end
 
   def issue_card(name_of_member)
@@ -47,10 +51,10 @@ class Library
     end
   end
 
-  def find_overdue_books
+  def find_overdue_books(mem = @current_member)
     check_closed_library
     check_current_member
-    res = @current_member.get_books.select {
+    res = mem.get_books.select {
         |b| b if b.get_due_date != nil && b.get_due_date < @calendar.get_date }
     (res.size > 0) ? res.join("\n") : 'None'
   end
