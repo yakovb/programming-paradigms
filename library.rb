@@ -47,7 +47,6 @@ class Library
     end
   end
 
-  # TODO Exception if library is closed or nobody currently being served
   def find_overdue_books
     check_closed_library
     check_current_member
