@@ -42,7 +42,8 @@ class Library
   # TODO Return string signalling success or failure
   # TODO Exception if library is closed
   def serve(name_of_member)
-
+    @current_member = name_of_member
+    "Now serving #{name_of_member}."
   end
 
   # TODO Multiline string of current customer's overdue books (using book's to_s),  else return 'None'

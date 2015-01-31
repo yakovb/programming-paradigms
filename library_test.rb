@@ -65,6 +65,12 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { @lib.issue_card('person') }
   end
 
+  def test_serve_existing_member
+    @lib.open
+    @lib.issue_card('person')
+    assert @lib.serve('person') == 'Now serving person.'
+  end
+
   def test_quit
     assert @lib.quit == 'The library is now closed for renovations.', 'Quit message was wrong'
   end
