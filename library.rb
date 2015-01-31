@@ -20,8 +20,6 @@ class Library
     "Today is day #{@calendar.get_date}."
   end
 
-  # TODO Formatted string of people with overdue books, including the overdue books
-  # TODO If no overdue return appropriate string
   def find_all_overdue_books
     check_closed_library
     res = []
