@@ -37,6 +37,14 @@ class TC_Library < Test::Unit::TestCase
     assert str == '1 books have been checked out to bob.', "Returned: #{str}"
   end
 
+  def test_check_out_three_books
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    str = @lib.check_out(1, 100, 201)
+    assert str == '3 books have been checked out to bob.', "Returned: #{str}"
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
