@@ -59,6 +59,17 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { @lib.find_overdue_books }
   end
 
+  def test_checkin_books
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(200, 1)
+    str = @lib.check_in(200, 1)
+    assert str == 'bob has returned 2 books.', "Returned: #{str}"
+    assert @lib.books[199].get_due_date == nil, 'Book 200 not checked in'
+    assert @lib.books[0].get_due_date == nil, 'Book 1 not checked in'
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
