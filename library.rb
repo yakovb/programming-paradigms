@@ -29,6 +29,7 @@ class Library
   # TODO If member in library, return string saying so, else add them to Hash and return string saying so
   # TODO Exception if library is closed
   def issue_card(name_of_member)
+    check_closed_library
     if @members.include? name_of_member
       "#{name_of_member} already has a library card."
     else
