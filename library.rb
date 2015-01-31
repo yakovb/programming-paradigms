@@ -3,7 +3,6 @@ class Library
   # TODO All methods should return a result - string or int since they'll be used by the librarian
   # TODO All methods should take string or int and not objects
   include Singleton
-  # TODO Creates data structure of books
   attr_reader :calendar, :books
 
   def initialize
