@@ -81,6 +81,8 @@ class Library
       'Members cannot check out more than 3 books'
     elsif book_ids.empty?
        'You cannot check out zero books'
+    elsif book_ids.any? { |id| id < 1 || id > @books.size }
+      raise Exception, "One of the id's you passed is not in this library.", caller
     else
       count = 0
       book_ids.each do |id|
