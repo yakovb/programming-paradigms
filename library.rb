@@ -61,13 +61,19 @@ class Library
   # TODO Exception if library is closed, no member being served, or member doesn't have that book id
   def check_in(*book_numbers)
     id_array = book_numbers
-    if id_array.all? { |bId| @current_member.get_books.include?(@books[bId-1]) }
+    badId = -1
+    if id_array.all? do |bId|
+      badId = bId
+      @current_member.get_books.include?(@books[bId-1])
+    end
       id_array.each do |bId|
         b = @books[bId-1]
         @current_member.give_back(b)
         b.check_in
       end
       "#{@current_member.get_name} has returned #{id_array.size} books."
+    else
+      "The member does not have book #{badId}."
     end
   end
 

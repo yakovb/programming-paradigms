@@ -75,7 +75,7 @@ class TC_Library < Test::Unit::TestCase
     @lib.issue_card('bob')
     @lib.serve('bob')
     str = @lib.check_in(200, 1)
-    assert str == 'The member does not have book 200.'
+    assert str == 'The member does not have book 200.', "Returned: #{str}"
   end
 
   def test_check_out_one_book
