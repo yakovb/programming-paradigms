@@ -99,6 +99,15 @@ class TC_Library < Test::Unit::TestCase
     }
   end
 
+  def test_check_out_passing_in_search_result
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    result = @lib.books[1].to_s + "\n" + @lib.books[201].to_s
+    str = @lib.check_out(result)
+    assert str == '2 books have been checked out to bob.', "Returned: #{str}"
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
