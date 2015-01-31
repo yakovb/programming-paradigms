@@ -69,6 +69,16 @@ class TC_Library < Test::Unit::TestCase
     assert @lib.members['bob'].get_books.size == 2, 'Bob should have 2 books checked out'
   end
 
+  def test_check_out_affects_books
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(1, 100)
+    assert @lib.books[0].get_due_date == @lib.calendar.get_date + 7, 'Book 1 was not checked out properly'
+    assert @lib.books[99].get_due_date == @lib.calendar.get_date + 7, 'Book 100 was not checked out properly'
+    assert @lib.books[200].get_due_date == nil, 'Book 201 should not have been checked out'
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
