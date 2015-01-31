@@ -76,6 +76,7 @@ class Library
   # TODO Exception if library is closed, no current member, library doesn't have that book id
   def check_out(*book_ids)
     check_closed_library
+    check_current_member
     if book_ids.size > 3
       'Members cannot check out more than 3 books'
     elsif book_ids.empty?
@@ -126,12 +127,15 @@ class Library
       Book.new(rawArr.index(b)+1, auth, tail.last)
     end
   end
+  def check_current_member
+    raise Exception, 'No member is curently being served.', caller if @current_member == nil
+  end
 
   def self.reset
     @singleton__instance__ = nil
   end
 
-  private :check_closed_library, :check_open_library, :load_books
+  private :check_closed_library, :check_open_library, :load_books, :check_current_member
 end
 
 

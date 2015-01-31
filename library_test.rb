@@ -83,6 +83,13 @@ class TC_Library < Test::Unit::TestCase
     assert_raise(Exception) { @lib.check_out(1) }
   end
 
+  def test_check_out_no_current_member
+    assert_raise(Exception) {
+      @lib.open
+      @lib.check_out(1)
+    }
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
