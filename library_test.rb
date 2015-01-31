@@ -53,6 +53,12 @@ class TC_Library < Test::Unit::TestCase
     assert str == 'Library card issued to person', "Returned wrong string: #{str}"
   end
 
+  def test_issue_card_to_existing_member
+    @lib.issue_card('person')
+    str = @lib.issue_card('person')
+    assert str == 'person already has a library card.', "Returned wrong string: #{str}"
+  end
+
   def test_quit
     assert @lib.quit == 'The library is now closed for renovations.', 'Quit message was wrong'
   end
