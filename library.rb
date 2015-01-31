@@ -79,10 +79,12 @@ class Library
   # TODO Due dates must be current date + 7
   def check_out(*book_ids)
     count = 0
-    b = @books[book_ids.first - 1]
-    b.check_out(@calendar.get_date + 7)
-    @members[@current_member].check_out(b)
-    count += 1
+    book_ids.each do |id|
+      b = @books[id - 1]
+      b.check_out(@calendar.get_date + 7)
+      @members[@current_member].check_out(b)
+      count += 1
+    end
     "#{count} books have been checked out to #{@current_member}."
   end
 
