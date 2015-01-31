@@ -23,6 +23,7 @@ class Library
   # TODO Formatted string of people with overdue books, including the overdue books
   # TODO If no overdue return appropriate string
   def find_all_overdue_books
+    check_closed_library
     res = []
     @members.each_pair do |k, v|
       res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v) + "\n")

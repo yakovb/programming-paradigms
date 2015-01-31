@@ -65,7 +65,10 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_all_overdue_library_closed
-
+    ex = assert_raise(Exception) {
+      @lib.find_all_overdue_books
+    }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_find_overdue_books_where_exist
