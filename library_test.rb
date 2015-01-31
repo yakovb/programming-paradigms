@@ -80,6 +80,16 @@ class TC_Library < Test::Unit::TestCase
     assert ex.message == 'The member does not have book 200.', "Returned: #{ex.message}"
   end
 
+  def test_checkin_no_books
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.issue_card('bob')
+      @lib.serve('bob')
+      str = @lib.check_in
+    }
+    assert ex.message == 'Cannot check in zero books', "Returned: #{ex.message}"
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
