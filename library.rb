@@ -58,6 +58,7 @@ class Library
   # TODO Must be given at least one book to check in
   # TODO Exception if library is closed, no member being served, or member doesn't have that book id
   def check_in(*book_numbers)
+    raise Exception, 'Cannot check in zero books', caller if book_numbers.empty?
     id_array = book_numbers
     badId = -1
     if id_array.all? do |bId|
