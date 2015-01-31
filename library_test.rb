@@ -70,6 +70,14 @@ class TC_Library < Test::Unit::TestCase
     assert @lib.books[0].get_due_date == nil, 'Book 1 not checked in'
   end
 
+  def test_checkin_books_not_out
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    str = @lib.check_in(200, 1)
+    assert str == 'The member does not have book 200.'
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
