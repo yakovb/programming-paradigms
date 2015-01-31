@@ -73,10 +73,9 @@ class Library
   # TODO Checks out the book to the current member, or says why this isn't possible
   # TODO book_ids could have been returned by a call to search(str)
   # TODO Checking out affects the book, the member, and the library
-  # TODO If successful, return 'n books have been checked out to member'
   # TODO Exception if library is closed, no current member, library doesn't have that book id
-  # TODO Due dates must be current date + 7
   def check_out(*book_ids)
+    check_closed_library
     if book_ids.size > 3
       'Members cannot check out more than 3 books'
     elsif book_ids.empty?

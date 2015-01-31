@@ -79,6 +79,10 @@ class TC_Library < Test::Unit::TestCase
     assert @lib.books[200].get_due_date == nil, 'Book 201 should not have been checked out'
   end
 
+  def test_check_out_library_closed
+    assert_raise(Exception) { @lib.check_out(1) }
+  end
+
   def test_close_on_closed
     assert_raise(Exception) { @lib.close }
   end
