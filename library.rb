@@ -115,6 +115,7 @@ class Library
   # TODO Exception if library is closed, no current member, member doesn't have the book id
   def renew(*book_ids)
     id_array = book_ids
+    id_array = search_to_array book_ids if book_ids[0].class == String
     badId = -1
     if id_array.all? do |id|
       badId = id
