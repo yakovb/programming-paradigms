@@ -13,7 +13,6 @@ class Library
     @open = false
   end
 
-  # TODO Advance calendar and return welcome string
   def open
     check_open_library
     @open = true
