@@ -47,9 +47,9 @@ class Library
     end
   end
 
-  # TODO Multiline string of current customer's overdue books (using book's to_s),  else return 'None'
   # TODO Exception if library is closed or nobody currently being served
   def find_overdue_books
+    check_current_member
     res = @current_member.get_books.select {
         |b| b if b.get_due_date != nil && b.get_due_date < @calendar.get_date }
     puts res

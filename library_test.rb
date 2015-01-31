@@ -48,6 +48,13 @@ class TC_Library < Test::Unit::TestCase
     assert str == 'None', "Returned #{str}"
   end
 
+  def test_find_overdue_books_no_member
+    assert_raise(Exception) {
+      @lib.open
+      @lib.find_overdue_books
+    }
+  end
+
   def test_check_out_one_book
     @lib.open
     @lib.issue_card('bob')
