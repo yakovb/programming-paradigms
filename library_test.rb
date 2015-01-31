@@ -25,7 +25,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_load_books_as_objects
-    assert @lib.books[198].to_s == '199: My Test Book, by Yakov Boglev', 'Did not return correct book.to_s'
+    str = @lib.books[198].to_s
+    assert str == '199: My Test Book, by Yakov Boglev', "Returned: #{str}"
   end
 
   def test_close_on_closed

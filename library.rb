@@ -109,7 +109,12 @@ class Library
     raise Exception, 'The library is already open!', caller if @open
   end
   def load_books(src)
-    File.readlines src
+    rawArr = File.readlines src
+    rawArr[-1] = rawArr.last+"\n" if rawArr.last[-1] != "\n"
+    rawArr.map do |b|
+      auth, *tail = b[1..-3].rpartition(',')
+      Book.new(rawArr.index(b)+1, auth, tail.last)
+    end
   end
 
   def self.reset
