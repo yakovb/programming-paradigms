@@ -37,10 +37,6 @@ class Library
     end
   end
 
-  # TODO Set internal var 'current customer' to this member
-  # TODO Ensure they are in the member Hash beforehand
-  # TODO Return string signalling success or failure
-  # TODO Exception if library is closed
   def serve(name_of_member)
     check_closed_library
     if @members.include? name_of_member
