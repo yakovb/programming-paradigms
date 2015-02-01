@@ -29,9 +29,6 @@ class TC_Library < Test::Unit::TestCase
     assert str == '199: My Test Book, by Yakov Boglev', "Returned: #{str}"
   end
 
-  #TODO no overdue books
-  #TODO closed library
-
   def test_all_overdue_one_member
     @lib.open
     @lib.issue_card('bob')
