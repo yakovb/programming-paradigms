@@ -52,9 +52,9 @@ class Library
   def find_overdue_books(mem = @current_member)
     check_closed_library
     check_current_member
-    res = mem.get_books.select {
+    result = mem.get_books.select {
         |b| b if b.get_due_date != nil && b.get_due_date < @calendar.get_date }
-    (res.size > 0) ? res.join("\n") : 'None'
+    (result.size > 0) ? result.join("\n") : 'None'
   end
 
   def check_in(*book_numbers)
