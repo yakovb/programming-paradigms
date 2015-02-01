@@ -65,12 +65,12 @@ class Library
     id_array = book_numbers
     id_array = search_to_array book_numbers if book_numbers[0].class == String
     badId = -1
-    if id_array.all? do |bId|
-      badId = bId
-      @current_member.get_books.include?(@books[bId-1])
+    if id_array.all? do |id|
+      badId = id
+      @current_member.get_books.include?(@books[id-1])
     end
-      id_array.each do |bId|
-        b = @books[bId-1]
+      id_array.each do |id|
+        b = @books[id-1]
         @current_member.give_back(b)
         b.check_in
       end
