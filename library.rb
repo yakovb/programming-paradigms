@@ -142,7 +142,6 @@ class Library
     end
   end
 
-  # TODO No other operations (except quit) should work when library is closed
   def close
     check_closed_library
     @open = false
@@ -152,6 +151,10 @@ class Library
   def quit
     @open = false
     'The library is now closed for renovations.'
+  end
+
+  def self.reset
+    @singleton__instance__ = nil
   end
 
   # Private Library methods start from here
@@ -176,10 +179,6 @@ class Library
   def search_to_array(search)
     search_arr = search[0].split("\n")
     search_arr.map { |res| res.partition(':').first.to_i }
-  end
-
-  def self.reset
-    @singleton__instance__ = nil
   end
 
   private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
