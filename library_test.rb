@@ -96,8 +96,7 @@ class TC_Library < Test::Unit::TestCase
   #TODO search title of multi copy book, multitple authors, all available
   #TODO search title of multi copy book, multitple authors, some available
   #TODO search title of multi copy book, multitple authors, none available
-  #TODO search no result
-  #TODO search < 4 chars
+  #TODO search library closed
 
   def test_find_overdue_books_where_exist
     @lib.open
