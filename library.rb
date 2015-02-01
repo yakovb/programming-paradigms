@@ -86,7 +86,13 @@ class Library
   # TODO If multiple versions of a book exist, return only one
   # TODO Return multiline string of all the books via their to_s, or 'no books found', or 'search string must contain at least four characters'
   def search(string)
-
+    key = string.downcase
+    res = @books.select do |b|
+      b.get_due_date == nil &&
+          (b.get_title.downcase.include?(key) || b.get_author.downcase.include?(key))
+    end
+    res.uniq! { |b| b.get_title + b.get_author }
+    res.join("\n")
   end
 
   def check_out(*book_ids)
