@@ -77,6 +77,14 @@ class TC_Library < Test::Unit::TestCase
     assert res == 'No books found.', "Returned: #{res}"
   end
 
+  def test_search_insufficient_chars
+    ex = assert_raise(Exception) {
+      @lib.open
+      @lib.search("the")
+    }
+    assert ex.message == 'Search string must contain at least four characters.', "Returned: #{ex.message}"
+  end
+
   def test_search_unique_book
     @lib.open
     res = @lib.search("violent bear")
