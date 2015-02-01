@@ -553,7 +553,8 @@ class TC_Member < Test::Unit::TestCase
   end
 
   def test_check_out_4_books
-    assert_raise(Exception) { 4.times { @m.check_out 'a book' } }
+    ex = assert_raise(Exception) { 4.times { @m.check_out 'a book' } }
+    assert ex.message == 'Members cannot have more than 3 books checked out. Cannot check in a book', "Returned: #{ex.message}"
   end
 
   def test_give_back_success_message
