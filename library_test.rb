@@ -131,7 +131,15 @@ class TC_Library < Test::Unit::TestCase
     res = @lib.search('how sleep')
     assert res == @lib.books[30].to_s + "\n" + @lib.books[97].to_s, "Returned: #{res}"
   end
-  #TODO search title of multi copy book, multitple authors, some available
+
+  def test_search_multiauthor_none_available
+    @lib.open
+    @lib.issue_card('bob')
+    @lib.serve('bob')
+    @lib.check_out(80, 98, 31)
+    res = @lib.search('how sleep')
+    assert res == 'No books found.', "Returned: #{res}"
+  end
   #TODO search title of multi copy book, multitple authors, none available
   #TODO search library closed
 
