@@ -96,7 +96,7 @@ class TC_Library < Test::Unit::TestCase
     @lib.issue_card('bob')
     @lib.serve('bob')
     @lib.check_out(199)
-    res = @lib.search('test book')
+    res = @lib.search('yakov')
     assert res == @lib.books[198].to_s, "Returned: #{res}"
   end
 
@@ -140,8 +140,6 @@ class TC_Library < Test::Unit::TestCase
     res = @lib.search('how sleep')
     assert res == 'No books found.', "Returned: #{res}"
   end
-  #TODO search title of multi copy book, multitple authors, none available
-  #TODO search library closed
 
   def test_search_library_closed
     ex = assert_raise(Exception) {
