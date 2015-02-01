@@ -381,7 +381,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_close_on_closed
-    assert_raise(Exception) { @lib.close }
+    ex = assert_raise(Exception) { @lib.close }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_close_on_open
@@ -401,7 +402,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_open_on_open
-    assert_raise(Exception) { 2.times {@lib.open} }
+    ex = assert_raise(Exception) { 2.times {@lib.open} }
+    assert ex.message == 'The library is already open!', "Returned: #{ex.message}"
   end
 
   def test_issue_card_to_new_member
@@ -418,7 +420,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_issue_card_library_closed
-    assert_raise(Exception) { @lib.issue_card('person') }
+    ex = assert_raise(Exception) { @lib.issue_card('person') }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_serve_existing_member
@@ -434,7 +437,8 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_serve_on_library_closed
-    assert_raise(Exception) { @lib.serve('person') }
+    ex = assert_raise(Exception) { @lib.serve('person') }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_quit
@@ -479,7 +483,8 @@ class TC_Book < Test::Unit::TestCase
   end
 
   def test_new_book_bad_id
-    assert_raise(Exception) { Book.new('x', 't', 'a') }
+    ex = assert_raise(Exception) { Book.new('x', 't', 'a') }
+    assert ex.message == "One or more numeric values are required for this operation, which you didn't provide", "Returned: #{ex.message}"
   end
 
   def test_new_book_duck_id
@@ -495,7 +500,8 @@ class TC_Book < Test::Unit::TestCase
   end
 
   def test_checkout_bad_duedate
-    assert_raise(Exception) { @b.check_out 'ten' }
+    ex = assert_raise(Exception) { @b.check_out 'ten' }
+    assert ex.message == "One or more numeric values are required for this operation, which you didn't provide", "Returned: #{ex.message}"
   end
 
   def test_checkout_and_get_duedate

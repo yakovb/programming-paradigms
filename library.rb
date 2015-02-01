@@ -245,7 +245,7 @@ class Book
   end
 
   def int_check(num)
-    raise Exception, 'Book ID must be an integer greater than 0!' if num.to_i == 0
+    raise Exception, "One or more numeric values are required for this operation, which you didn't provide" if num.to_i == 0
   end
   private :int_check
 end
