@@ -92,7 +92,7 @@ class Library
           (b.get_title.downcase.include?(key) || b.get_author.downcase.include?(key))
     end
     res.uniq! { |b| b.get_title + b.get_author }
-    res.join("\n")
+    (res.empty?) ? 'No books found.' : res.join("\n")
   end
 
   def check_out(*book_ids)

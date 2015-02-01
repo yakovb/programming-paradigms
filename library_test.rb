@@ -71,12 +71,17 @@ class TC_Library < Test::Unit::TestCase
     assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
+  def test_search_no_result
+    @lib.open
+    res = @lib.search("zzzz")
+    assert res == 'No books found.', "Returned: #{res}"
+  end
+
   def test_search_unique_book
     @lib.open
     res = @lib.search("violent bear")
     assert res == @lib.books[184].to_s, "Returned: #{res}"
   end
-  #TODO search unique book
   #TODO search title of multi copy book, one available
   #TODO search title of multi copy book, all available
   #TODO search title of multi copy book, none available
