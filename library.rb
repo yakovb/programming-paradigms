@@ -98,12 +98,16 @@ class Library
     check_current_member
     id_array = book_ids
     id_array = search_to_array book_ids if book_ids[0].class == String
+    badId = -1
     if id_array.size > 3
       'Members cannot check out more than 3 books'
     elsif id_array.empty?
        'You cannot check out zero books'
-    elsif id_array.any? { |id| id < 1 || id > @books.size }
-      raise Exception, "One of the id's you passed is not in this library.", caller
+    elsif id_array.any? do |id|
+      badId = id
+      id < 1 || id > @books.size
+    end
+      raise Exception, "The library does not have book #{badId}", caller
     else
       count = 0
       id_array.each do |id|

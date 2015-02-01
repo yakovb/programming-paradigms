@@ -165,14 +165,16 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_find_overdue_books_no_member
-    assert_raise(Exception) {
+    ex = assert_raise(Exception) {
       @lib.open
       @lib.find_overdue_books
     }
+    assert ex.message == 'No member is currently being served.', "Returned: #{ex.message}"
   end
 
   def test_find_overdue_books_library_closed
-    assert_raise(Exception) { @lib.find_overdue_books }
+    ex = assert_raise(Exception) { @lib.find_overdue_books }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_checkin_books
@@ -282,23 +284,26 @@ class TC_Library < Test::Unit::TestCase
   end
 
   def test_check_out_library_closed
-    assert_raise(Exception) { @lib.check_out(1) }
+    ex = assert_raise(Exception) { @lib.check_out(1) }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
   end
 
   def test_check_out_no_current_member
-    assert_raise(Exception) {
+    ex = assert_raise(Exception) {
       @lib.open
       @lib.check_out(1)
     }
+    assert ex.message == 'No member is currently being served.', "Returned: #{ex.message}"
   end
 
   def test_check_out_bad_id
-    assert_raise(Exception) {
+    ex = assert_raise(Exception) {
       @lib.open
       @lib.issue_card('bob')
       @lib.serve('bob')
       @lib.check_out(500)
     }
+    assert ex.message == 'The library does not have book 500', "Returned: #{ex.message}"
   end
 
   def test_check_out_passing_in_search_result
