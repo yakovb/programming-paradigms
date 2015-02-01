@@ -15,8 +15,7 @@ class Library
   def open
     check_open_library
     @open = true
-    @calendar.advance
-    "Today is day #{@calendar.get_date}."
+    "Today is day #{@calendar.advance}."
   end
 
   def find_all_overdue_books
@@ -102,7 +101,7 @@ class Library
     if id_array.size > 3
       'Members cannot check out more than 3 books'
     elsif id_array.empty?
-       'You cannot check out zero books'
+      'You cannot check out zero books'
     elsif id_array.any? do |id|
       badId = id
       id < 1 || id > @books.size
@@ -115,8 +114,8 @@ class Library
         b.check_out(@calendar.get_date + 7)
         @current_member.check_out(b)
         count += 1
-        end
-        "#{count} books have been checked out to #{@current_member.get_name}."
+      end
+      "#{count} books have been checked out to #{@current_member.get_name}."
     end
   end
 
@@ -142,46 +141,48 @@ class Library
     end
   end
 
-    # TODO No other operations (except quit) should work when library is closed
-    def close
-      check_closed_library
-      @open = false
-      'Good night.'
-    end
-
-    def quit
-      @open = false
-      'The library is now closed for renovations.'
-    end
-
-    def check_closed_library
-      raise Exception, 'The library is not open.', caller unless @open
-    end
-    def check_open_library
-      raise Exception, 'The library is already open!', caller if @open
-    end
-    def load_books(src)
-      rawArr = File.readlines src
-      rawArr[-1] = rawArr.last+"\n" if rawArr.last[-1] != "\n"
-      rawArr.map do |b|
-        auth, *tail = b[1..-3].rpartition(',')
-        Book.new(rawArr.index(b)+1, auth, tail.last)
-      end
-    end
-    def check_current_member
-      raise Exception, 'No member is currently being served.', caller if @current_member == nil
-    end
-    def search_to_array(search)
-      search_arr = search[0].split("\n")
-      search_arr.map { |res| res.partition(':').first.to_i }
-    end
-
-    def self.reset
-      @singleton__instance__ = nil
-    end
-
-    private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
+  # TODO No other operations (except quit) should work when library is closed
+  def close
+    check_closed_library
+    @open = false
+    'Good night.'
   end
+
+  def quit
+    @open = false
+    'The library is now closed for renovations.'
+  end
+
+  # Private Library methods start from here
+  #########################################
+  def check_closed_library
+    raise Exception, 'The library is not open.', caller unless @open
+  end
+  def check_open_library
+    raise Exception, 'The library is already open!', caller if @open
+  end
+  def load_books(src)
+    rawArr = File.readlines src
+    rawArr[-1] = rawArr.last+"\n" if rawArr.last[-1] != "\n"
+    rawArr.map do |b|
+      auth, *tail = b[1..-3].rpartition(',')
+      Book.new(rawArr.index(b)+1, auth, tail.last)
+    end
+  end
+  def check_current_member
+    raise Exception, 'No member is currently being served.', caller if @current_member == nil
+  end
+  def search_to_array(search)
+    search_arr = search[0].split("\n")
+    search_arr.map { |res| res.partition(':').first.to_i }
+  end
+
+  def self.reset
+    @singleton__instance__ = nil
+  end
+
+  private :check_closed_library, :check_open_library, :load_books, :check_current_member, :search_to_array
+end
 
 
 class Calendar
@@ -276,7 +277,7 @@ class Member
       "Returned #{book.to_s}"
     else
       "This member did not recently check out #{book.to_s}"
-end
+    end
   end
 
   def get_books
