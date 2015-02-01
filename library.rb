@@ -82,15 +82,17 @@ class Library
 
   def search(string)
     check_closed_library
-    raise Exception, 'Search string must contain at least four characters.', caller if string.size < 4
-
-    key = string.downcase
-    res = @books.select do |b|
-      b.get_due_date == nil &&
-          (b.get_title.downcase.include?(key) || b.get_author.downcase.include?(key))
+    if string.size < 4
+      'Search string must contain at least four characters.'
+    else
+      key = string.downcase
+      res = @books.select do |b|
+        b.get_due_date == nil &&
+            (b.get_title.downcase.include?(key) || b.get_author.downcase.include?(key))
+      end
+      res.uniq! { |b| b.get_title + b.get_author }
+      (res.empty?) ? 'No books found.' : res.join("\n")
     end
-    res.uniq! { |b| b.get_title + b.get_author }
-    (res.empty?) ? 'No books found.' : res.join("\n")
   end
 
   def check_out(*book_ids)
