@@ -98,6 +98,13 @@ class TC_Library < Test::Unit::TestCase
   #TODO search title of multi copy book, multitple authors, none available
   #TODO search library closed
 
+  def test_search_library_closed
+    ex = assert_raise(Exception) {
+      @lib.search("the")
+    }
+    assert ex.message == 'The library is not open.', "Returned: #{ex.message}"
+  end
+
   def test_find_overdue_books_where_exist
     @lib.open
     @lib.issue_card('bob')

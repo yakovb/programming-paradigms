@@ -86,6 +86,7 @@ class Library
   # TODO If multiple versions of a book exist, return only one
   # TODO Return multiline string of all the books via their to_s, or 'no books found', or 'search string must contain at least four characters'
   def search(string)
+    check_closed_library
     raise Exception, 'Search string must contain at least four characters.', caller if string.size < 4
 
     key = string.downcase
