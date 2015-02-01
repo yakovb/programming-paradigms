@@ -20,11 +20,12 @@ class Library
 
   def find_all_overdue_books
     check_closed_library
-    res = []
-    @members.each_pair do |k, v|
-      res<<("member " + k + " overdue list:" + "\n--------------------\n" + (find_overdue_books v) + "\n")
+    result = []
+    @members.each_pair do |memberName, memberObject|
+      result<<("member " + memberName + " overdue list:" +
+          "\n--------------------\n" + (find_overdue_books memberObject) + "\n")
     end
-    (res.empty?) ? 'No books are overdue.' : res.join("\n")
+    (result.empty?) ? 'No books are overdue.' : result.join("\n")
   end
 
   def issue_card(name_of_member)
