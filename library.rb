@@ -33,8 +33,8 @@ class Library
     if @members.include? name_of_member
       "#{name_of_member} already has a library card."
     else
-      memObj = Member.new name_of_member, self
-      @members[name_of_member] = memObj
+      memberObject = Member.new name_of_member, self
+      @members[name_of_member] = memberObject
       "Library card issued to #{name_of_member}"
     end
   end
