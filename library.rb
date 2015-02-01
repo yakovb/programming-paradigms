@@ -111,14 +111,12 @@ class Library
     end
       raise Exception, "The library does not have book #{badId}", caller
     else
-      count = 0
       id_array.each do |id|
         b = @books[id - 1]
         b.check_out(@calendar.get_date + 7)
         @current_member.check_out(b)
-        count += 1
       end
-      "#{count} books have been checked out to #{@current_member.get_name}."
+      "#{id_array.size} books have been checked out to #{@current_member.get_name}."
     end
   end
 
