@@ -44,13 +44,10 @@
 
 ; create cell structs with one pass through the puzzle
 (define (super-transform input)
-  (let* ([row 0]
-         [col 0])
-    (foldr (lambda (row-input z)
+  (foldr (lambda (row-input z)
              (cons (map (lambda (elem) (cell (mkset elem) (+ 1 row) (+ 1 col))) row-input) z))
            empty
-           input)))
-             
+           input)))           
           
 ; test for defining a cell struct
 (struct cell (data row col))
