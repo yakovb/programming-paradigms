@@ -1,5 +1,7 @@
 #lang racket
 
-(define (solve matrix))
+(define (solve matrix)
+  1)
 
-(define (transform matrix))
+(define (transform matrix)
+  1)
