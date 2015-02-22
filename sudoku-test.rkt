@@ -36,6 +36,36 @@
       (test-case
        "set construction"
        (check-equal? (f (first input)) (set 1 2 3 4 5 6 7 8 9) "error in making set with 0 input")
-       (check-equal? (f (second input)) (set 1) "error in making set with non-0 input"))))))
+       (check-equal? (f (second input)) (set 1) "error in making set with non-0 input"))))
+   
+   
+   (test-suite
+    "Box reference symbol maker"
+    (let ([f box-lookup])
+      
+      (test-case
+       "upper boxes"
+       (check-eq? (f 1 3) 'upper-left "error with upper-left symbol")
+       (check-eq? (f 2 5) 'upper-middle "error with upper-middle symbol")
+       (check-eq? (f 3 9) 'upper-right "error with upper-right symbol"))
+      
+      (test-case
+       "middle boxes"
+       (check-eq? (f 4 3) 'middle-left "error with middle-left symbol")
+       (check-eq? (f 5 5) 'middle-middle "error with middle-middle symbol")
+       (check-eq? (f 6 9) 'middle-right "error with middle-right symbol"))
+      
+      (test-case
+       "lower boxes"
+       (check-eq? (f 7 3) 'lower-left "error with lower-left symbol")
+       (check-eq? (f 8 5) 'lower-middle "error with lower-middle symbol")
+       (check-eq? (f 9 9) 'lower-right "error with lower-right symbol"))
+      
+      (test-case
+       "box out of bounds errors"
+       (check-exn exn:fail? (lambda () (f 3 10)) "column error should have been thrown") 
+       (check-exn exn:fail? (lambda () (f 10 6)) "row error should have been thrown"))))
+   
+   ))
   
 (run-tests sudoku-tests)
