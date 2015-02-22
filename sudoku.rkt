@@ -35,5 +35,6 @@
 (define (make-cell data row col box [singleton-checked? #f])
   (cell data row col box singleton-checked?))
 
-(provide (struct-out cell)
+(provide make-set-of-possible-values
+         (struct-out cell)
          make-cell)
