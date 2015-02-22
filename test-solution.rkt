@@ -36,7 +36,7 @@
            x))
 
 ; take a "list of lists of A" and return "a list of lists of B"
-(define (process-list func input)
+(define (process-cells func input)
   (foldr (lambda (row z)
            (cons (map (lambda (a) (func a)) row) z))
          empty
