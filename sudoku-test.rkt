@@ -11,8 +11,11 @@
      
      (test-case
       "basic cell struct contsruction"
-      (check-equal? (set 1 2 3) (cell-data c1) "error in cell data getter")
-      (check-equal? 2 (cell-row c1) "error in cell row getter"))
+      (check-equal? (cell-data c1) (set 1 2 3) "error in cell data getter")
+      (check-equal? (cell-row c1) 1 "error in cell row getter")
+      (check-equal? (cell-col c1) 1 "error in cell col getter")
+      (check-equal? (cell-box c1) 'upper-left "error in cell box getter")
+      (check-equal? (cell-singleton-checked? c1) #t "error in cell singleton-checked getter"))
      
      (test-case
       "cell struct construction with default parameter"
