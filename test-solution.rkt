@@ -42,6 +42,21 @@
          empty
          input))
 
+; create cell structs with manual recursion
+(define (make-cells input row-num result)
+  (let ([current-row (first input)]
+        [remaining-rows (rest input)]
+        [list-1-to-9 (range 1 10)])
+    (if (empty? current-row)
+        result
+        (make-cells
+         remaining-rows
+         (+ 1 row-num)
+         (map (lambda (item col-num) (cell item row-num col-num (box-lookup row-num col-num))) 
+              current-row
+              list-1-to-9)))))
+        
+
 ; create cell structs with one pass through the puzzle
 (define (super-transform input)
   (foldr (lambda (row-input z)
@@ -50,4 +65,4 @@
            input)))           
           
 ; test for defining a cell struct
-(struct cell (data row col))
+(struct cell (data row col box))
