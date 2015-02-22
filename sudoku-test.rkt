@@ -19,6 +19,12 @@
      
      (test-case
       "cell struct construction with default parameter"
-      (fail "default fail fancy struct")))))
+      (check-equal? (cell-data c2) (set 3 4 5) "error in cell data getter")
+      (check-equal? (cell-row c2) 2 "error in cell row getter")
+      (check-equal? (cell-col c2) 2 "error in cell col getter")
+      (check-equal? (cell-box c2) 'lower-right "error in cell box getter")
+      (check-equal? (cell-singleton-checked? c2) #f "error in cell singleton-checked getter"))
+      
+     )))
   
 (run-tests sudoku-tests)
