@@ -1,7 +1,7 @@
 #lang racket
-(require rackunit
-         rackunit/text-ui
-         "sudoku.rkt")
+(require "sudoku.rkt"
+         rackunit
+         rackunit/text-ui)
 
 (define sudoku-tests
   (test-suite
@@ -11,7 +11,8 @@
      
      (test-case
       "basic cell struct contsruction"
-      (check-equal? (set 1 2 3) (cell-data c1)))
+      (check-equal? (set 1 2 3) (cell-data c1) "error in cell data getter")
+      (check-equal? 2 (cell-row c1) "error in cell row getter"))
      
      (test-case
       "cell struct construction with default parameter"
