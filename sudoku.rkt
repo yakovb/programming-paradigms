@@ -20,3 +20,6 @@
 ;;
 (define (make-cell data row col box [singleton-checked? #f])
   (cell data row col box singleton-checked?))
+
+(provide (struct-out cell)
+         make-cell)
