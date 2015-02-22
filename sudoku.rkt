@@ -35,6 +35,33 @@
 (define (make-cell data row col box [singleton-checked? #f])
   (cell data row col box singleton-checked?))
 
+
+;; CONTRACT: box-lookup: number number -> symbol
+;;
+;; PURPOSE: take a row and column number and return a symbol that 
+;; signifies the box a row/col correspond to. Row options are upper/middle/lower
+;; and column options are left/middle/right
+;;
+(define (box-lookup row col)
+  (define (row-lookup r)
+    (cond [(<= r 3) "upper"]
+          [(<= r 6) "middle"]
+          [(<= r 9) "lower"]
+          [else (error "box-lookup failed because the supplied row is greater than 9")]))
+  
+  (define (col-lookup c)
+    (cond [(<= c 3) "left"]
+          [(<= c 6) "middle"]
+          [(<= c 9) "right"]
+          [else (error "box-lookup failed because the supplied col is greater than 9")]))
+  
+  (string->symbol (string-append
+                   (row-lookup row)
+                   "-"
+                   (col-lookup col))))
+
+
 (provide make-set-of-possible-values
          (struct-out cell)
-         make-cell)
+         make-cell
+         box-lookup)
