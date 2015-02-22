@@ -36,33 +36,52 @@
            x))
 
 ; take a "list of lists of A" and return "a list of lists of B"
-(define (process-cells func input)
+(define (process-elements func input)
   (foldr (lambda (row z)
-           (cons (map (lambda (a) (func a)) row) z))
+           (cons (map (lambda (elem) (func elem)) row) z))
          empty
          input))
 
 ; create cell structs with manual recursion
 (define (make-cells input row-num result)
-  (let ([current-row (first input)]
-        [remaining-rows (rest input)]
-        [list-1-to-9 (range 1 10)])
-    (if (empty? current-row)
-        result
+  (if (empty? input)
+      (reverse result)
+      (let ([current-row (first input)]
+            [remaining-rows (rest input)]
+            [list-1-to-9 (range 1 10)])
         (make-cells
          remaining-rows
          (+ 1 row-num)
-         (map (lambda (item col-num) (cell item row-num col-num (box-lookup row-num col-num))) 
-              current-row
-              list-1-to-9)))))
+         (cons (map (lambda (item col-num) (cell item row-num col-num (box-lookup row-num col-num))) 
+                    current-row
+                    list-1-to-9)
+               result)))))
+
+; lookup table to determine correct box
+(define (box-lookup row col)
+  (define (row-lookup r)
+    (cond [(<= r 3) "upper"]
+          [(<= r 6) "middle"]
+          [(<= r 9) "lower"]
+          [else (error "box-lookup failed because the supplied row is greater than 9")]))
+  
+  (define (col-lookup c)
+    (cond [(<= c 3) "left"]
+          [(<= c 6) "middle"]
+          [(<= c 9) "right"]
+          [else (error "box-lookup failed because the supplied col is greater than 9")]))
+  
+  (string->symbol (string-append
+                   (row-lookup row)
+                   "-"
+                   (col-lookup col))))
         
 
-; create cell structs with one pass through the puzzle
-(define (super-transform input)
-  (foldr (lambda (row-input z)
-             (cons (map (lambda (elem) (cell (mkset elem) (+ 1 row) (+ 1 col))) row-input) z))
-           empty
-           input)))           
+
           
 ; test for defining a cell struct
-(struct cell (data row col box))
+(struct cell (data row col box singleton-checked?))
+
+; helper constuctor which can use default value of #f for singleton-checked?
+(define (make-cell data row col box [singleton-checked? #f])
+  (cell data row col box singleton-checked?))
