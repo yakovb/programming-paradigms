@@ -14,6 +14,14 @@
   (process-nested-elements  make-set-of-possible-values  matrix))
 
 
+;; CONTRACT: cells-list: list-of-list-of-sets -> list-of-cell-structs
+;;
+;; PURPOSE: takes a transformed sudoku puzzle and creates a flat list of 
+;; cell structs to be used for further processing by other functions
+;;
+
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
