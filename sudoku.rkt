@@ -75,7 +75,8 @@
 
 ;; Export of relevant functions for testing purposes
 ;;
-(provide make-set-of-possible-values
+(provide process-nested-elements
+         make-set-of-possible-values
          (struct-out cell)
          make-cell
          box-lookup)
