@@ -104,6 +104,7 @@
 ;; Export of relevant functions for testing purposes
 ;;
 (provide transform
+         cells-list
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
