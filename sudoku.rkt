@@ -7,6 +7,15 @@
   1)
 
 
+;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
+;;
+;; PURPOSE: take a sudoku puzzle as a matrix; for each number other than 0
+;; transform to set containing only that number; for each 0 transform to 
+;; set containing numbers 1 through 9
+;;
+
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
