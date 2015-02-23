@@ -107,7 +107,7 @@
        (let ([elem (first result)])
          (check-equal? (cell-data elem) (set 1 2 3 4 5 6 7 8 9) "expected set of all possibilities")
          (check-equal? (cell-row elem) 2 "row should be 2")
-         (check-equal? (cell-row elem) 1 "col should be 1")
+         (check-equal? (cell-col elem) 1 "col should be 1")
          (check-eq? (cell-box elem) 'upper-left "box should be upper-left")
          (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
       
