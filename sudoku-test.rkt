@@ -74,7 +74,10 @@
           [ll-strings '(("this" "that") ("who" "what"))])
       
       (test-case 
-       "convert numbers to sets")
+       "convert numbers to sets"
+       (let ([result (f (lambda (e) (set e)) ll-numbers)])
+         (check-equal? (caar result) (set 1 2) "problem in numbers to sets")
+         (check-equal? (cadr result) (set 3 4) "problem in numbers to sets")))
       
       (test-case
        "convert sets to lists")
