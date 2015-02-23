@@ -9,7 +9,8 @@
    (test-suite
     "cell struct tests"
     (let ([c1 (cell (set 1 2 3) 1 1 'upper-left #t)]
-          [c2 (make-cell (set 3 4 5) 2 2 'lower-right)])
+          [c2 (make-cell (set 3 4 5) 2 2 'lower-right)]
+          [c3 (make-cell (set 3 4 5) 2 2 'lower-right #t)])
       
       (test-case
        "basic cell struct contsruction"
@@ -25,7 +26,11 @@
        (check-equal? (cell-row c2) 2 "error in cell row getter")
        (check-equal? (cell-col c2) 2 "error in cell col getter")
        (check-equal? (cell-box c2) 'lower-right "error in cell box getter")
-       (check-equal? (cell-singleton-checked? c2) #f "error in cell singleton-checked getter"))))
+       (check-equal? (cell-singleton-checked? c2) #f "error in cell singleton-checked getter"))
+      
+      (test-case
+       "cell struct with explicit singleton-checked? parameter"
+       (check-equal? (cell-singleton-checked? c3) #t "singleton-checked should be #t as per constructor"))))
       
    
    (test-suite 
@@ -81,7 +86,7 @@
       
       (test-case
        "convert sets to lists"
-       (let ([result (f (lambda (e) (reverse (set->list e))) ll-sets)])
+       (let ([result (f (lambda (e) (set->list e)) ll-sets)])
          (check-equal? (caar result) '(1 2) "problem in sets to list")
          (check-equal? (cdr result) '(((5 6) (7 8))) "problem in sets to list")))
       
