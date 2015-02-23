@@ -3,9 +3,6 @@
 (define (solve matrix)
   1)
 
-(define (transform matrix)
-  1)
-
 
 ;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
 ;;
@@ -13,7 +10,8 @@
 ;; transform to set containing only that number; for each 0 transform to 
 ;; set containing numbers 1 through 9
 ;;
-
+(define (transform matrix)
+  (process-nested-elements  make-set-of-possible-values  matrix))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
@@ -84,7 +82,8 @@
 
 ;; Export of relevant functions for testing purposes
 ;;
-(provide process-nested-elements
+(provide transform
+         process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
          make-cell
