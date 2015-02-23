@@ -86,6 +86,7 @@
          (check-equal? (cdr result) '(((5 6) (7 8))) "problem in sets to list")))
       
       (test-case
+       "convert srings to numbers"
        (let ([result (f (lambda (e) (string-length e)) ll-strings)])
          (check-equal? (caar result) 4 "problem in srings to numbers")
          (check-equal? (caadr result) 3 "problem in srings to numbers")))))
