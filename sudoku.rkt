@@ -19,7 +19,20 @@
 ;; PURPOSE: takes a transformed sudoku puzzle and creates a flat list of 
 ;; cell structs to be used for further processing by other functions
 ;;
-
+(define (cells-list transformed-puzzle)
+  (define (go input row-num result)
+    (if (empty? input)
+        result
+        (let ([this-row (first input)]
+              [other-rows (rest input)]
+              [col-nums (range 1 10)])
+          (go other-rows (+ 1 row-num)
+              (cons (map (lambda (elem col-num)
+                           (make-cell elem row-num col-num (box-lookup row-num col-num)))
+                         this-row
+                         col-nums)
+                    result)))))
+  (flatten (go transformed-puzzle 0 empty)))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
