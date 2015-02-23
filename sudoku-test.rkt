@@ -91,6 +91,12 @@
          (check-equal? (caar result) 4 "problem in srings to numbers")
          (check-equal? (caadr result) 3 "problem in srings to numbers")))))
    
+   (test-suite
+    "Transform sudoku puzzle from list of list of number to list of list of sets"
+    (let ([result (transform '((1 0) (3 4)))])
+      (check-equal? (car result) '(((set 1) (set 1 2 3 4 5 6 7 8 9))) "problem making ll-set")
+      (check-equal? (cadr result) '(((set 3))) "problem making ll-set")))
+   
    ))
   
 (run-tests sudoku-tests)
