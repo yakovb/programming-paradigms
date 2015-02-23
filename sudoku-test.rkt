@@ -102,10 +102,18 @@
     (let* ([input (list (list (set 1) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9))
                         (list (set 1 2 3 4 5 6 7 8 9) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9)))]
            [result (cells-list input)])
-      ; check first cell ok -data, row, col, singleton-checked?
-      ; check last cell ok -data, row, col, singleton-checked?
-      ; check first cell of 2nd row ok -data, row, col, singleton-checked?
-      ))
+      (test-case
+       "First element of the result (which is in reverse row order)"
+       (let ([elem (first result)])
+         (check-equal? (cell-data elem) (set 1 2 3 4 5 6 7 8 9) "expected set of all possibilities")
+         (check-equal? (cell-row elem) 2 "row should be 2")
+         (check-equal? (cell-row elem) 1 "col should be 1")
+         (check-eq? (cell-box elem) 'upper-left "box should be upper-left")
+         (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
+      
+      ; check first cell ok -data, row, col, box singleton-checked?
+      ; check last cell ok -data, row, col, box singleton-checked?
+      ; check first cell of 2nd row ok -data, row, col, box singleton-checked?
    
    ))
   
