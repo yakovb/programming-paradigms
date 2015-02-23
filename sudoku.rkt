@@ -7,6 +7,14 @@
   1)
 
 
+;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
+;;
+;; PURPOSE: transform the elements of nested lists from A to B
+;; given a function that takes A to B
+;;
+
+
+
 ;; CONTRACT: make-set-of-possible-values: number -> set
 ;;
 ;; PURPOSE: make a set of possible values for a cell. If the
