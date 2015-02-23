@@ -70,20 +70,25 @@
     "Processing of nested elements"
     (let ([f process-nested-elements]
           [ll-numbers '((1 2) (3 4))]
-          [ll-sets '(((set 1 2) (set 3 4)) ((set 5 6) (set 7 8)))]
-          [ll-strings '(("this" "that") ("who" "what"))])
+          [ll-sets (list (list (set 1 2) (set 3 4)) (list (set 5 6) (set 7 8)))]
+          [ll-strings '(("this" "that") ("who" "whatever"))])
       
       (test-case 
        "convert numbers to sets"
        (let ([result (f (lambda (e) (set e)) ll-numbers)])
-         (check-equal? (caar result) (set 1 2) "problem in numbers to sets")
-         (check-equal? (cadr result) (set 3 4) "problem in numbers to sets")))
+         (check-equal? (caar result) (set 1) "problem in numbers to sets")
+         (check-equal? (cdr result) (list (list (set 3) (set 4))) "problem in numbers to sets")))
       
       (test-case
-       "convert sets to lists")
+       "convert sets to lists"
+       (let ([result (f (lambda (e) (reverse (set->list e))) ll-sets)])
+         (check-equal? (caar result) '(1 2) "problem in sets to list")
+         (check-equal? (cdr result) '(((5 6) (7 8))) "problem in sets to list")))
       
       (test-case
-       "convert strings to numbers")))
+       (let ([result (f (lambda (e) (string-length e)) ll-strings)])
+         (check-equal? (caar result) 4 "problem in srings to numbers")
+         (check-equal? (caadr result) 3 "problem in srings to numbers")))))
    
    ))
   
