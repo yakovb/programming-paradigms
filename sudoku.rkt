@@ -61,6 +61,8 @@
                    (col-lookup col))))
 
 
+;; Export of relevant functions for testing purposes
+;;
 (provide make-set-of-possible-values
          (struct-out cell)
          make-cell
