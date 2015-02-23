@@ -80,7 +80,7 @@
 ;;
 ;; PURPOSE: take a row and column number and return a symbol that 
 ;; signifies the box a row/col correspond to. Row options are upper/middle/lower
-;; and column options are left/middle/right
+;; and column options are left/middle/right. The result is in reverse row order
 ;;
 (define (box-lookup row col)
   (define (row-lookup r)
