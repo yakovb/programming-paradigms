@@ -12,7 +12,11 @@
 ;; PURPOSE: transform the elements of nested lists from A to B
 ;; given a function that takes A to B
 ;;
-
+(define (process-nested-elements func input)
+  (foldr (lambda (row z)
+           (cons (map (lambda (elem) (func elem)) row) z))
+         empty
+         input))
 
 
 ;; CONTRACT: make-set-of-possible-values: number -> set
