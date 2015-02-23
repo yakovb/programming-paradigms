@@ -109,11 +109,16 @@
          (check-equal? (cell-row elem) 2 "row should be 2")
          (check-equal? (cell-col elem) 1 "col should be 1")
          (check-eq? (cell-box elem) 'upper-left "box should be upper-left")
-         (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
+         (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))
       
-      ; check first cell ok -data, row, col, box singleton-checked?
-      ; check last cell ok -data, row, col, box singleton-checked?
-      ; check first cell of 2nd row ok -data, row, col, box singleton-checked?
+      (test-case
+       "Last element of the result (which is in reverse row order)"
+       (let ([elem (last result)])
+         (check-equal? (cell-data elem) (set 9) "expected set with single val 9")
+         (check-equal? (cell-row elem) 1 "row should be 1")
+         (check-equal? (cell-col elem) 9 "col should be 9")
+         (check-eq? (cell-box elem) 'upper-right "box should be upper-right")
+         (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
    
    ))
   
