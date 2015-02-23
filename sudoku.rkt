@@ -32,7 +32,7 @@
                          this-row
                          col-nums)
                     result)))))
-  (flatten (go transformed-puzzle 0 empty)))
+  (flatten (go transformed-puzzle 1 empty)))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
