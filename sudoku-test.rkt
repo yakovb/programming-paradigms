@@ -66,6 +66,22 @@
        (check-exn exn:fail? (lambda () (f 3 10)) "column error should have been thrown") 
        (check-exn exn:fail? (lambda () (f 10 6)) "row error should have been thrown"))))
    
+   (test-suite
+    "Processing of nested elements"
+    (let ([f process-nested-elements]
+          [ll-numbers '((1 2) (3 4))]
+          [ll-sets '(((set 1 2) (set 3 4)) ((set 5 6) (set 7 8)))]
+          [ll-strings '(("this" "that") ("who" "what"))])
+      
+      (test-case 
+       "convert numbers to sets")
+      
+      (test-case
+       "convert sets to lists")
+      
+      (test-case
+       "convert strings to numbers")))
+   
    ))
   
 (run-tests sudoku-tests)
