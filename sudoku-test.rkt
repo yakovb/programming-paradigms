@@ -97,6 +97,16 @@
       (check-equal? (car result) (list (set 1) (set 1 2 3 4 5 6 7 8 9)) "problem making ll-set")
       (check-equal? (caadr result) (set 3) "problem making ll-set")))
    
+   (test-suite
+    "Create flattened list of cell structs out of transformed puzzle"
+    (let* ([input (list (list (set 1) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9))
+                        (list (set 1 2 3 4 5 6 7 8 9) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9)))]
+           [result (cells-list input)])
+      ; check first cell ok -data, row, col, singleton-checked?
+      ; check last cell ok -data, row, col, singleton-checked?
+      ; check first cell of 2nd row ok -data, row, col, singleton-checked?
+      ))
+   
    ))
   
 (run-tests sudoku-tests)
