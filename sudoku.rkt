@@ -43,7 +43,6 @@
 ;;
 ;TODO TRANS should be custom func: remove ? from row? col? box?
 ;TODO singletons toggle their singleton-checked?
-;TODO PRED custom func: (singleton-checked? = #f) AND (cell-data size = 1)
 ;TODO each cell in singles needs to work on the OTHERS list separately, and consecutively
 ;output from one being input to the next, and THEN append this to SINGLES list
 (define (process-singletons pred trans input) 
