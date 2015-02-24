@@ -35,6 +35,15 @@
   (flatten (go transformed-puzzle 1 empty)))
 
 
+;; CONTRACT: process-singletons: (A -> Boolean) (A -> A) list-of-A -> list-of-A
+;;
+;; PURPOSE: partition a list into elems passing and failing the predicate. 
+;; Then modify the failing elements using the second passed-in function. Finally,
+;; combine and return the passing elements and the modified failing elements
+;;
+
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
