@@ -118,6 +118,7 @@
 ;;
 (provide transform
          cells-list
+         process-singletons
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
