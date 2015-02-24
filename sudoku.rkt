@@ -50,10 +50,9 @@
          #:func-passes [func-passes identity] 
          #:func-fails [func-fails identity] 
          input) 
-  (let-values ([(pass-pred fail-pred) (partition pred input)])
-    (append pass-pred (foldr (lambda (elem z) (cons (func-fails elem) z))
-                             empty
-                             fail-pred))))
+  (let*-values ([(pass-pred fail-pred) (partition pred input)]
+                [pass-pred1 (func-passes pass-pred)])
+    (append pass-pred1 (map func-fails fail-pred))))
 
 
 ;; CONTRACT: valid-singleton?: cell -> Boolean
