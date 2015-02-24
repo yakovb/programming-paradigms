@@ -58,7 +58,7 @@
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
 ;;
 (define (valid-singleton? cell)
-  (and (not cell-singleton-checked?)
+  (and (not (cell-singleton-checked? cell))
        (eq? 1 (set-count (cell-data cell)))))
 
 
