@@ -169,6 +169,22 @@
        (check-eq? (first c-assoc) 4 "row should be 4")
        (check-eq? (second c-assoc) 5 "column should be 5")
        (check-eq? (last c-assoc) 'middle-middle' "box should be middle-middle"))))
+   
+   (test-suite
+    "Make cell without certain numbers"
+    (let ([c-all (make-cell (set 1 2 3 4 5 6 7 8 9) 1 1 'upper-left)]      
+          [c-three (make-cell (set 3 6 9) 2 2 'upper-left)]          
+          [c-sngl (make-cell (set 5) 3 3 'upper-left)])
+      
+      (test-case
+       "removing 5 from cell with full set"
+       (check-equal? (cell-data (make-cell-without c-all 5)) (set 1 2 3 4 6 7 8 9)))
+      (test-case 
+       "removing 9 from a cell with three-set"
+       (check-equal? (cell-data (make-cell-without c-three 9)) (set 3 6)))
+      (test-case 
+       "removing val from singleton cell causes error"
+       (check-exn exn:fail? (make-cell-without c-sngl 5)))))
       
       ))
   
