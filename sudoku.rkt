@@ -57,7 +57,9 @@
 ;;
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
 ;;
-
+(define (valid-singleton? cell)
+  (and (not cell-singleton-checked?)
+       (eq? 1 (set-count (cell-data cell)))))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
@@ -131,6 +133,7 @@
 (provide transform
          cells-list
          process-singletons
+         valid-singleton?
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
