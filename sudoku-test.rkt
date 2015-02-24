@@ -134,12 +134,12 @@
       (test-case
        "Situation where all elements fail the predicate"
        (let ([pred string?])
-         (check-equal? (f pred dbl in) (list 1 2 3 4 5 6))))
+         (check-equal? (f pred dbl in) (list 2 4 6 8 10 12))))
          
       (test-case
        "Situation where all elements pass the predicate"
        (let ([pred number?])
-         (check-equal? (f pred dbl in) (list 2 4 6 8 10 12))))
+         (check-equal? (f pred dbl in) (list 1 2 3 4 5 6))))
        
       (test-case
        "Situation where some elements pass the predicate"
