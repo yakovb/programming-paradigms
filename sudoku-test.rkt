@@ -126,8 +126,8 @@
          (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
    
    (test-suite
-    "Behaviour of process-singletons function"
-    (let ([f process-singletons]
+    "Behaviour of separate-singletons function"
+    (let ([f separate-singletons]
           [dbl (lambda (x) (* 2 x))]
           [in '(1 2 3 4 5 6)])
       

@@ -45,7 +45,7 @@
 ;TODO singletons toggle their singleton-checked?
 ;TODO each cell in singles needs to work on the OTHERS list separately, and consecutively
 ;output from one being input to the next, and THEN append this to SINGLES list
-(define (process-singletons pred trans input) 
+(define (separate-singletons pred trans input) 
   (let-values ([(singles others) (partition pred input)])
     (append singles (foldr (lambda (elem z) (cons (trans elem) z))
                            empty
@@ -131,7 +131,7 @@
 ;;
 (provide transform
          cells-list
-         process-singletons
+         separate-singletons
          valid-singleton?
          process-nested-elements
          make-set-of-possible-values
