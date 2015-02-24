@@ -145,6 +145,15 @@
        "Situation where some elements pass the predicate"
        (let ([pred even?])
          (check-equal? (f pred dbl in) (list 2 4 6 2 6 10))))))
+   
+   (test-suite
+    "Determine if cell is a singleton that should be processed"
+    (let ([sgl-NO-chkd-NO (cell (set 1 2) 1 1 'upper-left #f)]
+          [sgl-YES-chkd-NO (cell (set 2) 1 1 'upper-left #f)]
+          [sgl-YES-chkd-YES (cell (set 2) 1 1 'upper-left #t)])
+      (check-eq? (valid-singleton? sgl-NO-chkd-NO) #f) 
+      (check-eq? (valid-singleton? sgl-YES-chkd-NO) #t)
+      (check-eq? (valid-singleton? sgl-YES-chkd-YES) #f)))
       
       ))
   
