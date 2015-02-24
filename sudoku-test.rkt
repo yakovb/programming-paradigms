@@ -158,6 +158,17 @@
       (check-eq? (valid-singleton? sgl-NO-chkd-NO) #f) 
       (check-eq? (valid-singleton? sgl-YES-chkd-NO) #t)
       (check-eq? (valid-singleton? sgl-YES-chkd-YES) #f)))
+   
+   (test-suite
+    "Getting cell associations"
+    
+    (test-case
+     "middle-middle cell"
+     (let* ([c (make-cell (set 1 2) 4 5 'middle-middle)]
+           [c-assoc (cell-associations c)])
+       (check-eq? (first c-assoc) 4 "row should be 4")
+       (check-eq? (second c-assoc) 5 "column should be 5")
+       (check-eq? (last c-assoc) 'middle-middle' "box should be middle-middle"))))
       
       ))
   
