@@ -74,6 +74,14 @@
   (list (cell-row c) (cell-col c) (cell-box c)))
 
 
+;; CONTRACT: make-cell-without: cell number -> cell
+;;
+;; PURPOSE: given a cell and a number, makes a new cell similar to the original
+;; except that its set does not contain the number passed as the argument to this function
+;;
+
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
