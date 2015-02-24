@@ -65,6 +65,13 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
+;; CONTRACT: cell-associations: cell -> list(number number symbol)
+;;
+;; PURPOSE: extracts the row, column and box associated with a given 
+;; cell and returns these as a list
+;;
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
