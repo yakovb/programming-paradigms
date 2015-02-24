@@ -41,7 +41,12 @@
 ;; Then modify the failing elements using the second passed-in function. Finally,
 ;; combine and return the passing elements and the modified failing elements
 ;;
-(define (process-singletons pred trans input)
+;TODO TRANS should be custom func: remove ? from row? col? box?
+;TODO singletons toggle their singleton-checked?
+;TODO PRED custom func: (singleton-checked? = #f) AND (cell-data size = 1)
+;TODO each cell in singles needs to work on the OTHERS list separately, and consecutively
+;output from one being input to the next, and THEN append this to SINGLES list
+(define (process-singletons pred trans input) 
   (let-values ([(singles others) (partition pred input)])
     (append singles (foldr (lambda (elem z) (cons (trans elem) z))
                            empty
