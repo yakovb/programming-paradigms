@@ -45,11 +45,15 @@
 ;TODO singletons toggle their singleton-checked?
 ;TODO each cell in singles needs to work on the OTHERS list separately, and consecutively
 ;output from one being input to the next, and THEN append this to SINGLES list
-(define (separate-singletons pred trans input) 
-  (let-values ([(singles others) (partition pred input)])
-    (append singles (foldr (lambda (elem z) (cons (trans elem) z))
-                           empty
-                           others))))
+(define (separate-singletons 
+         pred 
+         #:func-passes [func-passes identity] 
+         #:func-fails [func-fails identity] 
+         input) 
+  (let-values ([(pass-pred fail-pred) (partition pred input)])
+    (append pass-pred (foldr (lambda (elem z) (cons (func-fails elem) z))
+                             empty
+                             fail-pred))))
 
 
 ;; CONTRACT: valid-singleton?: cell -> Boolean
