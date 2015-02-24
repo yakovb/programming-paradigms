@@ -125,6 +125,17 @@
          (check-eq? (cell-box elem) 'upper-right "box should be upper-right")
          (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
    
+   (test-suite
+    "Behaviour of process-singletons function"
+    (test-case
+     "Situation where all elements fail the predicate")
+    
+    (test-case
+     "Situation where all elements pass the predicate")
+    
+    (test-case
+     "Situation where some elements pass the predicate"))
+   
    ))
   
 (run-tests sudoku-tests)
