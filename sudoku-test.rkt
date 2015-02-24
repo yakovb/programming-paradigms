@@ -146,6 +146,10 @@
        (let ([pred even?])
          (check-equal? (f pred #:func-fails dbl in) (list 2 4 6 2 6 10))))))
    
+   ;;TODO test-suite separate-singletons with action on passes
+   
+   ;;TODO test-suite separate-singletons with no action ie default funcs for passes and fails
+   
    (test-suite
     "Determine if cell is a singleton that should be processed"
     (let ([sgl-NO-chkd-NO (cell (set 1 2) 1 1 'upper-left #f)]
