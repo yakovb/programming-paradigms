@@ -70,6 +70,8 @@
 ;; PURPOSE: extracts the row, column and box associated with a given 
 ;; cell and returns these as a list
 ;;
+(define (cell-associations c)
+  (list (cell-row c) (cell-col c) (cell-box c)))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
@@ -144,6 +146,7 @@
          cells-list
          separate-singletons
          valid-singleton?
+         cell-associations
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
