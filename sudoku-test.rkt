@@ -86,7 +86,7 @@
       
       (test-case
        "convert sets to lists"
-       (let ([result (f (lambda (e) (set->list e)) ll-sets)])
+       (let ([result (f (lambda (e) (reverse (set->list e))) ll-sets)])
          (check-equal? (caar result) '(1 2) "problem in sets to list")
          (check-equal? (cdr result) '(((5 6) (7 8))) "problem in sets to list")))
       
