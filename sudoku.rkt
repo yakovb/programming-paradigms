@@ -79,7 +79,11 @@
 ;; PURPOSE: given a cell and a number, makes a new cell similar to the original
 ;; except that its set does not contain the number passed as the argument to this function
 ;;
-
+(define (make-cell-without c num)
+  (let ([new-set (set-subtract (cell-data c) (set num))])
+    (if (set-empty? new-set)
+        (error "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!")
+        (make-cell new-set (cell-row c) (cell-col c) (cell-box c)))))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
@@ -155,6 +159,7 @@
          separate-singletons
          valid-singleton?
          cell-associations
+         make-cell-without
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
