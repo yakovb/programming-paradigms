@@ -144,7 +144,7 @@
       (test-case
        "Situation where some elements pass the predicate"
        (let ([pred even?])
-         (check-equal? (f pred dbl in) (list 1 2 3 4 5 6))))))
+         (check-equal? (f pred dbl in) (list 2 4 6 2 6 10))))))
       
       ))
   
