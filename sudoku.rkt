@@ -51,7 +51,7 @@
          #:func-fails [func-fails identity] 
          input) 
   (let*-values ([(pass-pred fail-pred) (partition pred input)]
-                [pass-pred1 (func-passes pass-pred)])
+                [(pass-pred1) (func-passes pass-pred)])
     (append pass-pred1 (map func-fails fail-pred))))
 
 
