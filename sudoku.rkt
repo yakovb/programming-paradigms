@@ -41,7 +41,11 @@
 ;; Then modify the failing elements using the second passed-in function. Finally,
 ;; combine and return the passing elements and the modified failing elements
 ;;
-
+(define (process-singletons pred trans input)
+  (let-values ([(singles others) (partition pred input)])
+    (append singles (foldr (lambda (elem z) (cons (trans elem) z))
+                           empty
+                           others))))
 
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
