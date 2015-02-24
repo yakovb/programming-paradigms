@@ -53,6 +53,13 @@
                            others))))
 
 
+;; CONTRACT: valid-singleton?: cell -> Boolean
+;;
+;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
+;;
+
+
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
