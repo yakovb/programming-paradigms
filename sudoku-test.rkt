@@ -184,7 +184,8 @@
        (check-equal? (cell-data (make-cell-without c-three 9)) (set 3 6)))
       (test-case 
        "removing val from singleton cell causes error"
-       (check-exn exn:fail? (make-cell-without c-sngl 5)))))
+       (check-exn exn:fail? (lambda () (make-cell-without c-sngl 5)) 
+                  "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!"))))
       
       ))
   
