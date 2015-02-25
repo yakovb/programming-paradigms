@@ -42,14 +42,15 @@
 ;; the resulting list of modified cells
 ;;
 (define (reduce-singletons input)
-  (let-values ([(singles others) (partition valid-singleton? input)])               
-    (let ([processed-others  (for/list ([non-sngl others]
-                                        [sngl singles])
-                               (if (associated-cells? non-sngl sngl)
-                                   (make-cell-without (cell-data sngl) non-sngl)
-                                   (non-sngl)))])
-      (append (toggle-checked-singletons singles) processed-others))))
-                 
+  (let-values ([(singles others) (partition valid-singleton? input)])    
+    (if (empty? singles)
+        #f
+        (let ([processed-others  (for/list ([non-sngl others]
+                                            [sngl singles])
+                                   (if (associated-cells? non-sngl sngl)
+                                       (make-cell-without (cell-data sngl) non-sngl)
+                                       (non-sngl)))])
+          (append (toggle-checked-singletons singles) processed-others)))))
 
 
 ;; CONTRACT: process-singletons: (A -> Boolean) (A -> A) list-of-A -> list-of-A
