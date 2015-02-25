@@ -198,6 +198,7 @@
          associated-cells?
          cell-associations
          make-cell-without
+         toggle-checked-singletons
          process-nested-elements
          make-set-of-possible-values
          (struct-out cell)
