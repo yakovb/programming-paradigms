@@ -44,7 +44,7 @@
     (let ([processed-others 
            (for/list ([non-sngl others]
                       [sngl singles])
-             (if (associated-cells non-sngl sngl)
+             (if (associated-cells? non-sngl sngl)
                  (make-new-cell-without (cell-data sngl) non-sngl)
                  (non-sngl)))])
       (append (toggle-checked-singletons singles) processed-others))))
@@ -78,6 +78,17 @@
 (define (valid-singleton? cell)
   (and (not (cell-singleton-checked? cell))
        (eq? 1 (set-count (cell-data cell)))))
+
+
+;; CONTRACT: associated-cells?: cell cell -> boolean
+;;
+;; PURPOSE: determines whether two cells share a row, column, or box
+;;
+(define (associated-cells? c1 c2)
+  (let ([c1-assoc (cell-associations c1)]
+        [c2-assoc (cell-associations c2)])
+    (for/or ([elem c1-assoc])
+      (member elem c2-assoc))))
 
 
 ;; CONTRACT: cell-associations: cell -> list(number number symbol)
