@@ -107,7 +107,7 @@
 ;; except that its set does not contain the number passed as the argument to this function
 ;;
 (define (make-cell-without num c)
-  (let ([new-set (set-subtract (cell-data c) (set num))])
+  (let ([new-set (set-subtract (cell-data c) num)])
     (if (set-empty? new-set)
         (error "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!")
         (make-cell new-set (cell-row c) (cell-col c) (cell-box c)))))
