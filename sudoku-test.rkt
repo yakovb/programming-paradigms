@@ -71,6 +71,7 @@
        (check-exn exn:fail? (lambda () (f 3 10)) "column error should have been thrown") 
        (check-exn exn:fail? (lambda () (f 10 6)) "row error should have been thrown"))))
    
+   
    (test-suite
     "Processing of nested elements"
     (let ([f process-nested-elements]
@@ -96,17 +97,20 @@
          (check-equal? (caar result) 4 "problem in srings to numbers")
          (check-equal? (caadr result) 3 "problem in srings to numbers")))))
    
+   
    (test-suite
     "Transform sudoku puzzle from list of list of number to list of list of sets"
     (let ([result (transform '((1 0) (3 4)))])
       (check-equal? (car result) (list (set 1) (set 1 2 3 4 5 6 7 8 9)) "problem making ll-set")
       (check-equal? (caadr result) (set 3) "problem making ll-set")))
    
+   
    (test-suite
     "Create flattened list of cell structs out of transformed puzzle"
     (let* ([input (list (list (set 1) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9))
                         (list (set 1 2 3 4 5 6 7 8 9) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9)))]
            [result (cells-list input)])
+      
       (test-case
        "First element of the result (which is in reverse row order)"
        (let ([elem (first result)])
@@ -124,6 +128,7 @@
          (check-equal? (cell-col elem) 9 "col should be 9")
          (check-eq? (cell-box elem) 'upper-right "box should be upper-right")
          (check-false (cell-singleton-checked? elem) "singleton-checked? should be #f")))))
+   
    
    (test-suite
     "Behaviour of separate-singletons function"
@@ -150,6 +155,7 @@
    
    ;;TODO test-suite separate-singletons with no action ie default funcs for passes and fails
    
+   
    (test-suite
     "Determine if cell is a singleton that should be processed"
     (let ([sgl-NO-chkd-NO (cell (set 1 2) 1 1 'upper-left #f)]
@@ -158,6 +164,7 @@
       (check-eq? (valid-singleton? sgl-NO-chkd-NO) #f) 
       (check-eq? (valid-singleton? sgl-YES-chkd-NO) #t)
       (check-eq? (valid-singleton? sgl-YES-chkd-YES) #f)))
+   
    
    (test-suite
     "Getting cell associations"
@@ -170,6 +177,7 @@
        (check-eq? (second c-assoc) 5 "column should be 5")
        (check-eq? (last c-assoc) 'middle-middle' "box should be middle-middle"))))
    
+   
    (test-suite
     "Make cell without certain numbers"
     (let ([c-all (make-cell (set 1 2 3 4 5 6 7 8 9) 1 1 'upper-left)]      
@@ -179,13 +187,16 @@
       (test-case
        "removing 5 from cell with full set"
        (check-equal? (cell-data (make-cell-without (set 5) c-all)) (set 1 2 3 4 6 7 8 9)))
+     
       (test-case 
        "removing 9 from a cell with three-set"
        (check-equal? (cell-data (make-cell-without (set 9) c-three)) (set 3 6)))
+     
       (test-case 
        "removing val from singleton cell causes error"
        (check-exn exn:fail? (lambda () (make-cell-without (set 5) c-sngl)) 
                   "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!"))))
+   
    
    (test-suite
     "Toggle checked singletons"
@@ -197,6 +208,13 @@
             [c2 (last clist)])
        (check-eq? (cell-singleton-checked? c1) #t)
        (check-eq? (cell-singleton-checked? c2) #t))))
+   
+   
+   (test-suite
+    "Associated cells"
+    
+    (test-case
+     "
    
       ))
   
