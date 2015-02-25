@@ -113,6 +113,16 @@
         (make-cell new-set (cell-row c) (cell-col c) (cell-box c)))))
 
 
+;; CONTRACT: toggle-checked-singletons: list-of-cells -> list-of-cells
+;;
+;; PURPOSE: once a singleton cell has had its data removed from associated
+;; rows, columns and boxes, it is marked as checked
+;;
+(define (toggle-checked-singletons singles)
+  (map (lambda (c) 
+         (make-cell (cell-data c) (cell-row c) (cell-col c) (cell-box c) #t))
+       singles))
+
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
 ;;
 ;; PURPOSE: transform the elements of nested lists from A to B
