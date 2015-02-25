@@ -234,7 +234,19 @@
      (let ([lst (list (make-cell (set 1 2 3) 1 1 'upper-left)
                       (make-cell (set 4 6 7) 6 6 'middle-middle)
                       (make-cell (set 6 7) 9 9 'lower-right))])
-       (check-false (reduce-singletons lst) "should be false as no singletons in list"))))
+       (check-false (reduce-singletons lst) "should be false as no singletons in list")))
+    
+    (test-case
+     "list with one singleton"
+     (let* ([c-sngl (make-cell (set 1) 1 1 'upper-middle)]
+            [c1-touch (make-cell (set 1 2 3) 2 2 'upper-middle)]
+            [c2-leave (make-cell (set 1 5 7) 9 9 'lower-right)]
+            [c3-touch (make-cell (set 1 9) 1 9 'upper-right)]
+            [lst (reduce-singletons (list c1-touch c2-leave c-sngl c3-touch))])
+       (check-true (cell-singleton-checked? (first lst)) "singleton should be processed")
+       (check-equal? (cell-data (fourth lst)) (set 2 3) "c1-touch should have had its set reduced")
+       (check-equal? (cell-data (third lst)) (set 1 5 7) "c2-leave should not have had its set reduced")
+       (check-equal? (cell-data (second lst)) (set 9) "c3-touch should have had its set reduced"))))
    
    ))
   
