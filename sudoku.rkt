@@ -46,7 +46,7 @@
     (let ([processed-others  (for/list ([non-sngl others]
                                         [sngl singles])
                                (if (associated-cells? non-sngl sngl)
-                                   (make-new-cell-without (cell-data sngl) non-sngl)
+                                   (make-cell-without (cell-data sngl) non-sngl)
                                    (non-sngl)))])
       (append (toggle-checked-singletons singles) processed-others))))
                  
