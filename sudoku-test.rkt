@@ -186,7 +186,18 @@
        "removing val from singleton cell causes error"
        (check-exn exn:fail? (lambda () (make-cell-without (set 5) c-sngl)) 
                   "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!"))))
-      
+   
+   (test-suite
+    "Toggle checked singletons"
+    (test-case
+     "should accept all input as it's caller's responsibility to ensure correct args passed in"
+     (let* ([clist (toggle-checked-singletons 
+                    (list (make-cell (set 1) 1 1 'upper-left) (make-cell (set 1 2) 1 1 'upper-left #t)))]
+            [c1 (first clist)]
+            [c2 (last clist)])
+       (check-eq? (cell-singleton-checked? c1) #t)
+       (check-eq? (cell-singleton-checked? c2) #t))))
+   
       ))
   
 (run-tests sudoku-tests)
