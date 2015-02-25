@@ -225,6 +225,17 @@
            [c2 (make-cell (set 4 5) 9 9 'lower-right)])
        (check-false (associated-cells? c1 c2) "cells should not be associated"))))
    
-      ))
+   
+   (test-suite
+    "Reduce singletons"
+    
+    (test-case
+     "list with no singletons"
+     (let ([lst (list (make-cell (set 1 2 3) 1 1 'upper-left)
+                      (make-cell (set 4 6 7) 6 6 'middle-middle)
+                      (make-cell (set 6 7) 9 9 'lower-right))])
+       (check-false (reduce-singletons lst) "should be false as no singletons in list"))))
+   
+   ))
   
 (run-tests sudoku-tests)
