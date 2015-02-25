@@ -214,7 +214,16 @@
     "Associated cells"
     
     (test-case
-     "
+     "cells with an associations"
+     (let ([c1 (make-cell (set 2) 1 1 'upper-left)]
+           [c2 (make-cell (set 4 5) 3 3 'upper-left)])
+       (check-true (associated-cells? c1 c2) "cells should be associated")))
+    
+    (test-case
+     "cells without an associations"
+     (let ([c1 (make-cell (set 2) 1 1 'upper-left)]
+           [c2 (make-cell (set 4 5) 9 9 'lower-right)])
+       (check-false (associated-cells? c1 c2) "cells should not be associated"))))
    
       ))
   
