@@ -35,6 +35,22 @@
   (flatten (go transformed-puzzle 1 empty)))
 
 
+;; CONTRACT: 
+;;
+;; PURPOSE: 
+;;
+(define (reduce-singletons input)
+  (let-values ([(singles others) (partition valid-singleton? input)])               
+    (let ([processed-others 
+           (for/list ([non-sngl others]
+                      [sngl singles])
+             (if (associated-cells non-sngl sngl)
+                 (make-new-cell-without (cell-data sngl) non-sngl)
+                 (non-sngl)))])
+      (append (toggle-checked-singletons singles) processed-others))))
+                 
+
+
 ;; CONTRACT: process-singletons: (A -> Boolean) (A -> A) list-of-A -> list-of-A
 ;;
 ;; PURPOSE: partition a list into elems passing and failing the predicate. 
@@ -78,7 +94,7 @@
 ;; PURPOSE: given a cell and a number, makes a new cell similar to the original
 ;; except that its set does not contain the number passed as the argument to this function
 ;;
-(define (make-cell-without c num)
+(define (make-cell-without num c)
   (let ([new-set (set-subtract (cell-data c) (set num))])
     (if (set-empty? new-set)
         (error "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!")
