@@ -185,6 +185,7 @@
          cells-list
          separate-singletons
          valid-singleton?
+         associated-cells?
          cell-associations
          make-cell-without
          process-nested-elements
