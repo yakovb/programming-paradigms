@@ -178,13 +178,13 @@
       
       (test-case
        "removing 5 from cell with full set"
-       (check-equal? (cell-data (make-cell-without c-all 5)) (set 1 2 3 4 6 7 8 9)))
+       (check-equal? (cell-data (make-cell-without 5 c-all)) (set 1 2 3 4 6 7 8 9)))
       (test-case 
        "removing 9 from a cell with three-set"
-       (check-equal? (cell-data (make-cell-without c-three 9)) (set 3 6)))
+       (check-equal? (cell-data (make-cell-without 9 c-three)) (set 3 6)))
       (test-case 
        "removing val from singleton cell causes error"
-       (check-exn exn:fail? (lambda () (make-cell-without c-sngl 5)) 
+       (check-exn exn:fail? (lambda () (make-cell-without 5 c-sngl)) 
                   "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!"))))
       
       ))
