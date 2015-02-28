@@ -53,26 +53,6 @@
           (append (toggle-checked-singletons singles) processed-others)))))
 
 
-;; CONTRACT: process-singletons: (A -> Boolean) (A -> A) list-of-A -> list-of-A
-;;
-;; PURPOSE: partition a list into elems passing and failing the predicate. 
-;; Then modify the failing elements using the second passed-in function. Finally,
-;; combine and return the passing elements and the modified failing elements
-;;
-;TODO TRANS should be custom func: remove ? from row? col? box?
-;TODO singletons toggle their singleton-checked?
-;TODO each cell in singles needs to work on the OTHERS list separately, and consecutively
-;output from one being input to the next, and THEN append this to SINGLES list
-(define (separate-singletons 
-         pred 
-         #:func-passes [func-passes identity] 
-         #:func-fails [func-fails identity] 
-         input) 
-  (let*-values ([(pass-pred fail-pred) (partition pred input)]
-                [(pass-pred1) (func-passes pass-pred)])
-    (append pass-pred1 (map func-fails fail-pred))))
-
-
 ;; CONTRACT: valid-singleton?: cell -> Boolean
 ;;
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1

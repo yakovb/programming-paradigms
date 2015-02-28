@@ -131,32 +131,6 @@
    
    
    (test-suite
-    "Behaviour of separate-singletons function"
-    (let ([f separate-singletons]
-          [dbl (lambda (x) (* 2 x))]
-          [in '(1 2 3 4 5 6)])
-      
-      (test-case
-       "Situation where all elements fail the predicate"
-       (let ([pred string?])
-         (check-equal? (f pred #:func-fails dbl in) (list 2 4 6 8 10 12))))
-         
-      (test-case
-       "Situation where all elements pass the predicate"
-       (let ([pred number?])
-         (check-equal? (f pred #:func-fails dbl in) (list 1 2 3 4 5 6))))
-       
-      (test-case
-       "Situation where some elements pass the predicate"
-       (let ([pred even?])
-         (check-equal? (f pred #:func-fails dbl in) (list 2 4 6 2 6 10))))))
-   
-   ;;TODO test-suite separate-singletons with action on passes
-   
-   ;;TODO test-suite separate-singletons with no action ie default funcs for passes and fails
-   
-   
-   (test-suite
     "Determine if cell is a singleton that should be processed"
     (let ([sgl-NO-chkd-NO (cell (set 1 2) 1 1 'upper-left #f)]
           [sgl-YES-chkd-NO (cell (set 2) 1 1 'upper-left #f)]
