@@ -113,13 +113,15 @@
 ;; no singleton is located and the return val is #f
 ;;
 (define (make-single-if-poss test-cell test-subjects)
-  (let ([result (for/or ([num (cell-data test-cell)])
+  (let* ([result (for/lists (result)
+                  ([num (cell-data test-cell)])
                   (if (not (member num
                                    (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
                       (make-singleton test-cell num)
-                      #f))])
-    (if result
-        result
+                      #f))]
+         [found (filter (lambda (r) (not (false? r))) result)])
+    (if (= 1 (length found))
+        (first found)
         test-cell)))
          
 
