@@ -78,6 +78,8 @@
                 [(c-rest) (rest candidates)]
                 [(associated others) (partition (lambda (cell) (associated-cells? c-first cell))
                                                 c-rest)])
+    ; TODO this bit needs to loop until all candidates and their associations are processed.
+    ; Do it via separate function
     (let ([result (loopy c-first associated 0)])
       (if result
           (append result checked others)
