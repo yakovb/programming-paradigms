@@ -61,25 +61,26 @@
     (append singles (singles-in-candidate-cells candidates))))
    
 
-;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells
+;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells boolean
 ;;
 ;; PURPOSE: in all cells that aren't already singletons, find all the cells which can be 
-;; reduced to singletons and make them so.
+;; reduced to singletons and make them so. If any changes are made, return the new list of
+;; cells along with a #t flag, otherwise return the original input with a #f flag
 ;;
 (define (singles-in-candidate-cells input)
   
-  (define (go input n)
+  (define (go input n change-flag)
     (if (= n (length input))
-        input
+        (values input change-flag)
         (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? (first input)
                                                                                         cell))
                                                       input)]
-                     [(new-associated) (singles-in-associated-cells associated)]
+                     [(new-associated result-flag) (singles-in-associated-cells associated)]
                      [(rejoined) (append new-associated others)]
                      [(new-input) (to-end-of-list (first rejoined) (rest rejoined))])
-          (go new-input (+ n 1)))))
+          (go new-input (+ n 1) (and change-flag result-flag)))))
   
-    (go input 0))
+    (go input 0 #f))
 
 
 ;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells boolean
@@ -93,7 +94,7 @@
   
   (define (go input n change-flag)
     (if (= n (length input))
-        input
+        (values input change-flag)
         (let*-values ([(new-single result-flag) (make-single-if-poss (first input) (rest input))]
                       [(new-input) (to-end-of-list new-single (rest input))])
           (go new-input (+ n 1) (and change-flag result-flag)))))
