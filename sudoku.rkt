@@ -74,7 +74,7 @@
         #f)))
 
 
-;; CONTRACT: singles-in-associated-cells: cell list-of-cells -> boolean (list-of-cells if #t)
+;; CONTRACT: singles-in-associated-cells: cell list-of-cells -> list-of-cells
 ;;
 ;; PURPOSE: finds all the cells which have a number not occuring elsewhere in their associated
 ;; cells. Returns these cells as singleton cells along with their associated cells
@@ -258,6 +258,7 @@
 (provide transform
          cells-list
          reduce-singletons
+         singles-in-associated-cells
          valid-singleton?
          make-single-if-poss
          associated-cells?
