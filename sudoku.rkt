@@ -67,8 +67,8 @@
   (if (empty? singles)
       others
       (remove-from-associated (rest singles)
-                              (let ([single (head singles)])
-                                (map (lambda (other) (if (assocated-cells? other single)
+                              (let ([single (first singles)])
+                                (map (lambda (other) (if (associated-cells? other single)
                                                          (make-cell-without (cell-data single) other)
                                                          other))
                                      others)))))
