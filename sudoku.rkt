@@ -164,8 +164,7 @@
 (define (associated-cells? c1 c2)
   (let ([c1-assoc (cell-associations c1)]
         [c2-assoc (cell-associations c2)])
-    (for/or ([elem c1-assoc])
-      (member elem c2-assoc))))
+    (ormap equal? c1-assoc c2-assoc)))
 
 
 ;; CONTRACT: cell-associations: cell -> list(number number symbol)
