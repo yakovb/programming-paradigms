@@ -173,6 +173,20 @@
    
    
    (test-suite
+    "Make a singleton cell"
+    (let ([c1 (make-cell (set 1 2 3 4) 1 1 'upper-left)]
+          [c2 (make-cell (set 1) 1 1 'upper-left)])
+      
+      (test-case
+       "set size > 1"
+       (let ([c1-single (make-singleton c1 3)])
+         (check-equal? (cell-data c1-single) (set 3) "new set data should only contain 3")
+         (check-eq? (cell-row c1-single) 1 "row should be the same")
+         (check-eq? (cell-col c1-single) 1 "col should be the same")
+         (check-eq? (cell-box c1-single) 'upper-left "box should be the same"))
+   
+   
+   (test-suite
     "Toggle checked singletons"
     (test-case
      "should accept all input as it's caller's responsibility to ensure correct args passed in"
