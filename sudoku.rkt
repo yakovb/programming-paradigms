@@ -73,21 +73,17 @@
 (define (singles-in-candidate-cells input)
   
   (define (go input n)
-    (if (= i (length input))
+    (if (= n (length input))
         input
         (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? (first input)
                                                                                         (rest input)))
                                                       input)]
                      [(new-associated) (singles-in-associated-cells associated)]
-                     [(new-head new-tail) (to-end-of-list (first new-associated) (rest new-associated))])
-          (go (cons new-head new-tail)
-          (if found-single
-              (append found-single others)
-              (singles-in-candidate-cells (first tail) (append (rest tail) (list head)) (+ i 1)))))
+                     [(rejoined) (append new-associated others)]
+                     [(new-input) (to-end-of-list (first rejoined) (rest rejoined))])
+          (go new-input (+ n 1)))))
   
-  (let ([head (first input)]
-        [tail (rest input)])
-    (go head tail 0))))
+    (go input 0))
 
 
 ;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells
@@ -98,11 +94,11 @@
 (define (singles-in-associated-cells input)
   
   (define (go input n)
-    (if (= n (length input)
+    (if (= n (length input))
         input
-        (let*-values ([(new-single) (make-single-if-poss (first input) (tail input))]
-                      [(new-input) (to-end-of-list new-single (tail input))])
-          (go new-input (+ n 1))))))
+        (let*-values ([(new-single) (make-single-if-poss (first input) (rest input))]
+                      [(new-input) (to-end-of-list new-single (rest input))])
+          (go new-input (+ n 1)))))
   
   (go input 0))
 
