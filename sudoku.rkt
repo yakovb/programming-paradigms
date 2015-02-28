@@ -80,14 +80,23 @@
 ;; cells. Returns these cells as singleton cells along with their associated cells
 ;;
 (define (singles-in-associated-cells test-cell test-subjects)
+  
   (define (go test-cell test-subjects n)
     (if (= n (+ 1 (length test-subjects)))
-        #f
+        (cons test-cell test-subjects)
         (let ([new-single (found-single-num test-cell test-subjects)])
           (if new-single
-              (cons (make-singleton test-cell new-single)
-                    test-subjects)
-              (go (first test-subjects) (append (rest test-subjects) (list test-cell)) (+ n 1))))))
+              (let*-values ([(new-cell) (make-singleton test-cell new-single)]
+                           [(new-test-cell new-test-subjects) (to-end-of-list new-cell test-subjects)])
+                (go new-test-cell new-test-subjects (+ n 1)))
+              
+              (let-values ([(new-test-cell new-test-subjects) (to-end-of-list test-cell test-subjects)])
+                (go new-test-cell new-test-subjects (+ n 1)))))))
+  
+  (define (to-end-of-list head tail)
+    (values (first tail)
+            (append (rest tail) (list head))))
+  
   (go test-cell test-subjects 0))
                   
           
