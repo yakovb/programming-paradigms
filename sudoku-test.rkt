@@ -218,9 +218,9 @@
             [c3-touch (make-cell (set 1 9) 1 9 'upper-right)]
             [lst (reduce-singletons (list c1-touch c2-leave c-sngl c3-touch))])
        (check-true (cell-singleton-checked? (first lst)) "singleton should be processed")
-       (check-equal? (cell-data (fourth lst)) (set 2 3) "c1-touch should have had its set reduced")
+       (check-equal? (cell-data (second lst)) (set 2 3) "c1-touch should have had its set reduced")
        (check-equal? (cell-data (third lst)) (set 1 5 7) "c2-leave should not have had its set reduced")
-       (check-equal? (cell-data (second lst)) (set 9) "c3-touch should have had its set reduced"))))
+       (check-equal? (cell-data (fourth lst)) (set 9) "c3-touch should have had its set reduced"))))
    
    ))
   
