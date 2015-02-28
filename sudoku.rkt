@@ -62,28 +62,36 @@
         #f
         (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? head cell))
                                                      tail)]
-                     [(found-single) (loopy-associated head associated 0)])
+                     [(found-single) (singles-in-associated-cells head associated 0)])
           (if found-single
               (append found-single others)
               (loopy-candidates (first tail) (append (rest tail) (list head)) (+ i 1))))))
-                                                    
-  (define (loopy-associated fst rst i)
-    (if (= i (+ 1 (length rst)))
-        #f
-        (let ([new-single (found-single-num fst rst)])
-          (if new-single
-              (cons (make-cell (set new-single) (cell-row fst) (cell-col fst) (cell-box fst))
-                    rst)
-              (loopy-associated (first rst) (append (rest rst) (list fst)) (+ i 1))))))
-  
+                                                      
   (let*-values ([(singles candidates) (partition valid-singleton? input)]
                 [(result) (loopy-candidates (first candidates) (rest candidates) 0)])
     (if result
         (append singles result)
         #f)))
+
+
+;; CONTRACT: singles-in-associated-cells: cell list-of-cells -> boolean (list-of-cells if #t)
+;;
+;; PURPOSE: finds all the cells which have a number not occuring elsewhere in their associated
+;; cells. Returns these cells as singleton cells along with their associated cells
+;;
+(define (singles-in-associated-cells test-cell test-subjects)
+  (define (go test-cell test-subjects n)
+    (if (= n (+ 1 (length test-subjects)))
+        #f
+        (let ([new-single (found-single-num test-cell test-subjects)])
+          (if new-single
+              (cons (make-singleton test-cell new-single)
+                    test-subjects)
+              (go (first test-subjects) (append (rest test-subjects) (list test-cell)) (+ n 1))))))
+  (go test-cell test-subjects 0))
                   
           
-;; CONTRACT: valid-singleton?: cell -> Boolean
+;; CONTRACT: valid-singleton?: cell -> boolean
 ;;
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
 ;;
@@ -92,7 +100,7 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
-;; CONTRACT: found-single-num: cell list-of-cells -> boolean (number if true)
+;; CONTRACT: found-single-num: cell list-of-cells -> boolean (number if #t)
 ;;
 ;; PURPOSE: determine whether there is a number in cell that does not occur in the 
 ;; list-of-cells. If true, then you've located a singleton which is returned. Otherwise
