@@ -76,7 +76,7 @@
     (if (= n (length input))
         input
         (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? (first input)
-                                                                                        (rest input)))
+                                                                                        cell))
                                                       input)]
                      [(new-associated) (singles-in-associated-cells associated)]
                      [(rejoined) (append new-associated others)]
