@@ -60,11 +60,11 @@
   (define (loopy fst rst i)
     (if (= i (+ 1 (length rst)))
         #f
-        (let ([result (found-single-num fst rst)])
-          (cond
-            [result (cons (make-cell (set result) (cell-row fst) (cell-col fst) (cell-box fst))
-                          rst)]
-            [else (loopy (first rst) (append (rest rst) (list fst)) (+ 1 i))]))))
+        (let ([new-single (found-single-num fst rst)])
+          (if new-single
+              (cons (make-cell (set new-single) (cell-row fst) (cell-col fst) (cell-box fst))
+                    rst)
+              (loopy (first rst) (append (rest rst) (list fst)) (+ 1 i))))))
   
   (define (found-single-num fst rst)
     (for*/or ([num fst]
