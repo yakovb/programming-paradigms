@@ -183,7 +183,20 @@
          (check-equal? (cell-data c1-single) (set 3) "new set data should only contain 3")
          (check-eq? (cell-row c1-single) 1 "row should be the same")
          (check-eq? (cell-col c1-single) 1 "col should be the same")
-         (check-eq? (cell-box c1-single) 'upper-left "box should be the same"))
+         (check-eq? (cell-box c1-single) 'upper-left "box should be the same")))
+      
+      (test-case
+       "set size = 1"
+       (let ([c2-single (make-singleton c2 1)])
+         (check-equal? (cell-data c2-single) (set 1) "new set data should only contain 1")
+         (check-eq? (cell-row c2-single) 1 "row should be the same")
+         (check-eq? (cell-col c2-single) 1 "col should be the same")
+         (check-eq? (cell-box c2-single) 'upper-left "box should be the same")))
+      
+      (test-case
+       "set size > 1 but cell doesn't contain singleton value"
+       (check-exn exn:fail? (lambda () (make-singleton c1 5)) 
+                  "supplied singleton value is not possible in this cell"))))
    
    
    (test-suite
