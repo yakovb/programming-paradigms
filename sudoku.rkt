@@ -67,6 +67,15 @@
 ;; PURPOSE: take a list of singletons and remove their cell values from each
 ;; of their associated cells, returning the new, thinned, list of cells
 ;;
+(define (remove-from-associated singles others)
+  (if (empty? singles)
+      others
+      (remove-from-associated (rest singles)
+                              (let ([single (head singles)])
+                                (map (lambda (other) (if (assocated-cells? other single)
+                                                         (make-cell-without (cell-data single) other)
+                                                         other))
+                                     others)))))
 
 
 ;; CONTRACT: associated-cells?: cell cell -> boolean
