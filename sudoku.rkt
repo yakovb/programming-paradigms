@@ -49,16 +49,19 @@
                 (remove-from-associated singles others)))))
 
 
-;; CONTRACT: find-single-val-in-set: list-of-cells -> list-of-celss
+;; CONTRACT: find-single-val-in-set: list-of-cells -> list-of-cells boolean
 ;;
 ;; PURPOSE: given a list of cells, remove existing singletons and find the cells in the 
 ;; remaining list that contain numbers not occuring in the same row/cell/box (ie can be 
 ;; made into a singleton set). Turn these cells into singletons, rejoin them and their 
-;; associations onto the existing singletons and return the updated list of cells
+;; associations onto the existing singletons and return the updated list of cells. Return a 
+;; boolean flag with the resulting list of cells to signify whether any updates were made
+;; to the list
 ;;
 (define (find-single-val-in-set input)       
-  (let-values ([(singles candidates) (partition valid-singleton? input)])
-    (append singles (singles-in-candidate-cells candidates))))
+  (let*-values ([(singles candidates) (partition valid-singleton? input)]
+                [(results flag) (singles-in-candidate-cells candidates)])
+    (values (append singles results) flag)))
    
 
 ;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells boolean
