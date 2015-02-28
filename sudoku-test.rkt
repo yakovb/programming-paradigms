@@ -267,28 +267,43 @@
        "With nothing to find"
        (check-equal? (cell-data (make-single-if-poss test-fail lst)) (set 7 8 1) "Nothing should have been found"))))
    
-   
+  
    (test-suite
-    "Find singles in a list of associated cells"
-    (let ([one-single (list (make-cell (set 1 3) 1 1 'ul)
+    "Find singles in a list of cells"
+    (let* ([one-single (list (make-cell (set 1 3) 1 1 'ul)
                             (make-cell (set 3 6 9) 2 2 'ul)
                             (make-cell (set 1 6 3) 3 3 'ul))]
           [one-real-one-fake-single (list (make-cell (set 1 3) 1 1 'ul)
                              (make-cell (set 3 6 9) 2 2 'ul)
                              (make-cell (set 1 6 3 8) 3 3 'ul))]
-          [f singles-in-associated-cells])
+          [checked (list (make-cell (set 4) 1 2 'ul #t)
+                         (make-cell (set 5) 1 3 'ul #t))]
+          [full-one (append checked one-single)]
+          [full-two (append checked one-real-one-fake-single)])
       
       (test-case
-       "With one singleton to process"
-       (let ([result (f one-single)])
+       "Candidate cells with one singleton to process"
+       (let ([result (singles-in-candidate-cells
+                      full-one)])
+        
+         (check-true (valid-singleton? (first result)) "first cell should be singleton")
+         (check-equal? (cell-data (first result)) (set 4) "data of first cell should be 4")
+         (check-true (valid-singleton? (second result)) "second cell should be singleton")
+         (check-equal? (cell-data (second result)) (set 5) "data of first cell should be 5")))
+      
+      (test-case
+       "Associated cells with one singleton to process"
+       (let ([result (singles-in-associated-cells 
+                      one-single)])
          (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
          (check-eq? (cell-row (second result)) 2 "row should be 2")
          (check-eq? (cell-col (second result)) 2 "col should be 2")
          (check-eq? (cell-box (second result)) 'ul "box should be ul")))
       
       (test-case
-       "With two singletons to process"
-       (let ([result (f one-real-one-fake-single)])
+       "Associated cells with one real and one fake singleton to process"
+       (let ([result (singles-in-associated-cells 
+                      one-real-one-fake-single)])
          (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
          (check-eq? (cell-row (second result)) 2 "row should be 2")
          (check-eq? (cell-col (second result)) 2 "col should be 2")
