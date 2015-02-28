@@ -99,7 +99,7 @@
 ;; no singleton is located and the return val is #f
 ;;
 (define (found-single-num test-cell test-subjects)
-  (for/or ([num test-cell])
+  (for/or ([num (cell-data test-cell)])
     (if (not (member num
                      (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
         num

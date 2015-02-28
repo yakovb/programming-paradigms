@@ -6,6 +6,7 @@
 (define sudoku-tests
   (test-suite
    "Wrapper suite for all tests"
+   
    (test-suite
     "cell struct tests"
     (let ([c1 (cell (set 1 2 3) 1 1 'upper-left #t)]
@@ -248,6 +249,23 @@
        (check-equal? (cell-data (second lst)) (set 2 3) "c1-touch should have had its set reduced")
        (check-equal? (cell-data (third lst)) (set 1 5 7) "c2-leave should not have had its set reduced")
        (check-equal? (cell-data (fourth lst)) (set 9) "c3-touch should have had its set reduced"))))
+   
+   
+   (test-suite 
+    "Finding single numbers in cell list"
+    (let ([lst (list (make-cell (set 1 3) 1 1 'ul)
+                      (make-cell (set 3 6 7) 2 2 'ul)
+                      (make-cell (set 1 6 8) 3 3 'ul))]
+           [test-pass (make-cell (set 7 8 9) 1 3 'ul)]
+           [test-fail (make-cell (set 7 8 1) 1 3 'ul)])
+      
+      (test-case 
+       "With a singleton to find"
+       (check-eq? (found-single-num test-pass lst) 9 "9 should have been found"))
+       
+      (test-case
+       "With nothing to find"
+       (check-false (found-single-num test-fail lst) "Nothing should have been found"))))
    
    ))
   
