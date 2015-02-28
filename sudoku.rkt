@@ -153,7 +153,7 @@
 ;; in its set of possibilities, with all other cell member variables the same
 ;;
 (define (make-singleton c num)
-  (if (set-member? num (cell-data c))
+  (if (set-member? (cell-data c) num)
       (make-cell (set num) (cell-row c) (cell-col c) (cell-box c))
       (error "supplied singleton value is not possible in this cell")))
 
