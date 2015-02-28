@@ -84,14 +84,9 @@
   (define (go test-cell test-subjects n)
     (if (= n (+ 1 (length test-subjects)))
         (cons test-cell test-subjects)
-        (let ([new-single (make-single-if-poss test-cell test-subjects)])
-          (if new-single
-              (let*-values ([(new-cell) (make-singleton test-cell new-single)]
-                           [(new-test-cell new-test-subjects) (to-end-of-list new-cell test-subjects)])
-                (go new-test-cell new-test-subjects (+ n 1)))
-              
-              (let-values ([(new-test-cell new-test-subjects) (to-end-of-list test-cell test-subjects)])
-                (go new-test-cell new-test-subjects (+ n 1)))))))
+        (let*-values ([(new-single) (make-single-if-poss test-cell test-subjects)]
+                      [(new-test-cell new-test-subjects) (to-end-of-list new-single test-subjects)])
+          (go new-test-cell new-test-subjects (+ n 1)))))
   
   (define (to-end-of-list head tail)
     (values (first tail)
