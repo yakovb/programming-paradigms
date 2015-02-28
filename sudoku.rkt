@@ -45,12 +45,8 @@
   (let-values ([(singles others) (partition valid-singleton? input)])    
     (if (empty? singles)
         #f
-        (let ([processed-others  (for/list ([non-sngl others]
-                                            [sngl singles])
-                                   (if (associated-cells? non-sngl sngl)
-                                       (make-cell-without (cell-data sngl) non-sngl)
-                                       (non-sngl)))])
-          (append (toggle-checked-singletons singles) processed-others)))))
+        (append (toggle-checked-singletons singles) 
+                (remove-from-associated singles others)))))
 
 
 ;; CONTRACT: valid-singleton?: cell -> Boolean
