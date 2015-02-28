@@ -261,11 +261,11 @@
       
       (test-case 
        "With a singleton to find"
-       (check-eq? (found-single-num test-pass lst) 9 "9 should have been found"))
+       (check-equal? (cell-data (make-single-if-poss test-pass lst)) (set 9) "9 should have been found"))
        
       (test-case
        "With nothing to find"
-       (check-false (found-single-num test-fail lst) "Nothing should have been found"))))
+       (check-false (make-single-if-poss test-fail lst) "Nothing should have been found"))))
    
    ))
   

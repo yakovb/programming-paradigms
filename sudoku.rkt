@@ -84,7 +84,7 @@
   (define (go test-cell test-subjects n)
     (if (= n (+ 1 (length test-subjects)))
         (cons test-cell test-subjects)
-        (let ([new-single (found-single-num test-cell test-subjects)])
+        (let ([new-single (make-single-if-poss test-cell test-subjects)])
           (if new-single
               (let*-values ([(new-cell) (make-singleton test-cell new-single)]
                            [(new-test-cell new-test-subjects) (to-end-of-list new-cell test-subjects)])
@@ -115,11 +115,11 @@
 ;; list-of-cells. If true, then you've located a singleton which is returned. Otherwise
 ;; no singleton is located and the return val is #f
 ;;
-(define (found-single-num test-cell test-subjects)
+(define (make-single-if-poss test-cell test-subjects)
   (for/or ([num (cell-data test-cell)])
     (if (not (member num
                      (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
-        num
+        (make-singleton test-cell num)
         #f)))
          
 
@@ -264,7 +264,7 @@
          cells-list
          reduce-singletons
          valid-singleton?
-         found-single-num
+         make-single-if-poss
          associated-cells?
          cell-associations
          make-cell-without
