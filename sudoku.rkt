@@ -62,6 +62,13 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
+;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
+;;
+;; PURPOSE: take a list of singletons and remove their cell values from each
+;; of their associated cells, returning the new, thinned, list of cells
+;;
+
+
 ;; CONTRACT: associated-cells?: cell cell -> boolean
 ;;
 ;; PURPOSE: determines whether two cells share a row, column, or box
