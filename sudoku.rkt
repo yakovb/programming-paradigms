@@ -117,7 +117,7 @@
     (if (not (member num
                      (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
         (make-singleton test-cell num)
-        #f)))
+        test-cell)))
          
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
