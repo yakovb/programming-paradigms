@@ -83,10 +83,10 @@
           num
           #f)))
   
-  (let*-values ([(checked candidates) (partition valid-singleton? input)]
+  (let*-values ([(singles candidates) (partition valid-singleton? input)]
                 [(result) (loopy-candidates (first candidates) (rest candidates) 0)])
     (if result
-        (append checked result)
+        (append singles result)
         #f)))
                   
           
@@ -145,6 +145,15 @@
     (if (set-empty? new-set)
         (error "FAIL: attempted to make a cell with an empty set as data. Something has gone wrong!")
         (make-cell new-set (cell-row c) (cell-col c) (cell-box c)))))
+
+
+;; CONTRACT: make-singleton: cell number -> cell
+;;
+;; PURPOSE: given a cell and a number, make a new cell that only has the number
+;; in its set of possibilities, with all other cell member variables the same
+;;
+(define (make-singleton c num)
+  (make-cell (set num) (cell-row c) (cell-col c) (cell-box c)))
 
 
 ;; CONTRACT: toggle-checked-singletons: list-of-cells -> list-of-cells
@@ -232,6 +241,7 @@
          associated-cells?
          cell-associations
          make-cell-without
+         make-singleton
          toggle-checked-singletons
          process-nested-elements
          make-set-of-possible-values
