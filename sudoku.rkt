@@ -187,7 +187,6 @@
 (provide transform
          cells-list
          reduce-singletons
-         separate-singletons ; delete
          valid-singleton?
          associated-cells?
          cell-associations
