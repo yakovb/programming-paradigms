@@ -82,21 +82,23 @@
     (go input 0))
 
 
-;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells
+;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells boolean
 ;;
 ;; PURPOSE: finds all the cells which have a number not occuring elsewhere in their associated
-;; cells. Returns these cells as singleton cells along with their associated cells
+;; cells. Returns these cells as singleton cells along with their associated cells, along with #t
+;; if any changes have been made. Otherwise return the original input with #f to signify that no
+;; changes have been made 
 ;;
 (define (singles-in-associated-cells input)
   
-  (define (go input n)
+  (define (go input n change-flag)
     (if (= n (length input))
         input
-        (let*-values ([(new-single) (make-single-if-poss (first input) (rest input))]
+        (let*-values ([(new-single result-flag) (make-single-if-poss (first input) (rest input))]
                       [(new-input) (to-end-of-list new-single (rest input))])
-          (go new-input (+ n 1)))))
+          (go new-input (+ n 1) (and change-flag result-flag)))))
   
-  (go input 0))
+  (go input 0 #f))
 
 
 ;; CONTRACT: to-end-of-list: A list-of-A -> A list-of-A
