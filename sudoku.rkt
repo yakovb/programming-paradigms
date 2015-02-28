@@ -97,6 +97,7 @@
 ;; PURPOSE: determine whether there is a number in cell that does not occur in the 
 ;; list-of-cells. If true, then you've located a singleton which is returned. Otherwise
 ;; no singleton is located and the return val is #f
+;;
 (define (found-single-num test-cell test-subjects)
   (for/or ([num test-cell])
     (if (not (member num
@@ -246,6 +247,7 @@
          cells-list
          reduce-singletons
          valid-singleton?
+         found-single-num
          associated-cells?
          cell-associations
          make-cell-without
