@@ -57,21 +57,37 @@
 ;; the updated list
 ;;
 (define (locate-singletons input)
-  (define (loopy-candidates head tail i)
-    (if (= i (+ 1 (length tail)))
-        #f
-        (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? head cell))
-                                                     tail)]
-                     [(found-single) (singles-in-associated-cells head associated 0)])
-          (if found-single
-              (append found-single others)
-              (loopy-candidates (first tail) (append (rest tail) (list head)) (+ i 1))))))
-                                                      
+                                                       
   (let*-values ([(singles candidates) (partition valid-singleton? input)]
-                [(result) (loopy-candidates (first candidates) (rest candidates) 0)])
+                [(result) (singles-in-candidate-cells (first candidates) (rest candidates) 0)])
     (if result
         (append singles result)
         #f)))
+
+
+;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells
+;;
+;; PURPOSE: in all cells that aren't already singletons, find all the cells which can be 
+;; reduced to singletons and make them so.
+;;
+(define (singles-in-candidate-cells input)
+  
+  (define (go input n)
+    (if (= i (length input))
+        input
+        (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? (first input)
+                                                                                        (rest input)))
+                                                      input)]
+                     [(new-associated) (singles-in-associated-cells associated)]
+                     [(new-head new-tail) (to-end-of-list (first new-associated) (rest new-associated))])
+          (go (cons new-head new-tail)
+          (if found-single
+              (append found-single others)
+              (singles-in-candidate-cells (first tail) (append (rest tail) (list head)) (+ i 1)))))
+  
+  (let ([head (first input)]
+        [tail (rest input)])
+    (go head tail 0))))
 
 
 ;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells
@@ -81,20 +97,24 @@
 ;;
 (define (singles-in-associated-cells input)
   
-  (define (go test-cell test-subjects n)
-    (if (= n (+ 1 (length test-subjects)))
-        (cons test-cell test-subjects)
-        (let*-values ([(new-single) (make-single-if-poss test-cell test-subjects)]
-                      [(new-test-cell new-test-subjects) (to-end-of-list new-single test-subjects)])
-          (go new-test-cell new-test-subjects (+ n 1)))))
+  (define (go input n)
+    (if (= n (length input)
+        input
+        (let*-values ([(new-single) (make-single-if-poss (first input) (tail input))]
+                      [(new-input) (to-end-of-list new-single (tail input))])
+          (go new-input (+ n 1))))))
   
-  (define (to-end-of-list head tail)
-    (values (first tail)
-            (append (rest tail) (list head))))
-  
-  (let ([head (first input)]
-        [tail (rest input)])
-    (go head tail 0)))
+  (go input 0))
+
+
+;; CONTRACT: to-end-of-list: A list-of-A -> A list-of-A
+;;
+;; PURPOSE: given an item and a list, return a list where the last item is now
+;; the previous head, and the first item is now the previous second item
+;
+(define (to-end-of-list head tail)
+  (cons (first tail)
+        (append (rest tail) (list head))))
                   
           
 ;; CONTRACT: valid-singleton?: cell -> boolean
@@ -265,6 +285,7 @@
 (provide transform
          cells-list
          reduce-singletons
+         singles-in-candidate-cells
          singles-in-associated-cells
          valid-singleton?
          make-single-if-poss
