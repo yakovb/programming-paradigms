@@ -265,7 +265,38 @@
        
       (test-case
        "With nothing to find"
-       (check-false (make-single-if-poss test-fail lst) "Nothing should have been found"))))
+       (check-equal? (cell-data (make-single-if-poss test-fail lst)) (set 7 8 1) "Nothing should have been found"))))
+   
+   
+   (test-suite
+    "Find singles in a list of associated cells"
+    (let ([one-single (list (make-cell (set 1 3) 1 1 'ul)
+                            (make-cell (set 3 6 9) 2 2 'ul)
+                            (make-cell (set 1 6 3) 3 3 'ul))]
+          [one-real-one-fake-single (list (make-cell (set 1 3) 1 1 'ul)
+                             (make-cell (set 3 6 9) 2 2 'ul)
+                             (make-cell (set 1 6 3 8) 3 3 'ul))]
+          [f singles-in-associated-cells])
+      
+      (test-case
+       "With one singleton to process"
+       (let ([result (f one-single)])
+         (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (second result)) 2 "row should be 2")
+         (check-eq? (cell-col (second result)) 2 "col should be 2")
+         (check-eq? (cell-box (second result)) 'ul "box should be ul")))
+      
+      (test-case
+       "With two singletons to process"
+       (let ([result (f one-real-one-fake-single)])
+         (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (second result)) 2 "row should be 2")
+         (check-eq? (cell-col (second result)) 2 "col should be 2")
+         (check-eq? (cell-box (second result)) 'ul "box should be ul")
+         (check-equal? (cell-data (third result)) (set 1 6 3 8) "Nothing should be changed in the set")
+         (check-eq? (cell-row (third result)) 3 "row should be 3")
+         (check-eq? (cell-col (third result)) 3 "col should be 3")
+         (check-eq? (cell-box (third result)) 'ul "box should be ul")))))
    
    ))
   
