@@ -74,12 +74,12 @@
         #f)))
 
 
-;; CONTRACT: singles-in-associated-cells: cell list-of-cells -> list-of-cells
+;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells
 ;;
 ;; PURPOSE: finds all the cells which have a number not occuring elsewhere in their associated
 ;; cells. Returns these cells as singleton cells along with their associated cells
 ;;
-(define (singles-in-associated-cells test-cell test-subjects)
+(define (singles-in-associated-cells input)
   
   (define (go test-cell test-subjects n)
     (if (= n (+ 1 (length test-subjects)))
@@ -92,7 +92,9 @@
     (values (first tail)
             (append (rest tail) (list head))))
   
-  (go test-cell test-subjects 0))
+  (let ([head (first input)]
+        [tail (rest input)])
+    (go head tail 0)))
                   
           
 ;; CONTRACT: valid-singleton?: cell -> boolean
