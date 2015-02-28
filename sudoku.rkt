@@ -56,8 +56,7 @@
 ;; Turn this cell into a singleton, rejoin it onto the full list of cells  and return 
 ;; the updated list
 ;;
-(define (locate-singletons input)
-                                                       
+(define (locate-singletons input)       
   (let*-values ([(singles candidates) (partition valid-singleton? input)]
                 [(result) (singles-in-candidate-cells (first candidates) (rest candidates) 0)])
     (if result
