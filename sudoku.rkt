@@ -49,6 +49,16 @@
                 (remove-from-associated singles others)))))
 
 
+;; CONTRACT: locate-singletons: list-of-cells -> list-of-celss
+;;
+;; PURPOSE: given a list of cells, remove existing singletons and find a cell in the 
+;; remaining list that contains a number not occuring in the same row/cell/box. 
+;; Turn this cell into a singleton, rejoin it onto the full list of cells  and return 
+;; the updated list
+;;
+
+
+
 ;; CONTRACT: valid-singleton?: cell -> Boolean
 ;;
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
