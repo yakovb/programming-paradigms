@@ -56,7 +56,25 @@
 ;; Turn this cell into a singleton, rejoin it onto the full list of cells  and return 
 ;; the updated list
 ;;
-
+(define (locate-singletons input)
+  (let*-values ([(checked candidates) (partition valid-singleton? input)]
+                [(c-first) (first candidates)]
+                [(c-rest) (rest candidates)]
+                [(associated others) (partition (lambda (cell) (associated-cells? c-first cell))
+                                                c-rest)])
+    (let ([result (for*/or ([num c-first]
+                          [c associated])
+                  (if (set-member? (cell-data c) num)
+                      num
+                      #f))])
+      (if result
+          (append checked 
+                  (append (cons (make-cell (set result) (cell-row c-first) (cell-col c-first) (cell-box c-first))
+                                associated)
+                          others))
+          #f))))
+                  
+          
 
 
 ;; CONTRACT: valid-singleton?: cell -> Boolean
