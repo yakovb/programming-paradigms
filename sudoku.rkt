@@ -81,7 +81,7 @@
                      [(new-associated result-flag) (singles-in-associated-cells associated)]
                      [(rejoined) (append new-associated others)]
                      [(new-input) (to-end-of-list (first rejoined) (rest rejoined))])
-          (go new-input (+ n 1) (and change-flag result-flag)))))
+          (go new-input (+ n 1) (or change-flag result-flag)))))
   
     (go input 0 #f))
 
@@ -100,7 +100,7 @@
         (values input change-flag)
         (let*-values ([(new-single result-flag) (make-single-if-poss (first input) (rest input))]
                       [(new-input) (to-end-of-list new-single (rest input))])
-          (go new-input (+ n 1) (and change-flag result-flag)))))
+          (go new-input (+ n 1) (or change-flag result-flag)))))
   
   (go input 0 #f))
 
