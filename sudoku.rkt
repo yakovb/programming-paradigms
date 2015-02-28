@@ -59,7 +59,7 @@
 (define (locate-singletons input)
   (define (loopy fst rst i)
     (if (= i (+ 1 (length rst)))
-        (cons fst rst)
+        #f
         (let ([result (found-single-num fst rst)])
           (cond
             [result (cons (make-cell (set result) (cell-row fst) (cell-col fst) (cell-box fst))
