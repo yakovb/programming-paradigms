@@ -57,14 +57,24 @@
 ;; the updated list
 ;;
 (define (locate-singletons input)
-  (define (loopy fst rst i)
+  (define (loopy-candidates head tail i)
+    (if (= i (+ 1 (length tail)))
+        #f
+        (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? head cell))
+                                                     tail)]
+                     [(found-single) (loopy-associated head associated 0)])
+          (if found-single
+              (append found-single others)
+              (loopy-candidates (first tail) (append (rest tail) (list head)) (+ i 1))))))
+                                                    
+  (define (loopy-associated fst rst i)
     (if (= i (+ 1 (length rst)))
         #f
         (let ([new-single (found-single-num fst rst)])
           (if new-single
               (cons (make-cell (set new-single) (cell-row fst) (cell-col fst) (cell-box fst))
                     rst)
-              (loopy (first rst) (append (rest rst) (list fst)) (+ 1 i))))))
+              (loopy-associated (first rst) (append (rest rst) (list fst)) (+ i 1))))))
   
   (define (found-single-num fst rst)
     (for*/or ([num fst]
@@ -80,14 +90,12 @@
                                                 c-rest)])
     ; TODO this bit needs to loop until all candidates and their associations are processed.
     ; Do it via separate function
-    (let ([result (loopy c-first associated 0)])
+    (let ([result (loopy-associated c-first associated 0)])
       (if result
           (append result checked others)
           #f))))
                   
           
-
-
 ;; CONTRACT: valid-singleton?: cell -> Boolean
 ;;
 ;; PURPOSE: #t if cell.singleton-checked? is false AND cell.data.size = 1
