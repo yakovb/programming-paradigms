@@ -76,13 +76,6 @@
                     rst)
               (loopy-associated (first rst) (append (rest rst) (list fst)) (+ i 1))))))
   
-  (define (found-single-num fst rst)
-    (for*/or ([num fst]
-              [c rst])
-      (if (set-member? (cell-data c) num)
-          num
-          #f)))
-  
   (let*-values ([(singles candidates) (partition valid-singleton? input)]
                 [(result) (loopy-candidates (first candidates) (rest candidates) 0)])
     (if result
@@ -98,6 +91,19 @@
   (and (not (cell-singleton-checked? cell))
        (eq? 1 (set-count (cell-data cell)))))
 
+
+;; CONTRACT: found-single-num: cell list-of-cells -> boolean (number if true)
+;;
+;; PURPOSE: determine whether there is a number in cell that does not occur in the 
+;; list-of-cells. If true, then you've located a singleton which is returned. Otherwise
+;; no singleton is located and the return val is #f
+(define (found-single-num test-cell test-subjects)
+  (for/or ([num test-cell])
+    (if (not (member num
+                     (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
+        num
+        #f)))
+         
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
 ;;
