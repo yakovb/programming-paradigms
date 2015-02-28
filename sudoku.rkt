@@ -57,6 +57,22 @@
 ;; the updated list
 ;;
 (define (locate-singletons input)
+  (define (loopy fst rst i)
+    (if (= i (+ 1 (length rst)))
+        (cons fst rst)
+        (let ([result (found-single-num fst rst)])
+          (cond
+            [result (cons (make-cell (set result) (cell-row fst) (cell-col fst) (cell-box fst))
+                          rst)]
+            [else (loopy (first rst) (append (rest rst) (list fst)) (+ 1 i))]))))
+  
+  (define (found-single-num fst rst)
+    (for*/or ([num fst]
+              [c rst])
+      (if (set-member? (cell-data c) num)
+          num
+          #f)))
+  
   (let*-values ([(checked candidates) (partition valid-singleton? input)]
                 [(c-first) (first candidates)]
                 [(c-rest) (rest candidates)]
