@@ -283,6 +283,7 @@
 (provide transform
          cells-list
          reduce-singletons
+         find-single-val-in-set
          singles-in-candidate-cells
          singles-in-associated-cells
          valid-singleton?
