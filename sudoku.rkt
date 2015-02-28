@@ -51,18 +51,15 @@
 
 ;; CONTRACT: find-single-val-in-set: list-of-cells -> list-of-celss
 ;;
-;; PURPOSE: given a list of cells, remove existing singletons and find a cell in the 
-;; remaining list that contains a number not occuring in the same row/cell/box. 
-;; Turn this cell into a singleton, rejoin it onto the full list of cells  and return 
-;; the updated list
+;; PURPOSE: given a list of cells, remove existing singletons and find the cells in the 
+;; remaining list that contain numbers not occuring in the same row/cell/box (ie can be 
+;; made into a singleton set). Turn these cells into singletons, rejoin them and their 
+;; associations onto the existing singletons and return the updated list of cells
 ;;
 (define (find-single-val-in-set input)       
-  (let*-values ([(singles candidates) (partition valid-singleton? input)]
-                [(result) (singles-in-candidate-cells (first candidates) (rest candidates) 0)])
-    (if result
-        (append singles result)
-        #f)))
-
+  (let-values ([(singles candidates) (partition valid-singleton? input)])
+    (append singles (singles-in-candidate-cells candidates))))
+   
 
 ;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells
 ;;
@@ -121,11 +118,12 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
-;; CONTRACT: found-single-num: cell list-of-cells -> boolean (number if #t)
+;; CONTRACT: found-single-num: cell list-of-cells -> cell boolean
 ;;
 ;; PURPOSE: determine whether there is a number in cell that does not occur in the 
-;; list-of-cells. If true, then you've located a singleton which is returned. Otherwise
-;; no singleton is located and the return val is #f
+;; list-of-cells. If true, then remake the cell as a singleton and return it along with #t
+;; to signify that a change has been made. Otherwise return the original cell along with #f
+;; to signify that no change has been made
 ;;
 (define (make-single-if-poss test-cell test-subjects)
   (let* ([result (for/lists (result)
@@ -136,8 +134,8 @@
                       #f))]
          [found (filter (lambda (r) (not (false? r))) result)])
     (if (= 1 (length found))
-        (first found)
-        test-cell)))
+        (values (first found) #t)
+        (values test-cell #f))))
          
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
