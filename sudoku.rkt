@@ -78,16 +78,9 @@
                 [(c-rest) (rest candidates)]
                 [(associated others) (partition (lambda (cell) (associated-cells? c-first cell))
                                                 c-rest)])
-    (let ([result (for*/or ([num c-first]
-                          [c associated])
-                  (if (set-member? (cell-data c) num)
-                      num
-                      #f))])
+    (let ([result (loopy c-first associated 0)])
       (if result
-          (append checked 
-                  (append (cons (make-cell (set result) (cell-row c-first) (cell-col c-first) (cell-box c-first))
-                                associated)
-                          others))
+          (append result checked others)
           #f))))
                   
           
