@@ -289,7 +289,32 @@
          (check-true (valid-singleton? (first result)) "first cell should be singleton")
          (check-equal? (cell-data (first result)) (set 4) "data of first cell should be 4")
          (check-true (valid-singleton? (second result)) "second cell should be singleton")
-         (check-equal? (cell-data (second result)) (set 5) "data of first cell should be 5")))
+         (check-equal? (cell-data (second result)) (set 5) "data of first cell should be 5")
+         
+         (check-equal? (cell-data (fourth result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (fourth result)) 2 "row should be 2")
+         (check-eq? (cell-col (fourth result)) 2 "col should be 2")
+         (check-eq? (cell-box (fourth result)) 'ul "box should be ul")))
+      
+      (test-case
+       "Candidate cells with one real and one fake singleton to process"
+       (let ([result (singles-in-candidate-cells
+                      full-two)])
+
+         (check-true (valid-singleton? (first result)) "first cell should be singleton")
+         (check-equal? (cell-data (first result)) (set 4) "data of first cell should be 4")
+         (check-true (valid-singleton? (second result)) "second cell should be singleton")
+         (check-equal? (cell-data (second result)) (set 5) "data of first cell should be 5")
+         
+         (check-equal? (cell-data (fourth result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (fourth result)) 2 "row should be 2")
+         (check-eq? (cell-col (fourth result)) 2 "col should be 2")
+         (check-eq? (cell-box (fourth result)) 'ul "box should be ul")
+         
+         (check-equal? (cell-data (fifth result)) (set 1 6 3 8) "Nothing should be changed in the set")
+         (check-eq? (cell-row (fifth result)) 3 "row should be 3")
+         (check-eq? (cell-col (fifth result)) 3 "col should be 3")
+         (check-eq? (cell-box (fifth result)) 'ul "box should be ul")))
       
       (test-case
        "Associated cells with one singleton to process"
