@@ -265,6 +265,31 @@
    
    
    (test-suite
+    "Remove vals from associated cells"
+    (let* ([remove (list (make-cell (set 1) 1 1 'ul)
+                        (make-cell (set 2) 3 3 'ul))]
+          [target (list (make-cell (set 1 2 3 4) 2 2 'ul)
+                        (make-cell (set 5 6 7) 1 2 'ul)
+                        (make-cell (set 2 3) 1 3 'ul)
+                        (make-cell (set 1) 9 9 'lr))]
+          [result (remove-from-associated remove target)])
+      
+      (test-case
+       "Result should only contain target cells"
+       (check-eq? (length result) 4 "There should only be 4 cells in result"))
+      
+      (test-case 
+       "Correctly dealt with associated targets"
+       (check-equal? (cell-data (first result)) (set 3 4))
+       (check-equal? (cell-data (second result)) (set 5 6 7))
+       (check-equal? (cell-data (third result)) (set 3)))
+      
+      (test-case 
+       "correctly dealth with unassociated target"
+       (check-equal? (cell-data (fourth result)) (set 1)))))
+   
+   
+   (test-suite
     "Associated cells"
     
     (test-case
