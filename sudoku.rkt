@@ -12,10 +12,11 @@
     (if flag
         (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
             (loop new-list new-flag))
+        (transform-back cells-list)))
 ;        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
 ;          (if new-flag
 ;              (loop new-list new-flag)
-              (transform-back cells-list)))
+              
 
 ;  (define (loop cells-list flag)
 ;    (if flag
@@ -47,7 +48,7 @@
 ;; a singleton set, it is represented in the final result as a number; otherwise 
 ;; it is represented as a set
 ;;
-(define (transform-back cells [n 9])
+(define (transform-back cells [n 6])
   
   (define (go output n)
     (if (< n 1)
@@ -262,7 +263,7 @@
 ;;
 (define (toggle-checked-singletons singles)
   (map (lambda (c) 
-         (make-cell (cell-data c) (cell-row c) (cell-col c) (cell-box c) #t))
+         (cell (cell-data c) (cell-row c) (cell-col c) (cell-box c) #t))
        singles))
 
 ;; CONTRACT: process-nested-elements: (A -> B) list-of-list-of-A -> list-of-list-of-B
@@ -340,7 +341,14 @@
                 (0 0 0 0 7 8 1 0 3)
                 (0 0 0 6 0 0 5 9 0)
                 ))
-(solve puzzle)
+
+(define p '((0 2 5 0 0 1 0 0 0)
+            (1 0 4 2 5 0 0 0 0)
+            (0 0 6 0 0 4 2 1 0)
+            (0 5 0 0 0 0 3 2 0)
+            (6 0 0 0 2 0 0 0 9)
+            (0 8 7 0 0 0 0 6 0)))
+;(solve puzzle)
 
 
 ;; Export of relevant functions for testing purposes
@@ -354,6 +362,7 @@
          singles-in-associated-cells
          valid-singleton?
          make-single-if-poss
+         remove-from-associated
          associated-cells?
          cell-associations
          make-cell-without
