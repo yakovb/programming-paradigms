@@ -216,12 +216,16 @@
 
 ;; CONTRACT: associated-cells?: cell cell -> boolean
 ;;
-;; PURPOSE: determines whether two cells share a row, column, or box
+;; PURPOSE: determines whether two cells share a row, column, or box. 
+;; Will not perform the checking if the cell in question is already a 
+;; checked singleton (because such a cell needs no further processing
 ;;
 (define (associated-cells? c1 c2)
-  (let ([c1-assoc (cell-associations c1)]
-        [c2-assoc (cell-associations c2)])
-    (ormap equal? c1-assoc c2-assoc)))
+  (if (cell-singleton-checked? c1)
+      #f
+      (let ([c1-assoc (cell-associations c1)]
+            [c2-assoc (cell-associations c2)])
+        (ormap equal? c1-assoc c2-assoc))))
 
 
 ;; CONTRACT: cell-associations: cell -> list(number number symbol)
