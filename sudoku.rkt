@@ -325,6 +325,7 @@
 ;; Export of relevant functions for testing purposes
 ;;
 (provide transform
+         transform-back
          cells-list
          reduce-singletons
          find-single-val-in-set
