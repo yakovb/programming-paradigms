@@ -241,23 +241,25 @@
    
    (test-suite
     "Reduce singletons"
-    (let* ([c-sngl (make-cell (set 1) 1 1 'upper-left)]
-           [c-sngl2 (make-cell (set 2) 2 8 'upper-right)]
-           [c1-touch (make-cell (set 1 2 3) 2 2 'upper-left)]
-           [c2-leave (make-cell (set 1 5 7) 9 9 'lower-right)]
-           [c3-touch (make-cell (set 1 9) 1 9 'upper-right)]
-           [lst1 (reduce-singletons (list c1-touch c2-leave c-sngl c3-touch))]
-           [lst2 (reduce-singletons (list c1-touch c-sngl c2-leave c-sngl2 c3-touch))])
-      
+    (let*-values ([(c-sngl) (make-cell (set 1) 1 1 'upper-left)]
+                   [(c-sngl2) (make-cell (set 2) 2 8 'upper-right)]
+                   [(c1-touch) (make-cell (set 1 2 3) 2 2 'upper-left)]
+                   [(c2-leave) (make-cell (set 1 5 7) 9 9 'lower-right)]
+                   [(c3-touch) (make-cell (set 1 9) 1 9 'upper-right)]
+                   [(lst1 flag1) (reduce-singletons (list c1-touch c2-leave c-sngl c3-touch))]
+                   [(lst2 flag2) (reduce-singletons (list c1-touch c-sngl c2-leave c-sngl2 c3-touch))])
+                  
       (test-case
        "list with no singletons"
        (let ([lst (list (make-cell (set 1 2 3) 1 1 'upper-left)
                         (make-cell (set 4 6 7) 6 6 'middle-middle)
                         (make-cell (set 6 7) 9 9 'lower-right))])
-         (check-eq? (reduce-singletons lst) empty "should be empty as no singletons in list")))
-      
+         (let-values ([(lstf f) (reduce-singletons lst)])
+           (check-false f "should be false as no singletons in list"))))
+                 
       (test-case
        "list with one singleton"
+       (check-true flag1 "Should be true as list amended")
        (check-true (cell-singleton-checked? (first lst1)) "singleton should be processed")
        (check-equal? (cell-data (second lst1)) (set 2 3) "c1-touch should have had its set reduced")
        (check-equal? (cell-data (third lst1)) (set 1 5 7) "c2-leave should not have had its set reduced")
@@ -265,6 +267,7 @@
     
       (test-case
        "list with two singletons"
+       (check-true flag2 "Should be true as list amended")
        (check-true (cell-singleton-checked? (first lst2)) "first singleton should be processed")
        (check-true (cell-singleton-checked? (second lst2)) "second singleton should be processed")
        (check-equal? (cell-data (third lst2)) (set 3) "c1-touch should have had its set reduced to 2")
