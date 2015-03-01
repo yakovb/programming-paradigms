@@ -6,17 +6,21 @@
 ;; (a) the solved puzzle with each cell showing its appropriate number, or 
 ;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
 ;;
-;(define (solve matrix)
-;  (let ([worklist ((compose1 cells-list transform) matrix)])
-;    (match worklist
-;      [(list ls ...) ])))
-;  
-;  (define (loop cells-list flag)
-;    (match result
-;      [empty (find-single-val-in-set
-    
+(define (solve matrix)
+        
+  (define (loop cells-list flag)
+    (if flag
+        (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
+            (loop new-list new-flag))
+        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
+          (if new-flag
+              (loop new-list new-flag)
+              (return-finished-matrix new-list)))))
+  
+  (let ([worklist ((compose1 cells-list transform) matrix)])
+    (loop worklist #t)))
+           
   ; TODO:
-  ; reduce/locate singletons until both functions return false consecutively (use OR)
   ; list -> matrix
   
 
