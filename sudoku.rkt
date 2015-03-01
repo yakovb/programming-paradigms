@@ -51,7 +51,7 @@
   
   (let ([result (go empty n)])
     (process-nested-elements (lambda (cell) (if (cell-singleton-checked? cell)
-                                                (set-first cell)
+                                                (set-first (cell-data cell))
                                                 (cell-data cell)))
                              result)))
                                                 
