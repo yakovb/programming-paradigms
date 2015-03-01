@@ -7,8 +7,12 @@
 ;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
 ;;
 (define (solve matrix)
+  ; TODO:
+  ; transform matrix
+  ; matrix -> list
+  ; reduce/locate singletons until both functions return false consecutively (use OR)
+  ; list -> matrix
   
-
 
 ;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
 ;;
