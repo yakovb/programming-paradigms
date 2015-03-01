@@ -15,7 +15,7 @@
         (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
           (if new-flag
               (loop new-list new-flag)
-              (return-finished-matrix new-list)))))
+              (transform-back new-list)))))
   
   (let ([worklist ((compose1 cells-list transform) matrix)])
     (loop worklist #t)))
@@ -32,6 +32,16 @@
 ;;
 (define (transform matrix)
   (process-nested-elements  make-set-of-possible-values  matrix))
+
+
+;; CONTRACT: transform-back: list-of-cells -> list-of-list-of-numberORset
+;;
+;; PURPOSE: takes a list of cells and transforms them back into a list of list
+;; of numbers, with each cell in its proper row/column position. If a cell contains 
+;; a singleton set, it is represented in the final result as a number; otherwise 
+;; it is represented as a set
+;;
+
 
 
 ;; CONTRACT: cells-list: list-of-list-of-sets -> list-of-cell-structs
