@@ -287,11 +287,11 @@
     "Find singles in a list of cells"
     (let* ([no-assoc (list (make-cell (set 1 3) 9 9 'lr)
                            (make-cell (set 1 3) 9 8 'lr))]
-           [one-single (list (make-cell (set 1 3) 1 1 'ul)
-                            (make-cell (set 3 6 9) 2 2 'ul)
+           [one-single (list (make-cell (set 1 3 6) 1 1 'ul)
+                            (make-cell (set 1 3 6 9) 2 2 'ul)
                             (make-cell (set 1 6 3) 3 3 'ul))]
-          [one-real-one-fake-single (list (make-cell (set 1 3) 1 1 'ul)
-                             (make-cell (set 3 6 9) 2 2 'ul)
+          [one-real-one-fake-single (list (make-cell (set 1 3 6 8) 1 1 'ul)
+                             (make-cell (set 1 3 6 9) 2 2 'ul)
                              (make-cell (set 1 6 3 8) 3 3 'ul))]
           [checked (list (make-cell (set 4) 1 2 'ul #t)
                          (make-cell (set 5) 1 3 'ul #t))]
@@ -301,7 +301,7 @@
       
       (test-case
        "Finding single val in mixed cells with a valid singleton"
-       (let-values ([(result flag) (find-single-val-in-set one+checked+noassoc)])
+       (let-values ([(result flag) (find-single-val-in-set two+checked+noassoc)])
          (check-true flag "changes should have been made to the input")
          (check-true flag "changes should have been made to the input")
          (check-true (valid-singleton? (first result)) "first cell should be singleton")
@@ -316,26 +316,26 @@
       
       (test-case
        "Candidate cells with one singleton to process"
-       (let-values ([(result flag) (singles-in-candidate-cells one+noassoc)]) 
+       (let-values ([(result flag) (singles-in-candidate-cells one+noassoc)])
          (check-true flag "changes should have been made to the input")
-         (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
-         (check-eq? (cell-row (second result)) 2 "row should be 2")
-         (check-eq? (cell-col (second result)) 2 "col should be 2")
-         (check-eq? (cell-box (second result)) 'ul "box should be ul")))
+         (check-equal? (cell-data (fifth result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (fifth result)) 2 "row should be 2")
+         (check-eq? (cell-col (fifth result)) 2 "col should be 2")
+         (check-eq? (cell-box (fifth result)) 'ul "box should be ul")))
       
       (test-case
        "Candidate cells with one real and one fake singleton to process"
-       (let ([result (singles-in-candidate-cells two+noassoc)])        
+       (let-values ([(result flag) (singles-in-candidate-cells two+noassoc)])
          (check-true flag "changes should have been made to the input")
-         (check-equal? (cell-data (second result)) (set 9) "Should have made singleton with 9")
-         (check-eq? (cell-row (second result)) 2 "row should be 2")
-         (check-eq? (cell-col (second result)) 2 "col should be 2")
-         (check-eq? (cell-box (second result)) 'ul "box should be ul")
+         (check-equal? (cell-data (fifth result)) (set 9) "Should have made singleton with 9")
+         (check-eq? (cell-row (fifth result)) 2 "row should be 2")
+         (check-eq? (cell-col (fifth result)) 2 "col should be 2")
+         (check-eq? (cell-box (fifth result)) 'ul "box should be ul")
          
-         (check-equal? (cell-data (third result)) (set 1 6 3 8) "Nothing should be changed in the set")
-         (check-eq? (cell-row (third result)) 3 "row should be 3")
-         (check-eq? (cell-col (third result)) 3 "col should be 3")
-         (check-eq? (cell-box (third result)) 'ul "box should be ul")))
+         (check-equal? (cell-data (first result)) (set 1 6 3 8) "Nothing should be changed in the set")
+         (check-eq? (cell-row (first result)) 3 "row should be 3")
+         (check-eq? (cell-col (first result)) 3 "col should be 3")
+         (check-eq? (cell-box (first result)) 'ul "box should be ul")))
       
       (test-case
        "Associated cells with one singleton to process"
