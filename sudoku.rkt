@@ -59,7 +59,7 @@
 (define (reduce-singletons input)
   (let-values ([(singles others) (partition valid-singleton? input)])    
     (if (empty? singles)
-        #f
+        empty
         (append (toggle-checked-singletons singles) 
                 (remove-from-associated singles others)))))
 
