@@ -6,17 +6,18 @@
 ;; (a) the solved puzzle with each cell showing its appropriate number, or 
 ;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
 ;;
-(define (solve matrix)
-  (let worklist ([((compose1 cells-list transform) matrix)])
-    (match worklist
-      [(list ls ...) ]))
-  
-  (define (loop func result flag)
+;(define (solve matrix)
+;  (let ([worklist ((compose1 cells-list transform) matrix)])
+;    (match worklist
+;      [(list ls ...) ])))
+;  
+;  (define (loop cells-list flag)
+;    (match result
+;      [empty (find-single-val-in-set
     
   ; TODO:
   ; reduce/locate singletons until both functions return false consecutively (use OR)
   ; list -> matrix
-  )
   
 
 ;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
@@ -59,9 +60,10 @@
 (define (reduce-singletons input)
   (let-values ([(singles others) (partition valid-singleton? input)])    
     (if (empty? singles)
-        empty
-        (append (toggle-checked-singletons singles) 
-                (remove-from-associated singles others)))))
+        (values input #f)
+        (values (append (toggle-checked-singletons singles) 
+                        (remove-from-associated singles others))
+                #t))))
 
 
 ;; CONTRACT: find-single-val-in-set: list-of-cells -> list-of-cells boolean
