@@ -118,6 +118,47 @@
    
    
    (test-suite
+    "Transform back a cells list into a matrix"
+    (let ([solved (list (cell (set 9) 3 3 'ul #t)
+                        (cell (set 3) 1 3 'ul #t)
+                        (cell (set 5) 2 2 'ul #t)
+                        (cell (set 1) 1 1 'ul #t)
+                        (cell (set 8) 3 2 'ul #t)
+                        (cell (set 6) 2 3 'ul #t)
+                        (cell (set 7) 3 1 'ul #t)
+                        (cell (set 2) 1 2 'ul #t)
+                        (cell (set 4) 2 1 'ul #t))]
+          [unsolved (list (cell (set 7 8 9) 3 3 'ul #t)
+                          (cell (set 3) 1 3 'ul #t)
+                          (cell (set 4 5 6) 2 2 'ul #t)
+                          (cell (set 1 2 3) 1 1 'ul #t)
+                          (cell (set 8) 3 2 'ul #t)
+                          (cell (set 6) 2 3 'ul #t)
+                          (cell (set 7) 3 1 'ul #t)
+                          (cell (set 2) 1 2 'ul #t)
+                          (cell (set 4) 2 1 'ul #t))])
+      (test-case
+       "Solved puzzle"
+       (let ([actual (transform-back solved)]
+             [expected (list (list 1 2 3)
+                             (list 4 5 6)
+                             (list 7 8 9))])
+         (check-equal? (first actual) (first expected) "First row should be 1 2 3")
+         (check-equal? (second actual) (second expected) "Second row should be 4 5 6")
+         (check-equal? (third actual) (third expected) "Third row should be 7 8 9")))
+      
+      (test-case
+       "Unsolved puzzle"
+       (let ([actual (transform-back unsolved)]
+             [expected (list (list (set 1 2 3) 2 3)
+                             (list 4 (set 4 5 6) 6)
+                             (list 7 8 (set 7 8 9)))])
+         (check-equal? (first actual) (first expected) "First row should be [1 2 3] 2 3")
+         (check-equal? (second actual) (second expected) "Second row should be 4 [4 5 6] 6")
+         (check-equal? (third actual) (third expected) "Third row should be 7 8 [7 8 9]")))))
+   
+   
+   (test-suite
     "Create flattened list of cell structs out of transformed puzzle"
     (let* ([input (list (list (set 1) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9))
                         (list (set 1 2 3 4 5 6 7 8 9) (set 2) (set 3) (set 4) (set 5) (set 6) (set 7) (set 8) (set 9)))]
