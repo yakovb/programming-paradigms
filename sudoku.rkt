@@ -7,7 +7,12 @@
 ;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
 ;;
 (define (solve matrix)
-  ((compose1 cells-list transform) matrix)
+  (let worklist ([((compose1 cells-list transform) matrix)])
+    (match worklist
+      [(list ls ...) ]))
+  
+  (define (loop func result flag)
+    
   ; TODO:
   ; reduce/locate singletons until both functions return false consecutively (use OR)
   ; list -> matrix
