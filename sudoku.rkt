@@ -38,7 +38,7 @@
 ;; a singleton set, it is represented in the final result as a number; otherwise 
 ;; it is represented as a set
 ;;
-(define (transform-back cells)
+(define (transform-back cells [n 9])
   
   (define (go output n)
     (if (< n 1)
@@ -49,7 +49,12 @@
     (let ([row (filter (lambda (c) (= row-num (cell-row c))) input)])
       (sort row < #:key (lambda (c) (cell-col c)))))
   
-  (go empty 9))
+  (let ([result (go empty n)])
+    (process-nested-elements (lambda (cell) (if (cell-singleton-checked? cell)
+                                                (set-first cell)
+                                                (cell-data cell)))
+                             result)))
+                                                
 
 
 ;; CONTRACT: cells-list: list-of-list-of-sets -> list-of-cell-structs
