@@ -128,10 +128,10 @@
                         (cell (set 7) 3 1 'ul #t)
                         (cell (set 2) 1 2 'ul #t)
                         (cell (set 4) 2 1 'ul #t))]
-          [unsolved (list (cell (set 7 8 9) 3 3 'ul #t)
+          [unsolved (list (cell (set 7 8 9) 3 3 'ul #f)
                           (cell (set 3) 1 3 'ul #t)
-                          (cell (set 4 5 6) 2 2 'ul #t)
-                          (cell (set 1 2 3) 1 1 'ul #t)
+                          (cell (set 4 5 6) 2 2 'ul #f)
+                          (cell (set 1 2 3) 1 1 'ul #f)
                           (cell (set 8) 3 2 'ul #t)
                           (cell (set 6) 2 3 'ul #t)
                           (cell (set 7) 3 1 'ul #t)
@@ -139,7 +139,7 @@
                           (cell (set 4) 2 1 'ul #t))])
       (test-case
        "Solved puzzle"
-       (let ([actual (transform-back solved)]
+       (let ([actual (transform-back solved 3)]
              [expected (list (list 1 2 3)
                              (list 4 5 6)
                              (list 7 8 9))])
@@ -149,7 +149,7 @@
       
       (test-case
        "Unsolved puzzle"
-       (let ([actual (transform-back unsolved)]
+       (let ([actual (transform-back unsolved 3)]
              [expected (list (list (set 1 2 3) 2 3)
                              (list 4 (set 4 5 6) 6)
                              (list 7 8 (set 7 8 9)))])
