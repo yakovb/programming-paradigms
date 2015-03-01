@@ -19,9 +19,6 @@
   
   (let ([worklist ((compose1 cells-list transform) matrix)])
     (loop worklist #t)))
-           
-  ; TODO:
-  ; list -> matrix
   
 
 ;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
@@ -41,7 +38,18 @@
 ;; a singleton set, it is represented in the final result as a number; otherwise 
 ;; it is represented as a set
 ;;
-
+(define (transform-back cells)
+  
+  (define (go output n)
+    (if (< n 1)
+        output
+        (go (cons (do-row cells n) output) (- n 1))))
+          
+  (define (do-row input row-num)
+    (let ([row (filter (lambda (c) (= row-num (cell-row c))) input)])
+      (sort row < #:key (lambda (c) (cell-col c)))))
+  
+  (go empty 9))
 
 
 ;; CONTRACT: cells-list: list-of-list-of-sets -> list-of-cell-structs
