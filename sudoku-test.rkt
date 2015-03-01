@@ -286,7 +286,8 @@
       
       (test-case 
        "correctly dealth with unassociated target"
-       (check-equal? (cell-data (fourth result)) (set 1)))))
+       (check-equal? (cell-data (fourth result)) (set 1))
+       (check-false (cell-singleton-checked? (fourth result))))))
    
    
    (test-suite
@@ -294,8 +295,8 @@
     
     (test-case
      "cells with an associations"
-     (let ([c1 (make-cell (set 2) 1 1 'upper-left)]
-           [c2 (make-cell (set 4 5) 3 3 'upper-left)])
+     (let ([c1 (make-cell (set 4 5) 3 3 'upper-left)]
+           [c2 (make-cell (set 2) 1 1 'upper-left)])
        (check-not-false (associated-cells? c1 c2) "cells should be associated")))
     
     (test-case

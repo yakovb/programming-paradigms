@@ -221,7 +221,8 @@
 ;; checked singleton (because such a cell needs no further processing
 ;;
 (define (associated-cells? c1 c2)
-  (if (cell-singleton-checked? c1)
+  (if (or (cell-singleton-checked? c1)
+          (= 1 (set-count (cell-data c1))))
       #f
       (let ([c1-assoc (cell-associations c1)]
             [c2-assoc (cell-associations c2)])
