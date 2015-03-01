@@ -1,7 +1,13 @@
 #lang racket
 
+;; CONTRACT: solve: list-of-list-of-number -> list-of-list-of-number
+;;
+;; PURPOSE: take a sudoku puzzle as a matrix of numbers and return as a matrix either 
+;; (a) the solved puzzle with each cell showing its appropriate number, or 
+;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
+;;
 (define (solve matrix)
-  1)
+  
 
 
 ;; CONTRACT: transform: list-of-list-of-number -> list-of-list-of-sets
