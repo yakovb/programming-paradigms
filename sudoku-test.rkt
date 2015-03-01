@@ -254,7 +254,7 @@
        (let ([lst (list (make-cell (set 1 2 3) 1 1 'upper-left)
                         (make-cell (set 4 6 7) 6 6 'middle-middle)
                         (make-cell (set 6 7) 9 9 'lower-right))])
-         (check-false (reduce-singletons lst) "should be false as no singletons in list")))
+         (check-eq? (reduce-singletons lst) empty "should be empty as no singletons in list")))
       
       (test-case
        "list with one singleton"
