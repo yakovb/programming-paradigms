@@ -6,26 +6,16 @@
 ;; (a) the solved puzzle with each cell showing its appropriate number, or 
 ;; (b) the part-solved puzzle with unsolved locations showing a set of possible numbers
 ;;
-(define (solve matrix)
-        
+(define (solve matrix)                 
+
   (define (loop cells-list flag)
     (if flag
         (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
             (loop new-list new-flag))
-        (transform-back cells-list)))
-;        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
-;          (if new-flag
-;              (loop new-list new-flag)
-              
-
-;  (define (loop cells-list flag)
-;    (if flag
-;        (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
-;            (loop new-list new-flag))
-;        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
-;          (if new-flag
-;              (loop new-list new-flag)
-;              (transform-back new-list)))))
+        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
+          (if new-flag
+              (loop new-list new-flag)
+              (transform-back new-list)))))
   
   (let ([worklist ((compose1 cells-list transform) matrix)])
     (loop worklist #t)))
@@ -186,16 +176,18 @@
 ;; to signify that no change has been made
 ;;
 (define (make-single-if-poss test-cell test-subjects)
-  (let* ([result (for/lists (result)
+  (let* ([result (for/lists (res)
                   ([num (cell-data test-cell)])
                   (if (not (member num
-                                   (flatten (map (lambda (c) (set->list (cell-data c))) test-subjects))))
+                                   (flatten (map 
+                                             (lambda (c) (set->list (cell-data c))) 
+                                             test-subjects))))
                       (make-singleton test-cell num)
                       #f))]
          [found (filter (lambda (r) (not (false? r))) result)])
-    (if (= 1 (length found))
-        (values (first found) #t)
-        (values test-cell #f))))
+    (cond 
+      [(= 1 (length found))  (values (first found) #t)]
+      [else (values test-cell #f)])))
          
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
