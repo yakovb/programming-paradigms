@@ -48,7 +48,7 @@
 ;; a singleton set, it is represented in the final result as a number; otherwise 
 ;; it is represented as a set
 ;;
-(define (transform-back cells [n 6])
+(define (transform-back cells [n 9])
   
   (define (go output n)
     (if (< n 1)
@@ -344,16 +344,7 @@
                 (0 8 7 0 0 0 0 6 0)
                 (0 9 1 5 0 0 6 0 0)
                 (0 0 0 0 7 8 1 0 3)
-                (0 0 0 6 0 0 5 9 0)
-                ))
-
-(define p '((0 2 5 0 0 1 0 0 0)
-            (1 0 4 2 5 0 0 0 0)
-            (0 0 6 0 0 4 2 1 0)
-            (0 5 0 0 0 0 3 2 0)
-            (6 0 0 0 2 0 0 0 9)
-            (0 8 7 0 0 0 0 6 0)))
-;(solve puzzle)
+                (0 0 0 6 0 0 5 9 0)))
 
 
 ;; Export of relevant functions for testing purposes
