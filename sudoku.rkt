@@ -12,10 +12,19 @@
     (if flag
         (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
             (loop new-list new-flag))
-        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
-          (if new-flag
-              (loop new-list new-flag)
-              (transform-back new-list)))))
+;        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
+;          (if new-flag
+;              (loop new-list new-flag)
+              (transform-back cells-list)))
+
+;  (define (loop cells-list flag)
+;    (if flag
+;        (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
+;            (loop new-list new-flag))
+;        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
+;          (if new-flag
+;              (loop new-list new-flag)
+;              (transform-back new-list)))))
   
   (let ([worklist ((compose1 cells-list transform) matrix)])
     (loop worklist #t)))
@@ -320,6 +329,18 @@
                    (row-lookup row)
                    "-"
                    (col-lookup col))))
+
+(define puzzle '((0 2 5 0 0 1 0 0 0)
+                (1 0 4 2 5 0 0 0 0)
+                (0 0 6 0 0 4 2 1 0)
+                (0 5 0 0 0 0 3 2 0)
+                (6 0 0 0 2 0 0 0 9)
+                (0 8 7 0 0 0 0 6 0)
+                (0 9 1 5 0 0 6 0 0)
+                (0 0 0 0 7 8 1 0 3)
+                (0 0 0 6 0 0 5 9 0)
+                ))
+(solve puzzle)
 
 
 ;; Export of relevant functions for testing purposes
