@@ -173,9 +173,29 @@
 ;;
 ;; PURPOSE: given a cell and its associations, check whether a number in cell's set
 ;; is unque in its associated row OR column OR box. If so, reduce cell to a singleton,
-;; and return it along with #t; else return the unchanged cell along with #f
+;; and return the cell along with #t; else return the unchanged cell along with #f
 ;;
+(define (make-single candidate others)
+  
+  (define (loop procs)
+    (if (empty? procs) 
+        (values candidate #f)
+        (let ([result (found (first procs))])
+          (if result
+              (values (make-single candidate result) #t)
+              (loop (rest procs))))))
+        
+  (define (found f)
+    (let* ([cand-val (f candidate)]
+           [other-vals (filter (lambda (val) (eq? cand-val (f val)) others))])
+      (for/first ([i (set->list (cell-data candidate))]
+                  #:when (member i (flatten (map (lambda (c) (set->list (cell-data c)))
+                                                 others))))
+        i)))
 
+ (let ([procs (list cell-row cell-col cell-box)])
+    (loop procs)))
+                  
 
 ;; CONTRACT: found-single-num: cell list-of-cells -> cell boolean
 ;;
