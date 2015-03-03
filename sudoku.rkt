@@ -168,6 +168,15 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
+;; TEST ;;
+;; CONTRACT: make-single: cell list-of-cells -> cell boolean
+;;
+;; PURPOSE: given a cell and its associations, check whether a number in cell's set
+;; is unque in its associated row OR column OR box. If so, reduce cell to a singleton,
+;; and return it along with #t; else return the unchanged cell along with #f
+;;
+
+
 ;; CONTRACT: found-single-num: cell list-of-cells -> cell boolean
 ;;
 ;; PURPOSE: determine whether there is a number in cell that does not occur in the 
