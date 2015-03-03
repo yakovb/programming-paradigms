@@ -142,7 +142,7 @@
   (define (go input n change-flag)
     (if (= n (length input))
         (values input change-flag)
-        (let*-values ([(new-single result-flag) (make-single-if-poss (first input) (rest input))]
+        (let*-values ([(new-single result-flag) (make-single (first input) (rest input))]
                       [(new-input) (to-end-of-list new-single (rest input))])
           (go new-input (+ n 1) (or change-flag result-flag)))))
   
@@ -195,29 +195,7 @@
        
  (let ([procs (list cell-row cell-col cell-box)])
     (loop procs)))
-                  
-
-;; CONTRACT: found-single-num: cell list-of-cells -> cell boolean
-;;
-;; PURPOSE: determine whether there is a number in cell that does not occur in the 
-;; list-of-cells. If true, then remake the cell as a singleton and return it along with #t
-;; to signify that a change has been made. Otherwise return the original cell along with #f
-;; to signify that no change has been made
-;;
-(define (make-single-if-poss test-cell test-subjects)
-  (let* ([result (for/lists (res)
-                  ([num (cell-data test-cell)])
-                  (if (not (member num
-                                   (flatten (map 
-                                             (lambda (c) (set->list (cell-data c))) 
-                                             test-subjects))))
-                      (make-singleton test-cell num)
-                      #f))]
-         [found (filter (lambda (r) (not (false? r))) result)])
-    (cond 
-      [(= 1 (length found))  (values (first found) #t)]
-      [else (values test-cell #f)])))
-         
+                          
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
 ;;
@@ -379,7 +357,6 @@
          singles-in-associated-cells
          valid-singleton?
          make-single
-         make-single-if-poss
          remove-from-associated
          associated-cells?
          cell-associations
