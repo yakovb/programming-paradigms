@@ -345,22 +345,24 @@
    
    (test-suite 
     "Finding single numbers in cell list"
-    (let ([lst (list (make-cell (set 1 3) 1 1 'ul)
-                      (make-cell (set 3 6 7) 2 2 'ul)
-                      (make-cell (set 1 6 8) 3 3 'ul))]
-           [test-pass (make-cell (set 7 8 9) 1 3 'ul)]
-           [test-fail (make-cell (set 7 8 1) 1 3 'ul)])
+    (let ([lst (list (make-cell (set 1 3) 2 1 'ul)
+                     (make-cell (set 1 3) 2 2 'ul)
+                     (make-cell (set 1 3 6) 1 4 'um)
+                     (make-cell (set 3 6 8 7) 2 4 'um)
+                     (make-cell (set 1 6 8) 3 6 'um))]
+          [test-pass (make-cell (set 1 8 9) 2 4 'um)]
+          [test-fail (make-cell (set 3 6 7) 2 4 'um)])
       
       (test-case 
        "With a singleton to find"
-       (let-values ([(result flag) (make-single-if-poss test-pass lst)])
-         (check-equal? (cell-data result) (set 9) "9 should have been found")
+       (let-values ([(result flag) (make-single test-pass lst)])
+         (check-equal? (cell-data result) (set 9) "should have made a singleton set with val 9")
          (check-true flag "flag should signify change in cell")))
        
       (test-case
        "With nothing to find"
-       (let-values ([(result flag) (make-single-if-poss test-fail lst)])
-         (check-equal? (cell-data result) (set 7 8 1) "Nothing should have been found")
+       (let-values ([(result flag) (make-single test-fail lst)])
+         (check-equal? (cell-data result) (set 3 6 7) "set should have stayed the same")
          (check-false flag "flag should signify no change in cell")))))
    
   
