@@ -182,12 +182,12 @@
         (values candidate #f)
         (let ([result (found (first procs))])
           (if result
-              (values (make-single candidate result) #t)
+              (values (make-singleton candidate result) #t)
               (loop (rest procs))))))
         
   (define (found f)
     (let* ([cand-val (f candidate)]
-           [other-vals (filter (lambda (val) (eq? cand-val (f val)) others))])
+           [other-vals (filter (lambda (val) (eq? cand-val (f val))) others)])
       (for/first ([i (set->list (cell-data candidate))]
                   #:when (member i (flatten (map (lambda (c) (set->list (cell-data c)))
                                                  others))))
@@ -378,6 +378,7 @@
          singles-in-candidate-cells
          singles-in-associated-cells
          valid-singleton?
+         make-single
          make-single-if-poss
          remove-from-associated
          associated-cells?
