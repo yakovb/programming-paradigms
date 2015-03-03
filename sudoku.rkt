@@ -189,10 +189,10 @@
     (let* ([cand-val (f candidate)]
            [other-vals (filter (lambda (val) (eq? cand-val (f val))) others)])
       (for/first ([i (set->list (cell-data candidate))]
-                  #:when (member i (flatten (map (lambda (c) (set->list (cell-data c)))
-                                                 others))))
+                  #:when (not (member i (flatten (map (lambda (c) (set->list (cell-data c)))
+                                                      other-vals)))))
         i)))
-
+       
  (let ([procs (list cell-row cell-col cell-box)])
     (loop procs)))
                   
