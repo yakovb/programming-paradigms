@@ -1,7 +1,6 @@
 -module(display).
 -export([loop/0]).
 
-%TODO: display original temp and converted temp
 %TODO: be killable by controller
 
 loop() ->
@@ -20,6 +19,6 @@ loop() ->
 
 		{zero_error, f, X} ->
 			io:format("Oops! ~.2f F is below absolute zero of -523.67 F so conversion is impossible~n", [X]),
-			loop();
+			loop()
 			
 		end.

@@ -1,7 +1,6 @@
 -module(convert).
 -export([loop/0]).
 
-%TODO: error check for temps below absolute zero (is there a max temp??)
 %TODO: send results to display
 
 loop() ->
@@ -23,12 +22,12 @@ loop() ->
 
 
 c2f(Ctemp) -> 	if 
-					Ctemp < -273.15 -> {zero_error, Ctemp}
+					Ctemp < -273.15 -> {zero_error, c, Ctemp}
 					true -> {celsiusOK, Ctemp, Ctemp * (9/5) + 32}
 				end.
 
 
 f2c(Ftemp) -> 	if 
-					Ftemp < -523.67 -> {zero_error, Ftemp};
+					Ftemp < -523.67 -> {zero_error, f, Ftemp};
 					true -> {fahrenheitOK, Ftemp, (Ftemp - 32) * (5/9)}
 				end.
