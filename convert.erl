@@ -2,6 +2,7 @@
 -export([loop/0]).
 
 %TODO: send results to display
+%TODO die if given bad data, tell controller
 
 loop() ->
 	receive
@@ -13,8 +14,7 @@ loop() ->
 			c2f(Ctemp),
 			loop();
 
-		test -> 
-			io:format("test message received by converter"),
+		_ -> exit(convert, "got bad data to process"),
 			loop()
 			
 		end.
@@ -22,7 +22,7 @@ loop() ->
 
 
 c2f(Ctemp) -> 	if 
-					Ctemp < -273.15 -> {zero_error, c, Ctemp}
+					Ctemp < -273.15 -> {zero_error, c, Ctemp};
 					true -> {celsiusOK, Ctemp, Ctemp * (9/5) + 32}
 				end.
 
