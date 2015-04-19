@@ -24,11 +24,11 @@ loop() ->
 
 c2f(Ctemp) -> 	if 
 					Ctemp < -273.15 -> {error, "Requested temp is below absolute zero"};
-					true -> Ctemp * (9/5) + 32
+					true -> {celsiusOK, Ctemp * (9/5) + 32}
 				end.
 
 
 f2c(Ftemp) -> 	if 
 					Ftemp < -523.67 -> {error, "Requested temp is below absolute zero"};
-					true -> (Ftemp - 32) * (5/9)
+					true -> {fahrenheitOK, (Ftemp - 32) * (5/9)}
 				end.
