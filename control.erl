@@ -15,8 +15,11 @@ loop() ->
 			register(converter, spawn_link(fun convert:loop/0)),
 			loop();
 
-		test -> 
-			io:format("test message received by controller"),
+
+		{'EXIT', DeadConverter, Reason} ->
+			io:format("Converter ~p died with reason:  ~p.", [DeadConverter, Reason]),
+			io:format("Launching another converter...~n"),
+			self ! new_converter,
 			loop()
 
 		end.
