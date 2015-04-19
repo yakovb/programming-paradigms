@@ -14,7 +14,7 @@ loop() ->
 			loop();
 
 		{link, Display} ->
-			link(Display),
+			register(display, Display),
 			io:format("Successfully linked to Display actor ~p.~n", [Display]),
 			loop();
 
