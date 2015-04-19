@@ -8,7 +8,13 @@
 %TODO note if converter dies and restart it
 
 loop() ->
+	process_flag(trap_exit, true),
 	receive
+		new_converter ->
+			io:format("Starting a new converter actor.~n"),
+			register(converter, spawn_link(fun convert:loop/0)),
+			loop();
+
 		test -> 
 			io:format("test message received by controller"),
 			loop()
