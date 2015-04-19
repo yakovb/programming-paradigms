@@ -19,6 +19,10 @@ loop() ->
 
 		{zero_error_F, F} ->
 			io:format("Oops! ~.2f F is below absolute zero of -523.67 F so conversion is impossible~n", [float(F)]),
+			loop();
+
+		_ -> 
+			io:format("Display: got bad data to process: "),
 			loop()
 			
 		end.

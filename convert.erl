@@ -12,7 +12,7 @@ loop() ->
 			loop();
 
 		_ -> 
-			io:format("got bad data to process: "),
+			io:format("Convert: got bad data to process: "),
 			loop()
 			
 	end.
