@@ -4,16 +4,16 @@
 loop() ->
 	receive
 		{link, Display} ->
-			register(display, Display),
+			register(mydisplay, Display),
 			io:format("Successfully linked to Display actor ~p.~n", [Display]),
 			loop();
 
 		{"ConvertToCelsius", Ftemp} ->
-			display ! f2c(Ftemp),
+			mydisplay ! f2c(Ftemp),
 			loop();
 
 		{"ConvertToFahrenheit", Ctemp} ->
-			display ! c2f(Ctemp),
+			mydisplay ! c2f(Ctemp),
 			loop();
 
 		_ -> 
