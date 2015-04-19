@@ -23,12 +23,12 @@ loop() ->
 
 
 c2f(Ctemp) -> 	if 
-					Ctemp < -273.15 -> {error, "Requested temp is below absolute zero"};
-					true -> {celsiusOK, Ctemp * (9/5) + 32}
+					Ctemp < -273.15 -> {zero_error, Ctemp}
+					true -> {celsiusOK, Ctemp, Ctemp * (9/5) + 32}
 				end.
 
 
 f2c(Ftemp) -> 	if 
-					Ftemp < -523.67 -> {error, "Requested temp is below absolute zero"};
-					true -> {fahrenheitOK, (Ftemp - 32) * (5/9)}
+					Ftemp < -523.67 -> {zero_error, Ftemp};
+					true -> {fahrenheitOK, Ftemp, (Ftemp - 32) * (5/9)}
 				end.
