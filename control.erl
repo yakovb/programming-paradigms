@@ -9,10 +9,17 @@ loop() ->
 	receive
 		kick_off ->
 			io:format("Starting a new converter actor and display actor.~n"),
-			Display = spawn(fun display:loop/0),
 			register(converter, spawn_link(fun convert:loop/0)),
-			converter ! {link, Display},
-			loop()
+			register(display, spawn_link(fun display:loop/0)),
+			loop();
 
+
+		shutdown ->
+			exit(display, kill),
+			io:format("Killed the display actor.~n"),
+			exit(converter, kill),
+			io:format("Killed the converter actor.~n"),
+			io:format("Killing myself...~n"),
+			exit(kill)
 
 	end.
