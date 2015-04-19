@@ -5,25 +5,24 @@
 
 loop() ->
 	receive
-		{"ConvertToCelsius", Ftemp} ->
-			Display ! f2c(Ftemp),
-			loop();
-
-		{"ConvertToFahrenheit", Ctemp} ->
-			Display ! c2f(Ctemp),
-			loop();
-
 		{link, Display} ->
 			register(display, Display),
 			io:format("Successfully linked to Display actor ~p.~n", [Display]),
 			loop();
 
+		{"ConvertToCelsius", Ftemp} ->
+			display ! f2c(Ftemp),
+			loop();
+
+		{"ConvertToFahrenheit", Ctemp} ->
+			display ! c2f(Ctemp),
+			loop();
+
 		_ -> 
-			io:format("got bad data to process"),
+			io:format("got bad data to process: "),
 			loop()
 			
-		end.
-
+	end.
 
 
 c2f(Ctemp) -> 	if 
