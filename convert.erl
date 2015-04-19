@@ -18,3 +18,4 @@ loop() ->
 		end.
 
 f2c(Ftemp) -> (Ftemp - 32) * (5/9).
+c2f(Ctemp) -> Ctemp * (9/5) + 32.
