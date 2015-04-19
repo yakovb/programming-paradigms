@@ -18,13 +18,15 @@ loop() ->
 	end.
 
 
-c2f(Ctemp) -> 	if 
+c2f(Ctemp) -> 	if 					
+					false == is_number(Ctemp) -> error;
 					Ctemp < -273.15 -> {zero_error_C, Ctemp};
 					true -> {celsiusOK, Ctemp, Ctemp * (9/5) + 32}
 				end.
 
 
 f2c(Ftemp) -> 	if 
+					false == is_number(Ftemp) -> error;
 					Ftemp < -523.67 -> {zero_error_F, Ftemp};
 					true -> {fahrenheitOK, Ftemp, (Ftemp - 32) * (5/9)}
 				end.
