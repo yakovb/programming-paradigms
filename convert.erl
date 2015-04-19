@@ -20,13 +20,16 @@ loop() ->
 			
 		end.
 
-c2f(Ctemp) -> if
-				Ctemp =< 273.15 -> 
-					{error, "Requested temp is below absolute zero"};
-				true ->
-					Ctemp * (9/5) + 32.
+c2f(Ctemp) -> case zeroTest({c, Ctemp}) of 
+				false -> {error, "Requested temp is below absolute zero"};
+				true -> Ctemp * (9/5) + 32
+			end.
 
-f2c(Ftemp) -> (Ftemp - 32) * (5/9).
+
+f2c(Ftemp) -> case zeroTest({f, Ftemp}) of 
+				false -> {error, "Requested temp is below absolute zero"};
+				true -> (Ftemp - 32) * (5/9)
+			end.
 
 
 % checks if the temperature is below absolute zero
