@@ -1,7 +1,6 @@
 -module(display).
 -export([loop/0]).
 
-%TODO: be killable by controller
 
 loop() ->
 	receive

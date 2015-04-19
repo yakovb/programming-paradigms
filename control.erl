@@ -1,9 +1,7 @@
 -module(control).
 -export([loop/0]).
 
-%TODO: kill converters and displays
 %TODO: create temp list for testing including temps in/out of range for F and C
-%TODO: have a system shutdown option
 
 loop() ->
 	receive
