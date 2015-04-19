@@ -6,11 +6,11 @@
 loop() ->
 	receive
 		{"ConvertToCelsius", Ftemp} ->
-			f2c(Ftemp),
+			Display ! f2c(Ftemp),
 			loop();
 
 		{"ConvertToFahrenheit", Ctemp} ->
-			c2f(Ctemp),
+			Display ! c2f(Ctemp),
 			loop();
 
 		{link, Display} ->

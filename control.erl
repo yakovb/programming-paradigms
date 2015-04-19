@@ -10,9 +10,9 @@ loop() ->
 		kick_off ->
 			io:format("Starting a new converter actir and display actor.~n"),
 			Display = spawn(fun display:loop/0),
-			Converter = spawn(fun convert:loop/0),
-			Converter ! {link, Display},
-			loop();
+			register(converter, spawn_link(fun convert:loop/0)),
+			converter ! {link, Display},
+			loop()
 
 
-		end.
+	end.
