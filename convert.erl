@@ -8,8 +8,7 @@
 loop() ->
 	receive
 		{"ConvertToCelsius", Ftemp} ->
-			Ctemp = (Ftemp - 32) * (5/9),
-			io:format("~.2f F is equivalent to ~.2f C~n", [float(Ftemp), Ctemp]), %TODO debug text, remove
+			io:format("~.2f F is equivalent to ~.2f C~n", [float(Ftemp), f2c(Ftemp)]), %TODO debug text, remove
 			loop();
 
 		test -> 
@@ -17,3 +16,5 @@ loop() ->
 			loop()
 			
 		end.
+
+f2c(Ftemp) -> (Ftemp - 32) * (5/9).
