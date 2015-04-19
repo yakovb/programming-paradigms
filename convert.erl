@@ -1,8 +1,6 @@
 -module(convert).
 -export([loop/0]).
 
-%TODO: send results to display
-
 loop() ->
 	receive
 		{link, Display} ->
