@@ -13,6 +13,11 @@ loop() ->
 			c2f(Ctemp),
 			loop();
 
+		{link, Display} ->
+			link(Display),
+			io:format("Successfully linked to Display actor ~p.~n", [Display]),
+			loop();
+
 		_ -> 
 			io:format("got bad data to process"),
 			loop()
