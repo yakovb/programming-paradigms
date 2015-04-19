@@ -13,7 +13,8 @@ loop() ->
 			c2f(Ctemp),
 			loop();
 
-		_ -> exit(convert, "got bad data to process"),
+		_ -> 
+			exit(convert, "got bad data to process"),
 			loop()
 			
 		end.
