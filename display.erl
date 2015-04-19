@@ -8,9 +8,11 @@ loop() ->
 	receive
 		{celsiusOK, Ctemp, Ftemp} ->
 			io:format("~.2f C is equivalent to ~.2f F~n", [float(Ctemp), float(Ftemp)]),
+			loop();
 
 		{fahrenheitOK, Ftemp, Ctemp} ->
 			io:format("~.2f F is equivalent to ~.2f C~n", [float(Ftemp), float(Ctemp)]),
+			loop();
 
 		test -> 
 			io:format("test message received by displayer"),
