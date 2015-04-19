@@ -2,12 +2,11 @@
 -export([loop/0]).
 
 %TODO: send results to display
-%TODO die if given bad data, tell controller
 
 loop() ->
 	receive
 		{"ConvertToCelsius", Ftemp} ->
-			io:format("~.2f F is equivalent to ~.2f C~n", [float(Ftemp), f2c(Ftemp)]), %TODO debug text, remove
+			f2c(Ftemp),
 			loop();
 
 		{"ConvertToFahrenheit", Ctemp} ->
