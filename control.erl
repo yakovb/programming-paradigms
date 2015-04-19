@@ -15,11 +15,7 @@ loop() ->
 
 
 		shutdown ->
-			exit(display, kill),
-			io:format("Killed the display actor.~n"),
-			exit(converter, kill),
-			io:format("Killed the converter actor.~n"),
-			io:format("Killing myself...~n"),
-			exit(kill)
+			io:format("Shutting down..."),
+			exit(shutdown)
 
 	end.
