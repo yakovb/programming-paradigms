@@ -7,6 +7,11 @@
 
 loop() ->
 	receive
+		{"ConvertToCelsius", Ftemp} ->
+			Ctemp = (Ftemp - 32) * (5/9),
+			io:format("~p F is equivalent to ~p C~n", [Ftemp, Ctemp]), %TODO debug text, remove
+			loop();
+
 		test -> 
 			io:format("test message received by converter"),
 			loop()
