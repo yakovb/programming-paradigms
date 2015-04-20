@@ -17,6 +17,11 @@ loop() ->
 			loop();
 
 
+		{convert_F, FTemp} ->
+			converter ! {display, "ConvertToCelsius", FTemp},
+			loop();
+
+
 		shutdown ->
 			io:format("Shutting down..."),
 			exit(shutdown)
