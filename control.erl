@@ -1,5 +1,5 @@
 -module(control).
--export([loop/0, start/0]).
+-export([loop/0, tester/0]).
 
 %TODO: create temp list for testing including temps in/out of range for F and C
 
@@ -24,18 +24,19 @@ loop() ->
 	end.
 
 
-start() ->
-	Me = spawn(fun control:loop/0),
-	Me ! kick_off,
+tester() ->
+	Control = spawn(fun control:loop/0),
+	Control ! kick_off,
+	timer:sleep(2000),
 	io:format("~nTesting Celsius conversion and display...~n"),
-	celsius_good(Me),
-	celsius_too_cold(Me),
-	celsius_bad_data(Me),
+	celsius_good(Control),
+	celsius_too_cold(Control),
+	celsius_bad_data(Control),
 	io:format("~nTesting Fahrenheit conversion and display...~n"),
-	fahrenheit_good(Me),
-	fahrenheit_too_cold(Me),
-	fahrenheit_bad_data(Me),
-	Me ! shutdown.
+	fahrenheit_good(Control),
+	fahrenheit_too_cold(Control),
+	fahrenheit_bad_data(Control),
+	Control ! shutdown.
 
 celsius_good(PID) ->
 	io:format("The next 5 Celsius temps should all convert correctly: ~n"),
@@ -61,4 +62,6 @@ fahrenheit_bad_data(PID) ->
 	io:format("The next 3 Fahrenheit conversions should fail as they're not numeric data: ~n"),
 	rollingSend({PID, convert_F,  [test, "string", [atom, list]]}).
 
-rollingSend({PID, Conv, Nums}) -> lists:foreach(fun(X) -> PID ! {Conv, X} end, Nums).
+rollingSend({PID, Conv, Nums}) -> 
+	lists:foreach(fun(X) -> PID ! {Conv, X} end, Nums),
+	timer:sleep(2000).
