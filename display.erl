@@ -20,8 +20,12 @@ loop() ->
 			io:format("Oops! ~.2f F is below absolute zero of -523.67 F so conversion is impossible~n", [float(F)]),
 			loop();
 
+		{bad_data, X} ->
+			io:format("The display got bad data to process: ~p~n", [X]),
+			loop();
+
 		_ -> 
-			io:format("The display got bad data to process: ~n"),
+			io:format("The display got bad data to process. ~n"),
 			loop()
 			
 		end.
