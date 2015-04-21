@@ -48,7 +48,7 @@ celsius_good(PID) ->
 	rollingSend({PID, convert_C,  [0, -100, 896, 46, 99751]}).
 
 celsius_too_cold(PID) ->
-	io:format("~nThe next 2 Celsius temps should all fail because they're below absolute zero: ~n"),
+	io:format("~nThe next 2 Celsius temps should fail because they're below absolute zero: ~n"),
 	rollingSend({PID, convert_C,  [-1000, -273.16]}).
 
 celsius_bad_data(PID) ->
@@ -60,7 +60,7 @@ fahrenheit_good(PID) ->
 	rollingSend({PID, convert_F,  [0, -100, 896, 46, 99751]}).
 
 fahrenheit_too_cold(PID) ->
-	io:format("~nThe next 2 Fahrenheit temps should all fail because they're below absolute zero: ~n"),
+	io:format("~nThe next 2 Fahrenheit temps should fail because they're below absolute zero: ~n"),
 	rollingSend({PID, convert_F,  [-1000, -523.68]}).
 
 fahrenheit_bad_data(PID) ->

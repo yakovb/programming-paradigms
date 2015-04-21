@@ -21,7 +21,7 @@ loop() ->
 			loop();
 
 		_ -> 
-			io:format("Display: got bad data to process: "),
+			io:format("The display got bad data to process: ~n"),
 			loop()
 			
 		end.
