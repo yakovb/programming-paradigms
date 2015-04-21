@@ -53,7 +53,7 @@ celsius_too_cold(PID) ->
 
 celsius_bad_data(PID) ->
 	io:format("~nThe next 3 Celsius conversions should fail as they're not numeric data: ~n"),
-	rollingSend({PID, convert_C,  [test, "string", [atom, list]]}).
+	rollingSend({PID, convert_C,  [testoid, "string", [atom, list]]}).
 
 fahrenheit_good(PID) ->
 	io:format("~nThe next 5 Fahrenheit temps should all convert correctly: ~n"),
