@@ -12,7 +12,7 @@
     (if flag
         (let-values ([(new-list new-flag) (reduce-singletons cells-list)])
             (loop new-list new-flag))
-        (let-values ([(new-list new-flag) (find-single-val-in-set cells-list)])
+        (let-values ([(new-list new-flag) (find-single-set cells-list)])
           (if new-flag
               (loop new-list new-flag)
               (transform-back new-list)))))
@@ -93,62 +93,6 @@
                 #t))))
 
 
-;; CONTRACT: find-single-val-in-set: list-of-cells -> list-of-cells boolean
-;;
-;; PURPOSE: given a list of cells, remove existing singletons and find the cells in the 
-;; remaining list that contain numbers not occuring in the same row/cell/box (ie can be 
-;; made into a singleton set). Turn these cells into singletons, rejoin them and their 
-;; associations onto the existing singletons and return the updated list of cells. Return a 
-;; boolean flag with the resulting list of cells to signify whether any updates were made
-;; to the list
-;;
-(define (find-single-val-in-set input)       
-  (let*-values ([(singles candidates) (partition valid-singleton? input)]
-                [(results flag) (singles-in-candidate-cells candidates)])
-    (values (append singles results) flag)))
-   
-
-;; CONTRACT: singles-in-candidate-cells: list-of-cells -> list-of-cells boolean
-;;
-;; PURPOSE: in all cells that aren't already singletons, find all the cells which can be 
-;; reduced to singletons and make them so. If any changes are made, return the new list of
-;; cells along with a #t flag, otherwise return the original input with a #f flag
-;;
-(define (singles-in-candidate-cells input)
-  
-  (define (go input n change-flag)
-    (if (= n (length input))
-        (values input change-flag)
-        (let*-values ([(associated others) (partition (lambda (cell) (associated-cells? (first input)
-                                                                                        cell))
-                                                      input)]
-                     [(new-associated result-flag) (singles-in-associated-cells associated)]
-                     [(rejoined) (append new-associated others)]
-                     [(new-input) (to-end-of-list (first rejoined) (rest rejoined))])
-          (go new-input (+ n 1) (or change-flag result-flag)))))
-  
-    (go input 0 #f))
-
-
-;; CONTRACT: singles-in-associated-cells: list-of-cells -> list-of-cells boolean
-;;
-;; PURPOSE: finds all the cells which have a number not occuring elsewhere in their associated
-;; cells. Returns these cells as singleton cells along with their associated cells, along with #t
-;; if any changes have been made. Otherwise return the original input with #f to signify that no
-;; changes have been made 
-;;
-(define (singles-in-associated-cells input)
-  
-  (define (go input n change-flag)
-    (if (= n (length input))
-        (values input change-flag)
-        (let*-values ([(new-single result-flag) (make-single (first input) (rest input))]
-                      [(new-input) (to-end-of-list new-single (rest input))])
-          (go new-input (+ n 1) (or change-flag result-flag)))))
-  
-  (go input 0 #f))
-
-
 ;; CONTRACT: to-end-of-list: A list-of-A -> A list-of-A
 ;;
 ;; PURPOSE: given an item and a list, return a list where the last item is now
@@ -168,34 +112,44 @@
        (eq? 1 (set-count (cell-data cell)))))
 
 
-;; TEST ;;
-;; CONTRACT: make-single: cell list-of-cells -> cell boolean
+;; CONTRACT: find-single-set: list-of-cells -> list-of-cells boolean
 ;;
-;; PURPOSE: given a cell and its associations, check whether a number in cell's set
-;; is unque in its associated row OR column OR box. If so, reduce cell to a singleton,
-;; and return the cell along with #t; else return the unchanged cell along with #f
+;; PURPOSE: take a list of cells and search for a set which has a value not occuring in 
+;; its associated row OR column OR box. If found, reduce that set to a singleton and immediately
+;; return the modified list-of-cells and #t. If no such set is found, return the unmodified 
+;; list-of-cells and #f
 ;;
-(define (make-single candidate others)
-  
-  (define (loop procs)
-    (if (empty? procs) 
-        (values candidate #f)
-        (let ([result (found (first procs))])
+(define (find-single-set cells)
+(let ([procs (list cell-row cell-col cell-box)])
+          
+  (define (loop input n flag)
+    (if (= n (length input))
+        (values input #f)
+        (let ([head (first input)]
+              [tail (rest input)])
+          (if (= 1 (set-count (cell-data head)))
+              (loop (to-end-of-list head tail) (+ n 1) flag)
+              (let ([setValOrFalse (found procs head tail)])
+                (if setValOrFalse
+                    (values (cons (make-singleton head setValOrFalse) tail) #t)
+                    (loop (to-end-of-list head tail) (+ n 1) flag)))))))                  
+                           
+  (define (found fs candidate others)
+    (if (empty? fs)
+        #f
+        (let* ([f (first fs)]
+               [cand-val (f candidate)]
+               [other-vals (filter (lambda (val) (eq? cand-val (f val))) others)]
+               [result (for/first ([i (set->list (cell-data candidate))]
+                                   #:when (not (member i (flatten (map (lambda (c) (set->list (cell-data c)))
+                                                                       other-vals)))))
+                         i)])
           (if result
-              (values (make-singleton candidate result) #t)
-              (loop (rest procs))))))
-        
-  (define (found f)
-    (let* ([cand-val (f candidate)]
-           [other-vals (filter (lambda (val) (eq? cand-val (f val))) others)])
-      (for/first ([i (set->list (cell-data candidate))]
-                  #:when (not (member i (flatten (map (lambda (c) (set->list (cell-data c)))
-                                                      other-vals)))))
-        i)))
-       
- (let ([procs (list cell-row cell-col cell-box)])
-    (loop procs)))
-                          
+              result
+              (found (rest fs) candidate others)))))
+  
+  (loop cells 0 #f)))
+                 
 
 ;; CONTRACT: remove-from-associated: list-of-cells list-of-cells -> list-of-cells
 ;;
@@ -352,11 +306,8 @@
          transform-back
          cells-list
          reduce-singletons
-         find-single-val-in-set
-         singles-in-candidate-cells
-         singles-in-associated-cells
          valid-singleton?
-         make-single
+         find-single-set
          remove-from-associated
          associated-cells?
          cell-associations
