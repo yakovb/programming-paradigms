@@ -1,4 +1,4 @@
-#MSc CS, PPL Ruby assignment 2015
+#MSc CS, PPL assignments 2015
 ## ruby
 This is a simple library management programme. It is meant to help a librarian manage library members and the books lent to them. Most methods in the library.rb file are public so this source file functions as the API (the method names are self explanatory). The key is that before any action can be taken, the library must be open and the customer must be a member of the library. 
 
